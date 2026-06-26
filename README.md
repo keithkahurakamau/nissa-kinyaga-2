@@ -33,12 +33,14 @@ python3 -m http.server 8000
   Recognition, Journal, and a Contact form with a custom date-picker calendar
 - Responsive layout with a full-screen mobile menu
 
+## Contact details (live)
+
+- **Email** — nissasafaris254@gmail.com
+- **WhatsApp / phone** — +254 707 415 444 (main) · +254 722 449 514 (alternate)
+- **Instagram** — [@nissa_safaris_tours](https://instagram.com/nissa_safaris_tours)
+- The contact form composes the enquiry and opens WhatsApp to the main number,
+  prefilled — no backend required.
+
 ## Content to finish before launch
 
-These are intentional placeholders left by the design:
-
 - **Portrait** — drop a photo of Nissa into `assets/` and wire it into the Story section
-- **Email / phone** — replace the placeholders in the Contact section
-- **Form delivery** — the contact form shows a success state but does not send;
-  connect a form service (e.g. Formspree) or an email handler
-- **Social links** — Instagram / YouTube / TikTok currently point to `#`
