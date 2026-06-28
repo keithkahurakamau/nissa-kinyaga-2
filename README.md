@@ -13,7 +13,7 @@ Zero-dependency static site — `index.html` (markup + inline styles) and `app.j
 ```
 index.html        # markup + styles
 app.js            # all behaviour (external so CSP can use script-src 'self')
-assets/*.jpg      # 21 safari photographs
+assets/*.jpg      # 23 photographs (incl. portrait of Nissa + Mukogodo)
 ```
 
 Photos are re-mastered from the original WhatsApp-resolution files (full frame,
@@ -79,4 +79,5 @@ python3 -m http.server 8000
 
 ## Content to finish before launch
 
-- **Portrait** — drop a photo of Nissa into `assets/` and wire it into the Story section
+- All core content is in place (portrait, Mukogodo, real contacts). Optional:
+  swap in guest testimonials in the Recognition section as they're collected.
