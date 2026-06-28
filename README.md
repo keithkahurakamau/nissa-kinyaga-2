@@ -11,8 +11,12 @@ No build step. Deploys to any static host (Vercel, Netlify, GitHub Pages) as-is.
 
 ```
 index.html        # markup, styles, and all behaviour
-assets/*.jpg      # 17 safari photographs
+assets/*.jpg      # 21 safari photographs
 ```
+
+Photos are re-mastered from the original WhatsApp-resolution files (full frame,
+upscaled with Lanczos + unsharp for sharpness on retina/large displays).
+Below-the-fold images are `loading="lazy"`.
 
 ## Run locally
 
