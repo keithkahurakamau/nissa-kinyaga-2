@@ -6,11 +6,13 @@ Borana Conservancy in Laikipia, Kenya. Implemented from the Claude Design source
 
 ## Stack
 
-Zero-dependency static site — one `index.html` with inline styles and vanilla JS.
-No build step. Deploys to any static host (Vercel, Netlify, GitHub Pages) as-is.
+Zero-dependency static site — `index.html` (markup + inline styles) and `app.js`
+(all behaviour, loaded `defer`). No build step. Deploys to any static host
+(Vercel, Netlify, GitHub Pages) as-is.
 
 ```
-index.html        # markup, styles, and all behaviour
+index.html        # markup + styles
+app.js            # all behaviour (external so CSP can use script-src 'self')
 assets/*.jpg      # 21 safari photographs
 ```
 
@@ -44,6 +46,36 @@ python3 -m http.server 8000
 - **Instagram** — [@nissa_safaris_tours](https://instagram.com/nissa_safaris_tours)
 - The contact form composes the enquiry and opens WhatsApp to the main number,
   prefilled — no backend required.
+
+## Security & privacy
+
+- **No data collection** — there is no backend. The enquiry form composes a message
+  and hands it to the visitor's own WhatsApp/email; nothing is sent to or stored on
+  a server. No tracking or advertising cookies are set.
+- **Strict Content-Security-Policy** (meta): `script-src 'self'` (all JS external, no
+  inline scripts or inline event handlers), locked `img`/`style`/`font`/`connect`
+  sources, `object-src 'none'`, `base-uri 'self'`, `form-action 'none'`.
+- HTTPS enforced (GitHub Pages); `referrer` policy set; outbound links use
+  `rel="noopener noreferrer"`.
+- **Cookie/consent banner** records the choice in `localStorage` (functional, not a
+  tracker). Any future analytics must be initialised in `loadAnalytics()` in `app.js`
+  so it only runs after explicit opt-in. A plain-language privacy note is in the footer.
+- Note: clickjacking protection (`frame-ancestors`/`X-Frame-Options`) needs an HTTP
+  response header, which GitHub Pages can't set. Move to a host that allows custom
+  headers (e.g. Vercel/Netlify with a `_headers` file) if framing protection is required.
+
+## Accessibility & responsiveness
+
+- Form labels associated via `for`/`id`; `name`/`autocomplete`/`inputmode` set;
+  ARIA on the custom dropdown and date-picker; visible `:focus-visible` rings.
+- Respects `prefers-reduced-motion`. Honest `alt`/`aria` on imagery.
+- Verified no horizontal overflow from 320 px to 1920 px; full-screen mobile menu;
+  `viewport-fit=cover` for notched devices.
+
+## Performance
+
+- Hero image preloaded (`fetchpriority="high"`); below-the-fold images `loading="lazy"`.
+- JS is a single deferred external file; fonts use `display=swap` with `preconnect`.
 
 ## Content to finish before launch
 
