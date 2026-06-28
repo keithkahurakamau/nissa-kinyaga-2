@@ -54,24 +54,22 @@
   });
 
   /* ---------- gallery carousel ---------- */
-  var track = document.getElementById('nk-track');
+  var gal = document.getElementById('nk-gal');
   function card(it, idx){
     var fig = document.createElement('figure');
     fig.className = 'nk-gcard';
-    fig.style.cssText = 'flex:none;width:clamp(300px,30vw,400px);height:440px;margin:0 22px 0 0;position:relative;overflow:hidden;border-radius:4px;';
     fig.innerHTML =
-      '<div role="img" aria-label="'+esc(it.title)+'" style="position:absolute;inset:0;background-image:url(\''+it.src+'\');background-size:cover;background-position:center;"></div>'+
-      '<div style="position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(20,15,9,.55));"></div>'+
-      '<figcaption class="nk-glass nk-glass-dark nk-refract" style="position:absolute;left:14px;right:14px;bottom:14px;padding:18px;border-radius:14px;">'+
+      '<img src="'+it.src+'" alt="'+esc(it.title)+'" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"/>'+
+      '<div style="position:absolute;inset:0;background:linear-gradient(transparent 38%,rgba(20,15,9,.62));"></div>'+
+      '<figcaption class="nk-glass nk-glass-dark nk-refract" style="position:absolute;left:16px;right:16px;bottom:16px;padding:18px;border-radius:14px;">'+
         '<span style="font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#E6C879;">'+esc(it.cat)+'</span>'+
-        '<div style="font-family:\'Cormorant Garamond\',serif;font-size:22px;color:#FBF7EF;margin:5px 0 8px;line-height:1.15;">'+esc(it.title)+'</div>'+
+        '<div style="font-family:\'Cormorant Garamond\',serif;font-size:23px;color:#FBF7EF;margin:5px 0 8px;line-height:1.15;">'+esc(it.title)+'</div>'+
         '<p style="font-size:13px;line-height:1.55;color:#DAD0BC;margin:0 0 14px;">'+esc(it.story)+'</p>'+
         '<button type="button" class="nk-gbtn" data-lb="'+idx+'" style="font-family:\'DM Mono\',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#FBF7EF;padding:10px 18px;cursor:pointer;border-radius:30px;">View image</button>'+
       '</figcaption>';
     return fig;
   }
-  items.forEach(function(it,i){ track.appendChild(card(it,i)); });
-  items.forEach(function(it,i){ track.appendChild(card(it,i)); }); // duplicate set for seamless loop
+  if (gal) items.forEach(function(it,i){ gal.appendChild(card(it,i)); });
 
   /* ---------- lightbox ---------- */
   var lb = document.getElementById('nk-lb');
@@ -103,44 +101,77 @@
     if (e.key === 'ArrowLeft') stepLb(-1);
   });
 
-  /* ---------- carousel physics (cursor steer + drag) ---------- */
+  /* ---------- carousel controller (snap + arrows + keyboard) ----------
+     Native scroll-snap drives touch swipe and trackpad on every device; arrows,
+     keyboard and a live counter give explicit control. The centred card scales
+     up for a focal transition. */
   (function(){
-    var gal = document.getElementById('nk-gal');
-    if (!gal || !track) return;
-    var half = function(){ return track.scrollWidth / 2; };
-    var pos = 0, vel = 0, target = -0.22;
-    var drag = false, dragX = 0, dragPos = 0, moved = false;
-    gal.addEventListener('mousemove', function(e){
-      if (drag) return;
-      var r = gal.getBoundingClientRect();
-      var t = (e.clientX - r.left) / r.width;
-      var d = (t - 0.5) * 2;
-      var dead = Math.abs(d) < 0.12 ? 0 : d;
-      target = dead * 6;
-    }, { passive:true });
-    gal.addEventListener('mouseleave', function(){ target = -0.22; });
-    gal.addEventListener('mousedown', function(e){ drag = true; moved = false; dragX = e.clientX; dragPos = pos; gal.classList.add('nk-grab'); });
-    window.addEventListener('mouseup', function(){ drag = false; gal.classList.remove('nk-grab'); });
-    window.addEventListener('mousemove', function(e){
-      if (!drag) return;
-      var dx = e.clientX - dragX;
-      if (Math.abs(dx) > 4) moved = true;
-      pos = dragPos + dx; vel = 0; target = 0;
-    }, { passive:true });
-    gal.addEventListener('click', function(e){
-      if (moved){ e.preventDefault(); e.stopPropagation(); return; }
-      var btn = e.target.closest('[data-lb]');
-      if (btn){ openLb(parseInt(btn.getAttribute('data-lb'), 10)); }
-    }, true);
-    // touch: native horizontal scroll fallback via drag is non-trivial; allow tap-to-view
-    function loop(){
-      if (!drag){ vel += (target - vel) * 0.06; pos -= vel; }
-      var h = half();
-      if (h > 0){ if (pos <= -h) pos += h; if (pos > 0) pos -= h; }
-      track.style.transform = 'translateX(' + pos + 'px)';
-      requestAnimationFrame(loop);
+    if (!gal) return;
+    var cards = Array.prototype.slice.call(gal.querySelectorAll('.nk-gcard'));
+    if (!cards.length) return;
+    var prevBtn = document.getElementById('nk-prev');
+    var nextBtn = document.getElementById('nk-next');
+    var curEl = document.getElementById('nk-gal-cur');
+    var totEl = document.getElementById('nk-gal-total');
+    var active = -1, raf = 0, target = 0, settleT = 0;
+    var pad = function(n){ return ('0' + n).slice(-2); };
+    if (totEl) totEl.textContent = pad(cards.length);
+
+    function update(){
+      var gr = gal.getBoundingClientRect();
+      var center = gr.left + gr.width / 2;
+      var best = 0, bd = Infinity;
+      for (var i = 0; i < cards.length; i++){
+        var r = cards[i].getBoundingClientRect();
+        var d = Math.abs((r.left + r.width / 2) - center);
+        if (d < bd){ bd = d; best = i; }
+      }
+      if (best !== active){
+        if (cards[active]) cards[active].classList.remove('is-active');
+        cards[best].classList.add('is-active');
+        active = best;
+        if (curEl) curEl.textContent = pad(active + 1);
+      }
+      if (prevBtn) prevBtn.disabled = (active <= 0);
+      if (nextBtn) nextBtn.disabled = (active >= cards.length - 1);
     }
-    loop();
+    // navigation is driven by an explicit target index that increments
+    // immediately, so rapid arrow taps accumulate even mid-animation
+    function goTo(i){
+      target = Math.max(0, Math.min(cards.length - 1, i));
+      var gr = gal.getBoundingClientRect();
+      var cr = cards[target].getBoundingClientRect();
+      var delta = (cr.left + cr.width / 2) - (gr.left + gr.width / 2);
+      gal.scrollTo({ left: gal.scrollLeft + delta, behavior:'smooth' });
+    }
+    function schedule(){ if (raf) cancelAnimationFrame(raf); raf = requestAnimationFrame(update); }
+    // only a genuine user swipe/scroll should resync the target; button-driven
+    // scrolling must let the explicit target accumulate
+    var userScroll = false;
+    gal.addEventListener('wheel', function(){ userScroll = true; }, { passive:true });
+    gal.addEventListener('touchstart', function(){ userScroll = true; }, { passive:true });
+    gal.addEventListener('scroll', function(){
+      schedule();
+      if (userScroll){ clearTimeout(settleT); settleT = setTimeout(function(){ target = active; userScroll = false; }, 150); }
+    }, { passive:true });
+    window.addEventListener('resize', schedule);
+    if (prevBtn) prevBtn.addEventListener('click', function(){ goTo(target - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', function(){ goTo(target + 1); });
+    gal.addEventListener('keydown', function(e){
+      if (e.key === 'ArrowRight'){ e.preventDefault(); goTo(target + 1); }
+      else if (e.key === 'ArrowLeft'){ e.preventDefault(); goTo(target - 1); }
+    });
+    // tap / click a card opens the lightbox (suppressed if the pointer was dragging/swiping)
+    var downX = 0, downY = 0, moved = false;
+    gal.addEventListener('pointerdown', function(e){ downX = e.clientX; downY = e.clientY; moved = false; if (e.pointerType !== 'mouse') userScroll = true; }, { passive:true });
+    gal.addEventListener('pointermove', function(e){ if (Math.abs(e.clientX - downX) > 8 || Math.abs(e.clientY - downY) > 8) moved = true; }, { passive:true });
+    gal.addEventListener('click', function(e){
+      var t = e.target.closest('[data-lb]');
+      if (!t) return;
+      if (moved){ e.preventDefault(); return; }
+      openLb(parseInt(t.getAttribute('data-lb'), 10));
+    });
+    requestAnimationFrame(update);
   })();
 
   /* ---------- reveal on scroll ---------- */

@@ -150,6 +150,20 @@ body{margin:0;background:#F3ECDC;-webkit-font-smoothing:antialiased;}
 #nk-date::-webkit-calendar-picker-indicator{filter:invert(74%) sepia(34%) saturate(560%) hue-rotate(2deg) brightness(95%);cursor:pointer;opacity:.95;}
 #nk-date::-webkit-datetime-edit{color:#F6EFDE;}
 #nk-date:disabled{cursor:not-allowed;}
+
+/* ===== gallery snap carousel ===== */
+#nk-gal{display:flex;gap:24px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;padding:14px max(0px,calc((100% - clamp(280px,82vw,540px)) / 2));-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);}
+#nk-gal::-webkit-scrollbar{display:none;}
+#nk-gal:focus-visible{outline:2px solid #C9A24B;outline-offset:4px;}
+.nk-gcard{flex:0 0 clamp(280px,82vw,540px);scroll-snap-align:center;height:clamp(400px,60vh,540px);position:relative;overflow:hidden;border-radius:6px;opacity:.42;transform:scale(.87);transition:opacity .6s cubic-bezier(.16,.7,.3,1),transform .6s cubic-bezier(.16,.7,.3,1),box-shadow .6s ease;will-change:transform,opacity;}
+.nk-gcard.is-active{opacity:1;transform:scale(1);box-shadow:0 30px 64px rgba(20,15,9,.34);}
+.nk-galbtn{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;color:#FBF7EF;cursor:pointer;background:rgba(28,22,14,.42);-webkit-backdrop-filter:blur(16px) saturate(160%);backdrop-filter:blur(16px) saturate(160%);border:1px solid rgba(255,255,255,.28);box-shadow:0 8px 24px rgba(20,15,9,.3),inset 0 1px 0 rgba(255,255,255,.25);transition:transform .3s ease,background .3s ease,opacity .3s ease;}
+.nk-galbtn:hover{background:rgba(28,22,14,.58);transform:translateY(-50%) scale(1.07);}
+.nk-galbtn:active{transform:translateY(-50%) scale(.95);}
+.nk-galbtn[disabled]{opacity:.22;pointer-events:none;}
+.nk-galbtn-prev{left:6px;}.nk-galbtn-next{right:6px;}
+@media(max-width:640px){.nk-galbtn{width:44px;height:44px;font-size:22px;}.nk-galbtn-prev{left:2px;}.nk-galbtn-next{right:2px;}}
+@media(prefers-reduced-motion:reduce){#nk-gal{scroll-behavior:auto;}.nk-gcard,.nk-gcard.is-active{transform:none;transition:opacity .25s ease;}}
 </style>
 </head>
 <body>
@@ -484,11 +498,16 @@ body{margin:0;background:#F3ECDC;-webkit-font-smoothing:antialiased;}
         <span style="font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:#8A7B66;">The Gallery</span>
       </div>
       <h2 style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(32px,4.4vw,58px);line-height:1.04;margin:0 0 14px;color:#241B12;">From the field</h2>
-      <p style="font-size:15px;color:#6E5F49;margin:0;font-style:italic;">Photographs from Nissa's own safaris, each with the story behind the frame. Glide the reel by moving your cursor left or right, drag to take control, and tap View image for the full frame.</p>
+      <p style="font-size:15px;color:#6E5F49;margin:0;font-style:italic;">Photographs from Nissa's own safaris, each with the story behind the frame. Swipe, scroll or use the arrows to move through the reel, and tap a frame to view it full-screen.</p>
     </div>
   </div>
-  <div id="nk-gal" data-reveal style="position:relative;overflow:hidden;padding:6px 0;cursor:grab;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);">
-    <div id="nk-track" style="display:flex;width:max-content;padding-left:32px;will-change:transform;"></div>
+  <div data-reveal style="position:relative;max-width:1320px;margin:0 auto;">
+    <div style="position:relative;">
+      <div id="nk-gal" role="region" aria-roledescription="carousel" aria-label="Photographs from the field" tabindex="0"></div>
+      <button id="nk-prev" type="button" aria-label="Previous photo" class="nk-galbtn nk-galbtn-prev">&#8249;</button>
+      <button id="nk-next" type="button" aria-label="Next photo" class="nk-galbtn nk-galbtn-next">&#8250;</button>
+    </div>
+    <div id="nk-gal-meta" style="text-align:center;margin-top:26px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.24em;color:#8A7B66;"><span id="nk-gal-cur">01</span> <span style="color:#C9A24B;">/</span> <span id="nk-gal-total">00</span></div>
   </div>
 </section>
 
