@@ -185,10 +185,8 @@
   (function(){
     var form = document.getElementById('nk-form');
     var wrap = document.getElementById('nk-form-wrap');
-    var cal = document.getElementById('nk-cal');
-    var calToggle = document.getElementById('nk-cal-toggle');
-    var calLabel = document.getElementById('nk-cal-label');
-    var calIcon = document.getElementById('nk-cal-icon');
+    var dateInput = document.getElementById('nk-date');
+    var flexInput = document.getElementById('nk-flex');
     var pkg = document.getElementById('nk-pkg');
     var pkgToggle = document.getElementById('nk-pkg-toggle');
     var pkgLabel = document.getElementById('nk-pkg-label');
@@ -211,58 +209,24 @@
     ];
     var pkgSel = null;
     var pkgOpen = false;
-    var MN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-    var dayNames = ['S','M','T','W','T','F','S'];
-    var today = new Date(); today.setHours(0,0,0,0);
-    var baseY = today.getFullYear(), baseM = today.getMonth();
-    var sel = null;          // {y,m,d} or {flex:true}
-    var open = false;
+    var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
-    function fmtLabel(){
-      if (!sel) return 'Select a date';
-      if (sel.flex) return 'Flexible / not sure yet';
-      return MN[sel.m] + ' ' + sel.d + ', ' + sel.y;
-    }
-    function syncLabel(){
-      calLabel.textContent = fmtLabel();
-      calToggle.style.color = sel ? '#F6EFDE' : '#7F7560';
-      calIcon.textContent = open ? 'CLOSE' : 'PICK DATE';
-      calToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    }
-    function renderCal(){
-      var firstDow = new Date(baseY, baseM, 1).getDay();
-      var daysIn = new Date(baseY, baseM + 1, 0).getDate();
-      var html = '';
-      html += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">'+
-        '<button type="button" data-nav="-1" style="background:none;border:1px solid rgba(201,162,75,.4);color:#E7DDC6;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:15px;">‹</button>'+
-        '<div style="font-family:\'Cormorant Garamond\',serif;font-size:20px;color:#F6EFDE;">'+MN[baseM]+' '+baseY+'</div>'+
-        '<button type="button" data-nav="1" style="background:none;border:1px solid rgba(201,162,75,.4);color:#E7DDC6;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:15px;">›</button>'+
-      '</div>';
-      html += '<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:6px;">';
-      dayNames.forEach(function(d){ html += '<div style="text-align:center;font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:.05em;color:#8A7E62;padding:4px 0;">'+d+'</div>'; });
-      html += '</div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;">';
-      var i;
-      for (i = 0; i < firstDow; i++) html += '<span></span>';
-      for (var d = 1; d <= daysIn; d++){
-        var dt = new Date(baseY, baseM, d);
-        var past = dt < today;
-        var isSel = sel && !sel.flex && sel.y === baseY && sel.m === baseM && sel.d === d;
-        var bg = isSel ? '#C9A24B' : 'transparent';
-        var color = isSel ? '#1B2016' : (past ? '#5A5340' : '#E7DDC6');
-        var cursor = past ? 'not-allowed' : 'pointer';
-        html += '<button type="button" '+(past?'':'data-day="'+d+'"')+' '+(past?'disabled':'')+
-          ' style="height:36px;border:none;background:'+bg+';color:'+color+';font-family:\'Mulish\',sans-serif;font-size:14px;cursor:'+cursor+';border-radius:50%;transition:background .2s ease;">'+d+'</button>';
+    /* native date input: block past dates, format for the message */
+    var t0 = new Date(); t0.setHours(0,0,0,0);
+    function iso(d){ return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2); }
+    if (dateInput) dateInput.min = iso(t0);
+    if (flexInput) flexInput.addEventListener('change', function(){
+      if (flexInput.checked){ dateInput.value = ''; dateInput.disabled = true; dateInput.style.opacity = '.45'; }
+      else { dateInput.disabled = false; dateInput.style.opacity = ''; }
+    });
+    function fmtWhen(){
+      if (flexInput && flexInput.checked) return 'Flexible / not sure yet';
+      if (dateInput && dateInput.value){
+        var pr = dateInput.value.split('-');
+        return MONTHS[(+pr[1]) - 1] + ' ' + (+pr[2]) + ', ' + pr[0];
       }
-      html += '</div>';
-      html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;border-top:1px solid rgba(201,162,75,.18);padding-top:12px;">'+
-        '<button type="button" data-flex="1" style="background:none;border:none;color:#C9A24B;font-family:\'DM Mono\',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;">I\'m flexible</button>'+
-        '<button type="button" data-close="1" style="background:none;border:none;color:#8A7E62;font-family:\'DM Mono\',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;">Close</button>'+
-      '</div>';
-      cal.innerHTML = html;
+      return '-';
     }
-    function openCal(){ closePkg(); open = true; cal.style.display = 'block'; renderCal(); syncLabel(); }
-    function closeCal(){ open = false; cal.style.display = 'none'; syncLabel(); }
-    calToggle.addEventListener('click', function(){ open ? closeCal() : openCal(); });
 
     /* ----- experience / package dropdown ----- */
     function syncPkg(){
@@ -279,7 +243,7 @@
       });
       pkg.innerHTML = html;
     }
-    function openPkg(){ closeCal(); pkgOpen = true; pkg.style.display = 'block'; renderPkg(); syncPkg(); }
+    function openPkg(){ pkgOpen = true; pkg.style.display = 'block'; renderPkg(); syncPkg(); }
     function closePkg(){ pkgOpen = false; pkg.style.display = 'none'; syncPkg(); }
     pkgToggle.addEventListener('click', function(){ pkgOpen ? closePkg() : openPkg(); });
     pkg.addEventListener('click', function(e){
@@ -288,38 +252,24 @@
       closePkg();
     });
 
-    /* close either popover when clicking outside the form */
+    /* close the package menu when clicking outside it */
     document.addEventListener('click', function(e){
-      if (!form.contains(e.target)){ if (open) closeCal(); if (pkgOpen) closePkg(); }
-    });
-    cal.addEventListener('click', function(e){
-      var t = e.target.closest('button'); if (!t) return;
-      if (t.hasAttribute('data-nav')){
-        var delta = parseInt(t.getAttribute('data-nav'),10);
-        var m = baseM + delta, y = baseY;
-        if (m < 0){ m = 11; y--; } if (m > 11){ m = 0; y++; }
-        baseM = m; baseY = y; renderCal(); return;
-      }
-      if (t.hasAttribute('data-day')){
-        sel = { y:baseY, m:baseM, d:parseInt(t.getAttribute('data-day'),10) };
-        closeCal(); return;
-      }
-      if (t.hasAttribute('data-flex')){ sel = { flex:true }; closeCal(); return; }
-      if (t.hasAttribute('data-close')){ closeCal(); return; }
+      if (pkgOpen && !pkg.contains(e.target) && e.target !== pkgToggle && !pkgToggle.contains(e.target)) closePkg();
     });
 
     form.addEventListener('submit', function(e){
       e.preventDefault();
-      var inputs = form.querySelectorAll('input');
-      var name = (inputs[0] && inputs[0].value || '').trim();
-      var email = (inputs[1] && inputs[1].value || '').trim();
-      var area = form.querySelector('textarea');
-      var wish = (area && area.value || '').trim();
+      var nameEl = document.getElementById('nk-name');
+      var emailEl = document.getElementById('nk-email');
+      var wishEl = document.getElementById('nk-wish');
+      var name = (nameEl && nameEl.value || '').trim();
+      var email = (emailEl && emailEl.value || '').trim();
+      var wish = (wishEl && wishEl.value || '').trim();
       var lines = 'Safari enquiry\n\n' +
         'Name: ' + (name || '-') + '\n' +
         'Email: ' + (email || '-') + '\n' +
         'Experience: ' + (pkgSel || '-') + '\n' +
-        'When: ' + fmtLabel() + '\n' +
+        'When: ' + fmtWhen() + '\n' +
         'Hoping to see: ' + (wish || '-');
       window.open('https://wa.me/254707415444?text=' + encodeURIComponent(lines), '_blank', 'noopener');
       wrap.innerHTML =
