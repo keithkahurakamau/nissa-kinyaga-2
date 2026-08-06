@@ -89,7 +89,7 @@ const destinations = [
       "My northern frontier circuit went through Saruni Kalama and Sarara Camp, out in the Mathews Range — community-conservancy country rather than a fenced reserve. It runs on its own rhythm, with its own specialities: gerenuk, Grevy's zebra, animals you don't find further south.",
     metaTitle: 'Samburu Safari Packages & Guide | Nissa Safaris',
     metaDescription:
-      "Discover a Samburu safari with Nissa Safaris: dry-country wildlife along the Ewaso Ng'iro river, from gerenuk to Grevy's zebra, with an experienced local guide.",
+      "Discover a Samburu safari with Nissa Safaris: dry-country wildlife along the Ewaso Ng'iro river, from gerenuk to Grevy's zebra, with expert guiding.",
   },
   {
     slug: 'ol-pejeta',
@@ -118,7 +118,7 @@ const destinations = [
     nissaNote: null,
     metaTitle: 'Ol Pejeta Safari Packages & Guide | Nissa Safaris',
     metaDescription:
-      "Take an Ol Pejeta safari with Nissa Safaris: East Africa's largest black rhino sanctuary, the last northern white rhino, and a chimpanzee sanctuary visit.",
+      "Take an Ol Pejeta safari with Nissa Safaris: East Africa's largest black rhino sanctuary, the last northern white rhino, and a chimpanzee sanctuary.",
   },
   {
     slug: 'tsavo',

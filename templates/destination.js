@@ -1,36 +1,15 @@
-import { html, escape } from '../lib/html.js';
+import { html } from '../lib/html.js';
 import { placeSchema } from '../lib/seo.js';
+import { MAX_DESCRIPTION, escapedLength, truncateToEscapedLimit } from '../lib/text.js';
 import { layout } from './layout.js';
 import { packageCard, ctaBlock, breadcrumbNav } from './partials.js';
 
-const MIN_DESCRIPTION = 50;
-const MAX_DESCRIPTION = 165;
-
-// Mirrors templates/package.js: the build test measures description length
-// off the rendered `<meta name="description">` attribute, which the `html`
-// tag function has already HTML-escaped. An apostrophe becomes `&#39;` (5
-// chars for 1), so a raw string sized against the 165-char ceiling can still
-// overflow once escaped — e.g. the Samburu entry, at 160 raw chars but two
-// apostrophes, escapes to 168. Truncate against the escaped length, not the
-// source string length.
-function escapedLength(text) {
-  return escape(text).length;
-}
-
-function truncateToEscapedLimit(text, maxLen) {
-  let candidate = text.trim();
-  while (escapedLength(candidate) > maxLen) {
-    const lastSpace = candidate.lastIndexOf(' ');
-    candidate = lastSpace > 0 ? candidate.slice(0, lastSpace) : candidate.slice(0, -1);
-  }
-  return candidate.trim();
-}
-
 /**
  * Derives a safe 50-165 (escaped) char meta description from a destination's
- * `metaDescription` field. Every destination's field is already sized in the
- * 146-160 raw-char range (well clear of the 50-char floor), so only the
- * ceiling needs guarding against escaping inflation.
+ * `metaDescription` field. Every destination's field is authored well clear
+ * of both the 50-char floor and the 165-char ceiling (see data/destinations.js),
+ * so this ceiling guard is a safety net for escaping inflation — apostrophes
+ * becoming `&#39;` — rather than something normal operation should rely on.
  *
  * @param {object} dest
  * @returns {string}

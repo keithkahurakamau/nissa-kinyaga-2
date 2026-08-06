@@ -1,37 +1,9 @@
-import { html, escape } from '../lib/html.js';
+import { html } from '../lib/html.js';
 import { touristTripSchema, faqPageSchema } from '../lib/seo.js';
+import { MIN_DESCRIPTION, MAX_DESCRIPTION, escapedLength, truncateToEscapedLimit } from '../lib/text.js';
 import { layout } from './layout.js';
 import { packageCard, ctaBlock, breadcrumbNav } from './partials.js';
 import packages, { PRICES } from '../data/packages.js';
-
-const MIN_DESCRIPTION = 50;
-const MAX_DESCRIPTION = 165;
-
-// The build test measures description length off the rendered HTML
-// attribute (`<meta name="description" content="...">`), where the `html`
-// tag function has already HTML-escaped the text. An apostrophe becomes
-// `&#39;` (5 chars for 1), so length decisions must be made against the
-// escaped length, not the raw source string length.
-function escapedLength(text) {
-  return escape(text).length;
-}
-
-/**
- * Truncates `text` word-by-word until its HTML-escaped form is at most
- * `maxLen` characters. Never splits a word.
- *
- * @param {string} text
- * @param {number} maxLen
- * @returns {string}
- */
-function truncateToEscapedLimit(text, maxLen) {
-  let candidate = text.trim();
-  while (escapedLength(candidate) > maxLen) {
-    const lastSpace = candidate.lastIndexOf(' ');
-    candidate = lastSpace > 0 ? candidate.slice(0, lastSpace) : candidate.slice(0, -1);
-  }
-  return candidate.trim();
-}
 
 // Fixed, truthful marketing copy used only as a last-resort suffix to pull
 // a composed description up to the 50-char floor. It's long enough on its
