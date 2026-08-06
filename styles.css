@@ -309,6 +309,16 @@ a { text-decoration: none; }
   font-size: clamp(15px, 1.7vw, 21px);
   letter-spacing: .03em;
   line-height: 1.55;
+  /* Default reads on the light .section/.section-alt backgrounds most
+     `.lede` instances land on (destinations/destination/safaris index
+     intros). Dark sections override back to cream immediately below —
+     see fix-round-1 finding 1: --cream-2 on --sand was ~1.01:1 contrast,
+     effectively invisible. */
+  color: var(--muted-2);
+}
+.section-ink .lede,
+.section-forest .lede,
+.hero .lede {
   color: var(--cream-2);
 }
 .body {
