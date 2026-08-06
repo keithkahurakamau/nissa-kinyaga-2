@@ -23,7 +23,7 @@ Every task's requirements implicitly include these. Values are copied verbatim f
 - **Design tokens** (from the current inline styles, do not invent new ones):
   `--ink:#241B12` `--sand:#F3ECDC` `--sand-2:#EBE1CD` `--forest:#22291E` `--cream:#FBF7EF` `--cream-2:#F6EFDE` `--gold:#C9A24B` `--gold-dark:#B28A3F` `--gold-deep:#7A5A22` `--gold-light:#E6C879` `--muted:#8A7B66` `--muted-2:#5A4A33` `--muted-3:#A99C7E` `--muted-4:#CFC5AE`
   Fonts: `Cormorant Garamond` (display), `Mulish` (body), `DM Mono` (labels).
-- **Nissa's biography is factual and must not be embellished.** Retained verbatim: Maasai, raised in the Mukogodo Forest; radio signaller at Lewa Wildlife Conservancy; Kenya Utalii College advanced tour-guiding certificate; full-time guide from 2002; advanced ornithology, walking safaris, astronomy, bush first aid; Silver-rated (one of 59 in Kenya); 20+ years. Worked at: Lewa Wildlife Conservancy, Laragai House, Borana Conservancy, Maasai Mara, Tsavo East, Tsavo West.
+- **Nissa's biography is factual and must not be embellished.** The single authoritative source is `docs/nissa-biography-source.md` — his own account, supplied 2026-08-06. Where it and older site copy disagree, the source document wins. Any task writing biographical copy must read it first. Its four editorial rules bind: no Lengishu references anywhere; never claim he currently guides at a single lodge (he is freelance and runs Nissa Safaris); use only the years he gave explicitly (1997, 1998, 1999, 2002, 2009, 2011, 2024) and durations elsewhere — never compute a start year; name the lodges, they are searchable entities and strong E-E-A-T signals.
 
 ---
 
@@ -1971,23 +1971,74 @@ git commit -m "feat: add safaris index with progressive-enhancement filtering"
 
 ---
 
-## Task 15: About page — the Kinyaga story
+## Task 15: About page — Nissa's story, and the biography correction
 
 **Files:**
 - Create: `templates/about.js`, `data/about.js`
-- Modify: `build.js`
+- Modify: `build.js`, `data/site.js`, `test/site.test.js`
 - Test: `test/about.test.js`
 
 **Interfaces:**
 - Consumes: `layout`, `personSchema`, `site`
-- Produces: `aboutPage() => string`; `data/about.js` exports `{ story[], journey[], expertise[], philosophy[], quotes[] }`
+- Produces: `aboutPage() => string`; `data/about.js` exports `{ origins[], training[], career[], expertise[], philosophy[], services[], quotes[] }`
 
-**Migrate verbatim from the existing `index.html`.** The prose in `#story`, `#journey`, `#expertise` and `#philosophy` is Nissa's own voice and the site's E-E-A-T payload — move it into `data/about.js` without rewriting, then apply only these changes:
+**Read `docs/nissa-biography-source.md` before writing a single line.** It is Nissa's own account and the authoritative record. The prose currently in the legacy `index.html` is partly wrong and must not be migrated verbatim — it claims he guides at a private house he left in 2024.
 
-1. The `#story` third paragraph currently reads "Today I guide at Lengishu, a private home in the heart of the 32,000-acre Borana Conservancy…". Rewrite to reflect freelance work across Kenya while keeping Laikipia as home ground and retaining the Borana detail.
-2. The `#journey` final entry "Silver Guide at Lengishu" becomes an entry covering the freelance present, listing Borana, Lewa, Laragai House, Maasai Mara and Tsavo.
-3. Add a "Where I have guided" section rendering `site.workedAt`.
-4. Keep both existing pull-quotes with their attributions, including "interview with Carrier / Luxury London, 2021".
+This task also corrects `data/site.js`, whose `workedAt` and `credentials` were authored in Task 3 from an incomplete brief.
+
+### The four editorial rules (from the source document)
+
+1. **No Lengishu references anywhere.** Borana Conservancy stays; the named private house does not.
+2. **Never claim he currently guides at a single lodge.** He is freelance and runs Nissa Safaris.
+3. **Use only the years he gave explicitly** — 1997, 1998, 1999, 2002, 2009, 2011, 2024. For the freelance stretch and the Borana stretch he gave durations, not start dates: write "three years" and "six years, to 2024". **Do not compute or invent a start year.**
+4. **Name the lodges.** Lewa, Sirikoi, Ol Donyo, Angama Mara, Sarara, Saruni Kalama, Il Ngwesi, Tassia, Borana are searchable entities and strong E-E-A-T signals.
+
+### `data/site.js` corrections
+
+Replace `workedAt` with the full record from the source document, each entry `{ name, role, where }`:
+
+| name | role |
+|---|---|
+| Lewa Wildlife Conservancy | Head radio signalling officer, ranger research |
+| Lewa Safari Camp | Safari guide, then head guide and camp assistant manager |
+| Sirikoi Camp, Lewa | Safari guide |
+| Ol Donyo Lodge, Chyulu Hills | Freelance guide |
+| Angama Mara | Freelance guide |
+| Sarara Camp, Mathews Range | Freelance guide |
+| Saruni Kalama | Freelance guide |
+| Il Ngwesi Lodge | Freelance guide |
+| Tassia Lodge | Freelance guide |
+| Borana Conservancy | Head guide and head of staff |
+| Laragai House | Private guide |
+| Tsavo East | Safari guide |
+| Tsavo West | Safari guide |
+
+Replace `credentials` with what the source document actually supports:
+
+```
+'Kenya Utalii College — safari guiding and administration, graduated with distinction'
+'Wildlife biology'
+'Ornithology'
+'Social anthropology'
+'Geology'
+'Astronomy'
+'Entomology'
+'Silver-rated safari guide — one of 59 in Kenya'
+```
+
+Keep the Silver-rating line **last** and unchanged. It is absent from Nissa's own account and is flagged in the launch checklist for confirmation; it is not this task's job to resolve.
+
+Update `site.description` so it no longer implies employment at one conservancy. Update `test/site.test.js`'s `workedAt` assertion to match the new list.
+
+### `data/about.js` content
+
+- `origins` — Mukogodo Forest childhood: the 7 km walk to school for eight years, herding at weekends and school holidays, learning tracks and signs (hyena pups, aardvark diggings, buffalo migrating north, African painted wolves moving in), herbal trees, and the symbiotic relationships among bird species. Maasai heritage, and social anthropology as the foundation of his eastern and northern frontier circuit.
+- `training` — 1997 tertiary; 1998 Lewa ranger research as head radio signalling officer linking conservationists and the Kenya Wildlife Service; 1999 Utalii College, distinction.
+- `career` — the five stages from the source document, in order, each `{ period, title, body }`.
+- `services` — flight bookings, hotels and lodges, road transfers, private guiding.
+- `expertise` — migrate the six entries from the legacy `index.html` `#expertise` section verbatim; they are accurate and in his voice.
+- `philosophy` — migrate the four entries and the closing pull-quote from `#philosophy` verbatim.
+- `quotes` — keep the Carrier / Luxury London 2021 pull-quote with its attribution.
 
 - [ ] **Step 1: Write the failing test at `test/about.test.js`**
 
@@ -2008,29 +2059,46 @@ test('carries Person schema anchored to #nissa', () => {
   assert.match(about, /"@id":"https:\/\/nissasafaris\.com\/about\/#nissa"/);
 });
 
-test('shows the new portrait', () => {
+test('shows the portrait', () => {
   assert.ok(about.includes(site.portrait));
 });
 
-test('retains the biographical facts from the spec', () => {
+test('retains the biographical facts from the source document', () => {
   for (const fact of [
-    'Mukogodo', 'Lewa', 'Kenya Utalii College', '2002', 'ornithology', 'Silver',
+    'Mukogodo', 'Lewa', 'Kenya Utalii College', 'ornithology',
+    'social anthropology', 'Kenya Wildlife Service', 'distinction',
   ]) {
-    assert.ok(about.includes(fact), `about page lost the fact: ${fact}`);
+    assert.ok(about.toLowerCase().includes(fact.toLowerCase()), `about page lost: ${fact}`);
   }
 });
 
-test('lists every place Nissa has worked', () => {
+test('carries every year Nissa stated explicitly', () => {
+  for (const year of ['1997', '1998', '1999', '2002', '2009', '2011', '2024']) {
+    assert.ok(about.includes(year), `about page omits the year ${year}`);
+  }
+});
+
+test('names every place Nissa has worked', () => {
   for (const place of site.workedAt) {
     assert.ok(about.includes(place.name), `about page omits ${place.name}`);
   }
 });
 
-test('no longer describes Nissa as working only at Lengishu on Borana', () => {
-  assert.doesNotMatch(about, /Today I guide at Lengishu/);
+test('never mentions Lengishu', () => {
+  assert.doesNotMatch(about, /Lengishu/i);
 });
 
-test('retains both attributed pull-quotes', () => {
+test('does not claim he currently guides at a single lodge', () => {
+  assert.doesNotMatch(about, /Today I guide at/i);
+});
+
+test('lists the four services he offers', () => {
+  for (const service of ['light', 'odge', 'ransfer', 'uiding']) {
+    assert.ok(about.includes(service), `about page omits a service containing "${service}"`);
+  }
+});
+
+test('retains the attributed pull-quote', () => {
   assert.ok(about.includes('Carrier'));
   assert.match(about, /<blockquote/);
 });
@@ -2041,24 +2109,30 @@ test('retains both attributed pull-quotes', () => {
 Run: `node --test test/about.test.js`
 Expected: FAIL — `about` is undefined
 
-- [ ] **Step 3: Create `data/about.js` by migrating the prose from `index.html`**
+- [ ] **Step 3: Correct `data/site.js` and `test/site.test.js`**
 
-- [ ] **Step 4: Implement `templates/about.js`**
+Apply the `workedAt`, `credentials` and `description` changes above. Run `node --test test/site.test.js` and confirm it passes with the new list.
 
-Body order: hero with portrait and `<h1>Nissa Ole Kinyaga</h1>` → story with the stat pair (20+ years, 59 Silver guides) → "Where I have guided" → journey timeline → expertise grid → philosophy on the forest background → `ctaBlock`. `schemas: [personSchema()]`.
+- [ ] **Step 4: Create `data/about.js` from `docs/nissa-biography-source.md`**
 
-- [ ] **Step 5: Register in `build.js`**
+- [ ] **Step 5: Implement `templates/about.js`**
 
-- [ ] **Step 6: Run the test and verify it passes**
+Body order: hero with portrait and `<h1>Nissa Ole Kinyaga</h1>` → origins → training → career timeline → "Where I have guided" (rendering `site.workedAt`) → expertise grid → what he arranges (`services`) → philosophy on the forest background → `ctaBlock`. `schemas: [personSchema()]`.
 
-Run: `node --test test/about.test.js`
-Expected: PASS — 7 tests
+The stat pair beside the portrait reads **20+ years in the field** and **1998**, the year he joined Lewa. Do not reuse the legacy "59 Silver guides" stat here — the Silver claim is unconfirmed and does not deserve hero placement.
 
-- [ ] **Step 7: Commit**
+- [ ] **Step 6: Register in `build.js`**
+
+- [ ] **Step 7: Run the full suite and verify it passes**
+
+Run: `npm test`
+Expected: PASS — every suite green, including the 10 new about tests and the amended `test/site.test.js`
+
+- [ ] **Step 8: Commit**
 
 ```bash
-git add data/about.js templates/about.js build.js test/about.test.js
-git commit -m "feat: add about page carrying the Kinyaga story and Person schema"
+git add data/about.js data/site.js templates/about.js build.js test/about.test.js test/site.test.js
+git commit -m "feat: add about page from Nissa's own account, correct site biography data"
 ```
 
 ---
