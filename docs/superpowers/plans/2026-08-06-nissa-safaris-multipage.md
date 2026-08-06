@@ -1638,17 +1638,6 @@ test('a package page CTA reaches WhatsApp prefilled with the package name', () =
   assert.match(decodeURIComponent(match[1]), new RegExp(pkg.title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
 });
 
-test('every internal href resolves to a page the build emits', () => {
-  const known = new Set(all.map((p) => p.path));
-  for (const { path, html } of all) {
-    const hrefs = [...html.matchAll(/href="(\/[^"#]*?)"/g)].map((m) => m[1]);
-    for (const href of hrefs) {
-      if (href.startsWith('/assets/') || href === '/styles.css' || href === '/app.js') continue;
-      assert.ok(known.has(href), `${path} links to ${href}, which is not built`);
-    }
-  }
-});
-
 test('no image is missing alt text', () => {
   for (const { path, html } of all) {
     const imgs = [...html.matchAll(/<img\b[^>]*>/g)].map((m) => m[0]);
@@ -1723,12 +1712,12 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
 }
 ```
 
-**Note:** the "unique title", "internal href resolves" and "unique description" tests will fail until Tasks 13–17 add the remaining pages — the package pages link to `/`, `/safaris/` and `/contact/`, which do not exist yet. Until then, run only the assertions that apply:
+Every assertion in `test/build.test.js` is scoped to the pages that exist after this task, so the suite must be fully green when Task 12 ends. Site-wide link integrity is deliberately **not** asserted here — package pages link to `/`, `/safaris/` and `/contact/`, which no task has built yet. That check lands in Task 17 as `test/integration.test.js`, once every page exists.
 
-- [ ] **Step 5: Run the package-specific assertions and verify they pass**
+- [ ] **Step 5: Run the suite and verify it passes**
 
-Run: `node --test test/build.test.js 2>&1 | grep -E "^(not )?ok"`
-Expected: the itinerary, schema, CTA, alt-text and canonical tests PASS; the "internal href resolves" test FAILS pending Tasks 13–17. Do not weaken the test — it is the acceptance gate for Task 17.
+Run: `npm test`
+Expected: PASS — every suite green, including all 9 tests in `test/build.test.js`
 
 - [ ] **Step 6: Run the build end to end**
 
@@ -2161,7 +2150,7 @@ git commit -m "feat: add home page"
 **Files:**
 - Create: `templates/gallery.js`, `templates/journal.js`, `templates/contact.js`, `templates/privacy.js`, `data/gallery.js`, `data/journal.js`
 - Modify: `build.js`, `app.js`
-- Test: `test/remaining-pages.test.js`
+- Test: `test/remaining-pages.test.js`, `test/integration.test.js`
 
 **Interfaces:**
 - Consumes: `layout`, `faqPageSchema`, `whatsappLink`, `packages`
@@ -2231,30 +2220,75 @@ test('every external link is rel="noopener noreferrer"', () => {
 });
 ```
 
-- [ ] **Step 2: Run the test and verify it fails**
+- [ ] **Step 2: Write the site-wide integrity test at `test/integration.test.js`**
 
-Run: `node --test test/remaining-pages.test.js`
-Expected: FAIL — none of the four paths exist
+This is the acceptance gate deferred from Task 12. It can only pass once all 37 pages exist, which is what this task completes.
 
-- [ ] **Step 3: Create `data/gallery.js` and `data/journal.js`**
+```js
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { pages } from '../build.js';
+
+const all = pages();
+
+test('every internal href resolves to a page the build emits', () => {
+  const known = new Set(all.map((p) => p.path));
+  for (const { path, html } of all) {
+    if (!path.endsWith('/')) continue;
+    const hrefs = [...html.matchAll(/href="(\/[^"#]*?)"/g)].map((m) => m[1]);
+    for (const href of hrefs) {
+      if (href.startsWith('/assets/') || href === '/styles.css' || href === '/app.js') continue;
+      assert.ok(known.has(href), `${path} links to ${href}, which is not built`);
+    }
+  }
+});
+
+test('every page is reachable from the home page in at most two hops', () => {
+  const byPath = new Map(all.filter((p) => p.path.endsWith('/')).map((p) => [p.path, p.html]));
+  const linksFrom = (path) =>
+    [...(byPath.get(path) ?? '').matchAll(/href="(\/[^"#]*?)"/g)]
+      .map((m) => m[1])
+      .filter((href) => byPath.has(href));
+
+  const reached = new Set(['/']);
+  for (const first of linksFrom('/')) {
+    reached.add(first);
+    for (const second of linksFrom(first)) reached.add(second);
+  }
+  for (const path of byPath.keys()) {
+    assert.ok(reached.has(path), `${path} is more than two hops from the home page`);
+  }
+});
+
+test('all 37 HTML pages are emitted', () => {
+  assert.equal(all.filter((p) => p.path.endsWith('/')).length, 37);
+});
+```
+
+- [ ] **Step 3: Run both tests and verify they fail**
+
+Run: `node --test test/remaining-pages.test.js test/integration.test.js`
+Expected: FAIL — none of the four paths exist, and the page count is 33
+
+- [ ] **Step 4: Create `data/gallery.js` and `data/journal.js`**
 
 Move the photo array from `app.js` into `data/gallery.js` (fields: `src`, `alt`, `category`, `title`, `story`). Move the three journal entries out of `index.html` into `data/journal.js`.
 
-- [ ] **Step 4: Implement the four templates**
+- [ ] **Step 5: Implement the four templates**
 
-- [ ] **Step 5: Update `app.js`** to read gallery items from the rendered DOM rather than an inline array, keeping the drag, cursor-steering, keyboard and lightbox behaviour intact.
+- [ ] **Step 6: Update `app.js`** to read gallery items from the rendered DOM rather than an inline array, keeping the drag, cursor-steering, keyboard and lightbox behaviour intact.
 
-- [ ] **Step 6: Register all four in `build.js`**
+- [ ] **Step 7: Register all four in `build.js`**
 
-- [ ] **Step 7: Run the full suite and verify everything passes**
+- [ ] **Step 8: Run the full suite and verify everything passes**
 
 Run: `npm test`
-Expected: PASS — every suite green, **including** the `test/build.test.js` "every internal href resolves to a page the build emits" test that has been failing since Task 12.
+Expected: PASS — every suite green, including all three site-wide integrity tests in `test/integration.test.js`. If "every internal href resolves" fails, a template links somewhere unbuilt: fix the link or build the page — do not weaken the assertion.
 
-- [ ] **Step 8: Commit**
+- [ ] **Step 9: Commit**
 
 ```bash
-git add templates/ data/ build.js app.js test/remaining-pages.test.js
+git add templates/ data/ build.js app.js test/remaining-pages.test.js test/integration.test.js
 git commit -m "feat: add gallery, journal, contact and privacy pages"
 ```
 
@@ -2619,7 +2653,7 @@ No gaps.
 - `pages()` returns `{ path, html }[]` in 12; every later test destructures exactly those two keys.
 - `outputPath` (Task 2) is the only path-to-file mapper, used once in 12.
 
-One deliberate cross-task failure is recorded: `test/build.test.js`'s "every internal href resolves" assertion is written in Task 12 and only goes green in Task 17. Task 12 Step 5 names it explicitly so no implementer weakens the test to make their own task pass.
+**Every task ends with a green suite.** Site-wide link integrity and the 37-page count cannot be asserted until all pages exist, so they live in `test/integration.test.js`, created in Task 17 — not written early and left failing. Each earlier task's assertions are scoped to the pages that exist when it ends.
 
 ---
 
