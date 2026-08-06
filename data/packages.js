@@ -21,6 +21,12 @@ export const PRICES = {
   'samburu-olpejeta4': { fromUsd: 940, tier: 'mid-range' },
   'borana-lewa4': { fromUsd: 1180, tier: 'mid-range' },
   'laikipia-walking3': { fromUsd: 890, tier: 'mid-range' },
+  'mtkenya-naromoru4': { fromUsd: 720, tier: 'mid-range' },
+  'mtkenya-sirimon5': { fromUsd: 980, tier: 'mid-range' },
+  'mtkenya-chogoria6': { fromUsd: 1180, tier: 'mid-range' },
+  diani4: { fromUsd: 560, tier: 'mid-range' },
+  'tsavo-diani6': { fromUsd: 1120, tier: 'mid-range' },
+  'mara-diani8': { fromUsd: 1780, tier: 'mid-range' },
 };
 
 const packages = [
@@ -1136,6 +1142,505 @@ const packages = [
       },
     ],
     signature: true,
+  },
+  {
+    title: '4-Day Mount Kenya — Naro Moru Route',
+    slug: '4-day-mount-kenya-naro-moru-route',
+    days: 4,
+    nights: 3,
+    category: 'Mount Kenya',
+    destinations: ['mount-kenya'],
+    priceKey: 'mtkenya-naromoru4',
+    hero: '/assets/p16.jpg',
+    heroAlt: 'A still waterhole reflecting a pale sky, ringed by dry grass and low hills',
+    summary:
+      'The shortest way to Point Lenana: up and down the Naro Moru side in four days, the fastest route on the mountain and the one that asks the most of your lungs.',
+    overview: [
+      "Naro Moru is the route I put people on when the calendar, not the mountain, is setting the limit: four days is enough to stand on Point Lenana and be back at the gate, but it compresses the climb most other routes spread over five. You go from the Met Station at just over 3,000 metres to the summit ridge at 4,985 metres in two days of walking, which is a serious amount of altitude to gain that fast.",
+      "I say this plainly because it matters: Naro Moru has the lowest summit success rate of the three main routes, precisely because it gives your body the least time to adjust. If four days is genuinely all you have, we take it seriously and build in what acclimatisation we can — a slow pace, an early night before the push, and a guide watching you as closely as the trail. If your dates have any flexibility, the 5-Day Sirimon to Chogoria route gives your body an extra day and climbs the summit odds accordingly.",
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Nanyuki to the Met Station',
+        body: "We collect you in Nanyuki and drive to the Naro Moru gate, then walk up through cedar and podocarpus forest to the Met Station at around 3,050 metres, three to four hours on a good track. This first night is as much about testing boots and pace as covering ground; camp sits at a modest altitude and dinner is the last proper hot meal before the climb gets serious.",
+      },
+      {
+        day: 2,
+        title: "Met Station to Mackinder's Camp, via the Vertical Bog",
+        body: "The day trekkers remember for the wrong reasons: the Vertical Bog, a steep, often waterlogged climb out of the forest onto open moorland, gaining several hundred metres in a short distance. Beyond it the ground opens into tussock grass and giant groundsel before Mackinder's Camp at around 4,200 metres, set below the peaks with the Teleki Valley falling away below. We keep the afternoon deliberately quiet — short walk, food, rest — since tomorrow starts in the dark.",
+      },
+      {
+        day: 3,
+        title: 'Summit day: Point Lenana, then down to the gate',
+        body: "We're up at around 2 to 3 am for the push to Point Lenana, climbing by torchlight over scree and frozen ground, the cold genuinely below freezing at that hour, to reach the summit around sunrise at 4,985 metres, with Batian and Nelion's rock faces catching the first light beside you. We do not climb those two peaks; they need ropes and technical rock skills that a trekking party doesn't carry. From the top we descend all the way back down through Mackinder's, the Vertical Bog and the forest to the Met Station and the gate, a long day on tired legs.",
+      },
+      {
+        day: 4,
+        title: 'Contingency day and return to Nanyuki',
+        body: "This day exists on paper as a buffer, in case altitude or weather has pushed the summit push back by a day, and in practice it is usually a straightforward drive back to Nanyuki with time to shower and rest before you move on.",
+      },
+    ],
+    included: [
+      'Transport between Nanyuki and the Naro Moru gate',
+      'Mount Kenya National Park entry and camping fees for three nights',
+      'A licensed mountain guide, cook and porters for the full trek',
+      'All meals on the mountain from lunch on day one to breakfast on day four',
+      'Camping equipment: tents, sleeping mats and a mess tent',
+      'Drinking water, treated or boiled, throughout the trek',
+    ],
+    excluded: [
+      'Transport to and from Nairobi (we can arrange this separately)',
+      'Personal trekking gear: sleeping bag, waterproofs, boots',
+      'Tips for your guide, cook and porters',
+      'Kenya e-Visa or entry permit fees',
+      'Travel insurance covering high-altitude trekking',
+    ],
+    bestTime:
+      "January through March and July through October are driest underfoot, which matters more on Naro Moru's steep, often muddy Vertical Bog than on the other routes. Whatever the season, this route's speed is its real risk factor: four days gives your body the least time to adjust of any route on the mountain, so altitude sickness turns back a higher share of Naro Moru parties than Sirimon or Chogoria, and no guide can promise you the summit regardless of fitness.",
+    faqs: [
+      {
+        q: 'Why does this route have a lower summit success rate?',
+        a: "Purely a matter of time. You gain roughly 1,900 metres of altitude between the Met Station and Point Lenana in about a day and a half of walking, which is fast by any mountain's standards. Altitude sickness is about the pace of ascent as much as fitness, so a strong hiker can still be turned back here where an extra day on Sirimon or Chogoria would have let them adjust.",
+      },
+      {
+        q: 'What do the porters carry, and what do I carry myself?',
+        a: 'Porters carry your main kit bag, up to a weight limit we confirm at booking, along with camp equipment and food. You carry a daypack with water, layers, snacks and anything you want immediate access to on the trail, which on summit night should include a headtorch and every warm layer you own.',
+      },
+      {
+        q: "What happens if I can't continue?",
+        a: "Your guide is watching for the early signs of altitude sickness — headache, nausea, poor coordination — throughout the climb, and their word on turning back is final, not a suggestion. If you need to stop, a porter or the guide accompanies you back down to a lower camp; we don't leave anyone on the mountain alone, and it doesn't affect the rest of your trip if you have onward travel booked.",
+      },
+      {
+        q: 'Is a summit guaranteed on this route?',
+        a: "No, and I'd be lying if I said otherwise. Altitude sickness can turn back a fit, well-prepared trekker regardless of effort, and Naro Moru's pace makes that more likely than on the slower routes. What I can promise is an experienced guide, a sensible turnaround policy, and an honest account of your odds before you commit to this route over a longer one.",
+      },
+    ],
+    signature: false,
+  },
+  {
+    title: '5-Day Mount Kenya — Sirimon to Chogoria',
+    slug: '5-day-mount-kenya-sirimon-to-chogoria',
+    days: 5,
+    nights: 4,
+    category: 'Mount Kenya',
+    destinations: ['mount-kenya'],
+    priceKey: 'mtkenya-sirimon5',
+    hero: '/assets/p17.jpg',
+    heroAlt: 'Two helicopters parked on a grassy slope beneath a spreading acacia tree at dusk',
+    summary:
+      'Up the drier Sirimon side, down through Chogoria: five days that give your body a real extra day to acclimatise before the push to Point Lenana.',
+    overview: [
+      "This is the route I recommend most often when someone asks which way up Mount Kenya. Sirimon is the gentlest and driest approach on the way up, climbing gradually through forest and open moorland to Shipton's Camp below the peaks; Chogoria, on the way down, is generally agreed to be the most scenic face of the mountain, with the Gorges Valley and a string of glacial tarns underfoot. Crossing between the two on summit day means you see two quite different sides of Mount Kenya rather than retracing your own footprints.",
+      "The extra day over our 4-Day Naro Moru itinerary is not padding. Spreading the ascent across five days gives your body a genuinely better chance to adjust to altitude before the summit push, and it shows in the numbers: Sirimon to Chogoria carries a noticeably better success rate than the faster Naro Moru route, for a very simple reason — more time.",
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Sirimon gate to Old Moses Camp',
+        body: 'We drive from Nanyuki to the Sirimon gate and start walking through open podocarpus forest, thinning quickly into moorland studded with giant groundsel and lobelia. Old Moses Camp, at around 3,300 metres, sits in open country with a clear first view of the peaks on a good afternoon.',
+      },
+      {
+        day: 2,
+        title: "Old Moses to Shipton's Camp",
+        body: "A longer day through the Mackinder Valley, climbing steadily with the peaks ahead of you for most of the walk, to Shipton's Camp at around 4,200 metres, tucked below Batian and Nelion's rock faces. We build in a short acclimatisation walk in the afternoon toward Mugi Hill, high enough to help your body adjust without spending the effort you'll need in the morning.",
+      },
+      {
+        day: 3,
+        title: 'Summit day: Point Lenana, then down to Mintos',
+        body: "Up around 2 to 3 am for the climb to Point Lenana, torchlit over scree and frozen ground in temperatures genuinely below freezing, reaching the 4,985-metre summit for sunrise. Point Lenana is the trekking summit; Batian and Nelion, the two higher rock peaks either side of us, are technical climbs we don't attempt on this itinerary. From the top we descend the Chogoria side via Simba Col into the Gorges Valley, down to Mintos Camp for the night, a long but spectacular day.",
+      },
+      {
+        day: 4,
+        title: 'Mintos to the Chogoria forest, via Lake Ellis and Hall Tarns',
+        body: 'A gentler day through some of the mountain\'s best scenery: past Lake Ellis and the Hall Tarns, glacial pools set among moorland, before dropping into montane forest as the vegetation thickens and the air warms. We camp near the forest edge, close enough to the gate to make the final descent short the next morning.',
+      },
+      {
+        day: 5,
+        title: 'Chogoria gate and drive to Nanyuki',
+        body: 'A short final walk through forest to the Chogoria gate, then the drive back to Nanyuki, roughly four hours, with lunch on the road.',
+      },
+    ],
+    included: [
+      'Transport between Nanyuki, the Sirimon gate and the Chogoria gate',
+      'Mount Kenya National Park entry and camping fees for four nights',
+      'A licensed mountain guide, cook and porters for the full trek',
+      'All meals on the mountain from lunch on day one to lunch on day five',
+      'Camping equipment: tents, sleeping mats and a mess tent',
+      'Drinking water, treated or boiled, throughout the trek',
+    ],
+    excluded: [
+      'Transport to and from Nairobi (we can arrange this separately)',
+      'Personal trekking gear: sleeping bag, waterproofs, boots',
+      'Tips for your guide, cook and porters',
+      'Kenya e-Visa or entry permit fees',
+      'Travel insurance covering high-altitude trekking',
+    ],
+    bestTime:
+      'January through March and July through October are driest, with firmer trails on both the Sirimon moorland and the Chogoria descent through the Gorges Valley. The five-day pace itself is a safety choice as much as a scenic one: it acclimatises noticeably better than a four-day ascent, though no route removes the risk of altitude sickness entirely, and we never promise a summit regardless of how fit you arrive.',
+    faqs: [
+      {
+        q: 'Why cross from Sirimon to Chogoria instead of climbing and descending the same route?',
+        a: "Two reasons. Sirimon is the driest, most gradual way up, which suits acclimatisation, while Chogoria is widely rated the most scenic way down, past Lake Ellis, the Hall Tarns and the Gorges Valley. Doing both means five days shows you two genuinely different sides of the mountain rather than the same path twice.",
+      },
+      {
+        q: 'What gear do I need to bring versus what you provide?',
+        a: "We supply tents, sleeping mats, a mess tent and all mountain meals. You bring a four-season sleeping bag, waterproof jacket and trousers, warm layers for a below-freezing summit night, and broken-in trekking boots. We send a full kit list once you book, and can arrange rental gear in Nanyuki for items you'd rather not fly with.",
+      },
+      {
+        q: 'How much fitter do I need to be than for the 4-Day Naro Moru route?',
+        a: "Not dramatically fitter, since the terrain difficulty is similar. What this route asks for more of is stamina over a longer stretch of days, particularly the summit-day distance from Shipton's over Point Lenana down to Mintos, which is a full day on your feet. Regular hill walking or hiking in the months before your trip is the right kind of preparation.",
+      },
+      {
+        q: "What happens if altitude sickness stops someone from continuing?",
+        a: "Your guide checks in with everyone regularly for the early warning signs and has the final word on turning back, not you. Someone who needs to stop descends with a porter to a lower camp rather than continuing, and we adjust the group's pace around it; it doesn't reflect on your fitness, and altitude sickness can affect trekkers regardless of how fit they are.",
+      },
+    ],
+    signature: false,
+  },
+  {
+    title: '6-Day Mount Kenya — Chogoria Traverse',
+    slug: '6-day-mount-kenya-chogoria-traverse',
+    days: 6,
+    nights: 5,
+    category: 'Mount Kenya',
+    destinations: ['mount-kenya'],
+    priceKey: 'mtkenya-chogoria6',
+    hero: '/assets/p18.jpg',
+    heroAlt: 'Two buffalo standing on a red-earth bank above a still waterhole, forest and hills behind',
+    summary:
+      'Six days up the scenic Chogoria side and down through Naro Moru, with a built-in acclimatisation day that gives this route the best summit odds we offer.',
+    overview: [
+      "This is the itinerary for a trekker who wants the best chance of standing on Point Lenana and has the extra day to spend on it. We go up the Chogoria route, generally agreed to be the most scenic approach on the mountain, past Lake Ellis and the Hall Tarns into the Gorges Valley, and come down the shorter Naro Moru side afterward. The difference from our 5-Day Sirimon to Chogoria itinerary is a full extra day built in around Mintos Camp before the summit push, purely for acclimatisation.",
+      "That extra day is the point of this route, not an afterthought. Altitude sickness is caused by ascending faster than your body can adjust, not by fitness, and a rest day at around 4,300 metres before the final climb to 4,985 metres measurably improves your odds of reaching the summit compared with pushing straight through. We still can't promise a summit — nobody honestly can — but this is the itinerary I'd choose myself if the extra day were available.",
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Chogoria gate into the forest',
+        body: 'We drive from Nanyuki to the Chogoria gate and walk into dense montane forest, cedar and podocarpus giving way gradually to more open ground, camping near the forest\'s upper edge at moderate altitude to start the acclimatisation process gently.',
+      },
+      {
+        day: 2,
+        title: 'Forest camp to Lake Ellis',
+        body: "The forest thins into moorland as we climb, past giant groundsel and lobelia, to camp at Lake Ellis, a glacial tarn at around 3,540 metres with the Gorges Valley opening up ahead. It's a manageable day by design, keeping the pace of altitude gain conservative this early in the trek.",
+      },
+      {
+        day: 3,
+        title: 'Lake Ellis to Mintos, via Hall Tarns',
+        body: 'We continue past the Hall Tarns, a string of glacial pools set in open moorland, and along the rim of the Gorges Valley to Mintos Camp at around 4,300 metres, one of the best-positioned camps on the mountain for views back down the valley we\'ve just climbed.',
+      },
+      {
+        day: 4,
+        title: 'Acclimatisation day at Mintos',
+        body: "A short walk up toward Simba Col and back, high enough to help your body adjust to the thinning air, then a deliberately quiet afternoon back at camp. This is the day that sets this itinerary apart from the faster routes, and the one most trekkers are glad of by summit night.",
+      },
+      {
+        day: 5,
+        title: "Summit day: Point Lenana, then down to Mackinder's Camp",
+        body: "Up around 2 to 3 am for the climb over Simba Col to Point Lenana, cold enough by then to be genuinely below freezing, reaching the 4,985-metre summit for sunrise with Batian and Nelion's technical faces close beside us — peaks we don't attempt on this trek. We descend the Naro Moru side past Austrian Hut to Mackinder's Camp at around 4,200 metres for the night, a long day but a shorter one than crossing all the way to the gate.",
+      },
+      {
+        day: 6,
+        title: "Mackinder's Camp to the Naro Moru gate, via the Vertical Bog",
+        body: "A final descent down through the Vertical Bog and the forest to the Met Station and the Naro Moru gate, then the drive back to Nanyuki.",
+      },
+    ],
+    included: [
+      'Transport between Nanyuki, the Chogoria gate and the Naro Moru gate',
+      'Mount Kenya National Park entry and camping fees for five nights',
+      'A licensed mountain guide, cook and porters for the full trek',
+      'All meals on the mountain from lunch on day one to lunch on day six',
+      'Camping equipment: tents, sleeping mats and a mess tent',
+      'Drinking water, treated or boiled, throughout the trek',
+    ],
+    excluded: [
+      'Transport to and from Nairobi (we can arrange this separately)',
+      'Personal trekking gear: sleeping bag, waterproofs, boots',
+      'Tips for your guide, cook and porters',
+      'Kenya e-Visa or entry permit fees',
+      'Travel insurance covering high-altitude trekking',
+    ],
+    bestTime:
+      'January through March and July through October give the driest trails on both the Chogoria ascent and the Naro Moru descent. The built-in acclimatisation day at Mintos is this route\'s real advantage regardless of season: spreading the climb to 4,985 metres over six days with a rest day included gives noticeably better summit odds than our faster itineraries, though altitude sickness can still turn back even a fit, well-prepared trekker, and we never guarantee the summit.',
+    faqs: [
+      {
+        q: 'Why does an extra acclimatisation day matter this much?',
+        a: "Altitude sickness is caused by the speed of ascent more than fitness or effort, so a rest day at around 4,300 metres before pushing higher gives your body real time to adjust before the hardest stretch of the climb. It's the single biggest reason this route carries better summit odds than our 4-Day and 5-Day itineraries.",
+      },
+      {
+        q: 'What do the porters carry, and what should I keep with me?',
+        a: 'Porters carry your main kit bag up to an agreed weight limit, plus camp and kitchen equipment. Keep a daypack with water, snacks, layers and, for summit night specifically, every piece of warm clothing you own and a reliable headtorch.',
+      },
+      {
+        q: "Is the summit guaranteed with the extra acclimatisation day?",
+        a: "No. This route gives you the best odds we offer, but altitude sickness doesn't respect a schedule, and some trekkers are still turned back regardless of how carefully the days are paced. What the extra day buys is a real improvement in your chances, not a certainty.",
+      },
+      {
+        q: 'How does this differ from the 5-Day Sirimon to Chogoria itinerary?',
+        a: "Both use the Chogoria route for its scenery, but this one climbs Chogoria first and descends Naro Moru, with a full rest day built in at Mintos before the summit push. The 5-Day route runs the opposite direction, Sirimon up and Chogoria down, without that extra acclimatisation day, and suits trekkers with less time to spare.",
+      },
+      {
+        q: "What happens if someone in the group needs to turn back?",
+        a: "Your guide monitors everyone for the early signs of altitude sickness throughout the trek and has the final say on descending, not the trekker. A porter or the guide accompanies anyone who needs to stop down to a lower camp; we don't leave anyone alone on the mountain, and the rest of the group continues at the planned pace.",
+      },
+    ],
+    signature: false,
+  },
+  {
+    title: '4-Day Diani Beach',
+    slug: '4-day-diani-beach',
+    days: 4,
+    nights: 3,
+    category: 'Coast',
+    destinations: ['diani'],
+    priceKey: 'diani4',
+    hero: '/assets/p09.jpg',
+    heroAlt: 'A gerenuk standing upright on its hind legs to browse a thorn bush',
+    summary:
+      'Four unhurried days on Diani\'s white sand, with the reef offshore for snorkelling and a dhow trip along the coast, built to close out a safari or stand on its own.',
+    overview: [
+      "This is the itinerary we build for guests who want the coast to be a proper stay rather than a rushed final night before a flight. Diani sits south of Mombasa, a long stretch of white sand backed by palm groves, with a coral reef close enough offshore to keep the lagoon calm and give snorkelling that doesn't require a boat to reach good coral. Four days gives you two full days with nothing scheduled beyond what you choose, on either side of a slower arrival and departure.",
+      "Most guests take this as the back half of a longer Kenya trip, landing at Ukunda airstrip on the edge of Diani straight from an inland safari, but it stands on its own just as well for anyone who wants a beach week without the game drives. Either way, the pace here is deliberately different from the bush: nothing starts before you're ready for it to.",
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Diani',
+        body: "However you're arriving, whether flying direct into Ukunda or landing at Mombasa's Moi International and crossing the Likoni ferry south, we have you met and transferred to your beachfront accommodation. The rest of the day is yours: most guests do nothing more strenuous than a walk on the sand and a sundowner before dinner.",
+      },
+      {
+        day: 2,
+        title: 'Reef and lagoon',
+        body: "A full day built around the water: we arrange a snorkelling trip out to the reef, where the coral and reef fish are within easy reach of the boat, or a scuba introduction for anyone certified or wanting to try a first dive. Snorkelling gear is provided; for diving we work with a PADI-affiliated operator on the beach and can arrange lessons for beginners.",
+      },
+      {
+        day: 3,
+        title: 'Dhow sailing and free time',
+        body: 'A traditional dhow sail along the coastline in the morning, a slower, quieter way to see the shoreline than from the beach, often with a stop for fishing or a swim off the boat. The afternoon is unstructured, whether that means the pool, the sand, or simply staying in the shade with a book.',
+      },
+      {
+        day: 4,
+        title: 'Departure',
+        body: 'A final relaxed morning before checkout, then a transfer to Ukunda airstrip or, via the Likoni ferry, on to Moi International Airport in Mombasa, timed to your onward flight.',
+      },
+    ],
+    included: [
+      'Airport or ferry-point transfers on arrival and departure',
+      'Three nights accommodation on a bed-and-breakfast basis at a beachfront hotel',
+      'One snorkelling trip to the reef with equipment provided',
+      'One dhow sailing trip along the coast',
+      'Bottled water at your accommodation',
+    ],
+    excluded: [
+      'International and domestic flights',
+      'Kenya e-Visa or entry permit fees',
+      'Scuba diving beyond a beginner introduction, and PADI certification courses',
+      'Lunches and dinners not specified as included',
+      'Tips and gratuities, and travel insurance',
+    ],
+    bestTime:
+      'December through March and July through September are driest, with the calmest seas for snorkelling, diving and the dhow trip. The coast is warm and swimmable year round; the long rains through April and May bring the wettest weather and choppier water.',
+    faqs: [
+      {
+        q: 'Do we need a separate visa for the coast, or does our Kenya e-Visa cover it?',
+        a: "Your Kenya e-Visa or entry permit covers the whole country, including Diani; there is no separate visa or border process for the coast. It's the same document you'd use for a safari elsewhere in Kenya.",
+      },
+      {
+        q: 'What is the Likoni ferry, and does it add much time?',
+        a: "It's the free vehicle and foot ferry crossing the channel between Mombasa Island and the south coast, the route most road transfers to Diani use. It runs constantly, but can queue for anywhere from a few minutes to over an hour at busy times of day; we build a buffer into transfer timings for exactly this reason, and flying direct to Ukunda airstrip avoids it entirely.",
+      },
+      {
+        q: 'Is snorkelling gear provided, or do we need our own?',
+        a: "We provide mask, snorkel and fins for the included reef trip. If you have your own and prefer the fit, bringing it is fine; either way nothing extra needs arranging before you travel.",
+      },
+      {
+        q: 'Can this be booked as a standalone trip, or does it need to follow a safari?',
+        a: "Either way. Most guests add it onto the end of an inland itinerary, but it works perfectly well as a beach trip on its own if that's all you're after.",
+      },
+    ],
+    signature: false,
+  },
+  {
+    title: '6-Day Tsavo & Diani',
+    slug: '6-day-tsavo-diani',
+    days: 6,
+    nights: 5,
+    category: 'Coast',
+    destinations: ['tsavo', 'diani'],
+    priceKey: 'tsavo-diani6',
+    hero: '/assets/p04.jpg',
+    heroAlt: 'A leopard resting on a tree branch, coat lit by low sun, a hazy mountain silhouette behind',
+    summary:
+      'Red-dust game drives in Tsavo, then three days on Diani\'s sand: a road route that follows the natural line from Nairobi down to the coast.',
+    overview: [
+      "Tsavo and Diani sit on more or less the same line south from Nairobi, since the road and railway to Mombasa run straight past Tsavo's gate and the coast is only a few hours further on. That makes this one of the more natural combinations we run, rather than a pairing that needs a flight to make sense: two nights of red-dust game driving followed directly by three nights unwinding on the beach, all by road.",
+      "We keep the game-driving half at Tsavo East, the wider and flatter of the two halves of the park, for elephant, lion and the Galana River's resident hippo and crocodile, then continue on toward the coast. From the Mombasa road we cross the Likoni ferry south to Diani, so the two very different halves of this trip, dust and salt water, are separated by a single day of travel rather than a flight.",
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Nairobi to Tsavo East',
+        body: 'We drive southeast on the Mombasa highway to the Tsavo East gate, arriving by early afternoon and settling into camp for lunch, then head out for a first game drive across the open red-dust plains.',
+      },
+      {
+        day: 2,
+        title: 'Full day in Tsavo East',
+        body: 'A complete day inside the park: an early drive while the light is soft, a rest at camp through the heat, and an afternoon session along the Galana River and out onto the plains, watching for elephant, lion and the fringe-eared oryx found in this dry country.',
+      },
+      {
+        day: 3,
+        title: 'Tsavo to Diani, via the Likoni ferry',
+        body: "A final early game drive, then we continue southeast on the Mombasa highway, joining the coast road south through the Likoni ferry crossing to Diani. It's a genuine travel day, several hours on the road plus the ferry queue, so we don't schedule anything on arrival beyond checking into your beachfront room in the late afternoon.",
+      },
+      {
+        day: 4,
+        title: 'Reef and lagoon',
+        body: "A full day built around the water: a snorkelling trip out to the reef, with equipment provided, or a scuba introduction for anyone certified or wanting to try diving for the first time with a PADI-affiliated operator on the beach.",
+      },
+      {
+        day: 5,
+        title: 'Dhow sailing and free time',
+        body: 'A morning dhow sail along the coastline, often with a stop for fishing or a swim off the boat, followed by an afternoon with nothing scheduled: the pool, the sand, or simply the shade.',
+      },
+      {
+        day: 6,
+        title: 'Departure',
+        body: 'A final relaxed morning before checkout, then a transfer to Ukunda airstrip or, via the Likoni ferry, on to Moi International Airport in Mombasa.',
+      },
+    ],
+    included: [
+      'Ground transport throughout, including the Likoni ferry crossing, in a 4x4 safari vehicle with a pop-up roof for the Tsavo leg',
+      'Two nights full-board accommodation in or bordering Tsavo East',
+      'Three nights accommodation on a bed-and-breakfast basis at a beachfront hotel in Diani',
+      'Four game drives, led by an English-speaking driver-guide',
+      'One snorkelling trip and one dhow sailing trip at the coast',
+      'Tsavo East National Park entry fees',
+    ],
+    excluded: [
+      'International and domestic flights',
+      'Kenya e-Visa or entry permit fees',
+      'Scuba diving beyond a beginner introduction, and PADI certification courses',
+      'Lunches and dinners at the coast not specified as included',
+      'Tips and gratuities, and travel insurance',
+    ],
+    bestTime:
+      'June through October and January through February give the driest game viewing in Tsavo; the same months, plus the rest of the July-to-September and December-to-March windows, give the calmest coast weather for the Diani half of the trip.',
+    faqs: [
+      {
+        q: 'How long does the road transfer from Tsavo to Diani actually take?',
+        a: "Realistically the better part of a day: several hours from the Tsavo East gate to Mombasa, then the Likoni ferry crossing, which can add anywhere from a few minutes to over an hour depending on the queue, before the final stretch south to Diani. We treat day three as a travel day for that reason and don't plan activities on arrival.",
+      },
+      {
+        q: 'Are park fees and the ferry crossing included?',
+        a: 'Yes, Tsavo East entry fees and the Likoni ferry crossing are both built into the price above. What is not included is anything at the coast beyond the one snorkelling trip and one dhow trip specified.',
+      },
+      {
+        q: 'Do we need a different visa for the two halves of the trip?',
+        a: 'No. A single Kenya e-Visa or entry permit covers the whole country, Tsavo and Diani included; there is no separate coastal entry process.',
+      },
+      {
+        q: 'Could we do this in the other direction, coast first and Tsavo last?',
+        a: "Yes, that works just as well logistically, since it's the same road either direction. Most guests prefer game drives first and the beach as a way to wind down at the end of a trip, which is why we default to this order, but tell us at booking if you'd rather reverse it.",
+      },
+    ],
+    signature: false,
+  },
+  {
+    title: '8-Day Masai Mara & Diani',
+    slug: '8-day-masai-mara-diani',
+    days: 8,
+    nights: 7,
+    category: 'Coast',
+    destinations: ['masai-mara', 'diani'],
+    priceKey: 'mara-diani8',
+    hero: '/assets/plane.jpg',
+    heroAlt: 'A small bush plane lifting off a dirt airstrip, dust trailing behind it, hills beyond',
+    summary:
+      'Three days of game drives in the Mara, then a flight down to five days on Diani\'s sand: our fullest itinerary pairing cats with the coast.',
+    overview: [
+      "This is the longest of our coast pairings, and the one built for guests who want a full Mara safari rather than a shortened taste of it before moving on. Three days give us a proper introduction to the reserve, an arrival drive plus a full day inside it, before the trip changes pace entirely for five days on Diani's sand. There is no sensible road between the Mara and the coast, so unlike our Tsavo & Diani route, we link the two halves by air rather than by driving.",
+      "The flight itself is straightforward: a light aircraft from the Mara back to Wilson Airport, the same transfer our Mara-to-Amboseli itineraries use, connecting onward to a scheduled flight to Ukunda airstrip on the edge of Diani. It adds up to most of a travel day, but it beats the alternative of a two-day drive back through Nairobi, and it means the beach half of the trip starts the same afternoon you leave the bush.",
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Nairobi to the Mara',
+        body: 'We leave Nairobi in the early morning and drive southwest through Narok to the reserve, arriving by early afternoon and checking into camp for lunch, then head straight out for an afternoon game drive.',
+      },
+      {
+        day: 2,
+        title: 'Full day in the Mara',
+        body: 'An early morning drive, a midday break at camp through the heat, and an afternoon session running until the light goes, with the route depending on where sightings have concentrated over the preceding days.',
+      },
+      {
+        day: 3,
+        title: 'Second full day in the Mara',
+        body: "A second complete day inside the reserve, giving us room to move to a different part of the Mara if the first day's game viewing was concentrated in one area, near the river for cats or out on the open plains if migration herds are moving through.",
+      },
+      {
+        day: 4,
+        title: 'Mara to Diani by air',
+        body: "An early game drive before breakfast, then a transfer to the nearest airstrip for a light-aircraft flight back to Wilson Airport, connecting onward to a scheduled flight to Ukunda, landing on the edge of Diani in the afternoon. We have you met and transferred straight to your beachfront room; the rest of the day is free.",
+      },
+      {
+        day: 5,
+        title: 'Reef and lagoon',
+        body: 'A full day built around the water: a snorkelling trip out to the reef, with equipment provided, or a scuba introduction with a PADI-affiliated operator on the beach for anyone certified or wanting to try diving for the first time.',
+      },
+      {
+        day: 6,
+        title: 'Dhow sailing and free time',
+        body: 'A morning dhow sail along the coastline, often with a stop for fishing or a swim off the boat, followed by an afternoon with nothing scheduled beyond the pool and the sand.',
+      },
+      {
+        day: 7,
+        title: 'Free day at the coast',
+        body: "A day with nothing built in, for guests who'd rather choose their own pace by this point in the trip: a second dive, a massage, a walk into Diani town, or simply staying by the water.",
+      },
+      {
+        day: 8,
+        title: 'Departure',
+        body: 'A final relaxed morning before checkout, then a transfer to Ukunda airstrip or, via the Likoni ferry, on to Moi International Airport in Mombasa.',
+      },
+    ],
+    included: [
+      'Ground transport in a 4x4 safari vehicle with a pop-up roof for the Mara leg',
+      'One light-aircraft flight from the Mara to Wilson Airport, connecting to a scheduled flight to Ukunda',
+      'Two nights full-board accommodation in or bordering the Mara',
+      'Five nights accommodation on a bed-and-breakfast basis at a beachfront hotel in Diani',
+      'Six game drives, led by an English-speaking driver-guide',
+      'One snorkelling trip and one dhow sailing trip at the coast',
+      'Masai Mara reserve entry fees',
+    ],
+    excluded: [
+      'International flights',
+      'Kenya e-Visa or entry permit fees',
+      'Scuba diving beyond a beginner introduction, and PADI certification courses',
+      'Lunches and dinners at the coast not specified as included',
+      'Tips and gratuities, and travel insurance',
+    ],
+    bestTime:
+      'Late June through October carries the best odds on the Mara migration; January through March gives quieter camps and clear skies. For the coast half, December through March and July through September are driest, with the calmest seas for the reef and dhow days.',
+    faqs: [
+      {
+        q: 'Why fly between the Mara and Diani rather than driving?',
+        a: "There's no practical direct road between the two; a drive would mean backtracking most of the way to Nairobi before continuing to the coast, costing the better part of two days. The flight, by contrast, gets you from a game drive in the Mara to a beachfront room in Diani the same afternoon.",
+      },
+      {
+        q: 'Is luggage limited on the flight from the Mara?',
+        a: 'Yes, the light-aircraft leg into Wilson Airport typically limits checked luggage to around 15 kg per person in a soft-sided bag, with no rigid suitcases. We flag this at booking so you can pack for both halves of the trip accordingly.',
+      },
+      {
+        q: 'Will we see the wildebeest migration during the Mara days?',
+        a: "Only if it's in the reserve during your dates, since it follows rainfall and grazing rather than a fixed calendar. Three days gives strong odds on resident lion, cheetah and general plains game regardless, with a river crossing as a bonus if the timing lines up.",
+      },
+      {
+        q: 'Is a full week enough to feel unrushed doing both halves of this trip?',
+        a: "That's exactly what eight days is built for. Three days in the Mara is enough for a proper safari without feeling clipped, and five days at the coast, one of them left entirely open, gives real time to unwind rather than a token beach stop before flying home.",
+      },
+    ],
+    signature: false,
   },
 ];
 

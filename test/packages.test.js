@@ -62,3 +62,22 @@ test('exactly 2 packages are flagged signature', () => {
     '4-day-borana-lewa-conservation-safari',
   ]);
 });
+
+test('there are exactly 21 packages', () => {
+  assert.equal(packages.length, 21);
+});
+
+test('the 3 Mount Kenya packages are present', () => {
+  assert.equal(packages.filter((p) => p.category === 'Mount Kenya').length, 3);
+});
+
+test('the 3 Coast packages are present', () => {
+  assert.equal(packages.filter((p) => p.category === 'Coast').length, 3);
+});
+
+test('every destination has at least one package', () => {
+  const covered = new Set(packages.flatMap((p) => p.destinations));
+  for (const dest of destinations) {
+    assert.ok(covered.has(dest.slug), `no package visits ${dest.slug}`);
+  }
+});
