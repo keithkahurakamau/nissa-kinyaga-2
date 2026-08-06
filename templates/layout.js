@@ -20,8 +20,12 @@ function navItem(item, path, extraClass) {
 }
 
 function menuItem(item, path, extraClass) {
+  // app.js closes the mobile menu via document.querySelectorAll('.nk-mlink')
+  // on click — that literal class token must be present on the element
+  // itself; the CSS-level `.menu-link, .nk-mlink` alias in styles.css only
+  // covers styling, not app.js's DOM query.
   const isCurrent = item.href === path;
-  return html`<a class="menu-link${extraClass ?? ''}"${isCurrent ? raw(' aria-current="page"') : ''} href="${item.href}">${item.label}</a>`;
+  return html`<a class="menu-link nk-mlink${extraClass ?? ''}"${isCurrent ? raw(' aria-current="page"') : ''} href="${item.href}">${item.label}</a>`;
 }
 
 function nav(path) {
