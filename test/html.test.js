@@ -23,6 +23,10 @@ test('html() does not escape literal template text', () => {
 });
 
 test('html() nests without double-escaping', () => {
+  // The inner template contains pre-escaped content: &amp; represents the ampersand character.
+  // Literal template text passes through untouched (not escaped). Only interpolations are escaped.
+  // When the inner raw HTML is nested into the outer template via ${inner}, it is not re-escaped.
+  // Double-escaping would yield &amp;amp; — that must not happen.
   const inner = html`<em>R&amp;D</em>`;
   assert.equal(renderToString(html`<p>${inner}</p>`), '<p><em>R&amp;D</em></p>');
 });
