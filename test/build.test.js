@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { pages } from '../build.js';
+import { metaDescription } from '../templates/package.js';
 import packages from '../data/packages.js';
 
 const all = pages();
@@ -69,4 +70,16 @@ test('no image is missing alt text', () => {
       assert.ok(/\salt="/.test(img), `${path} has an <img> with no alt attribute`);
     }
   }
+});
+
+test('meta description composer guarantees the 50-char floor even for a pathological short package', () => {
+  // A deliberately minimal package: a one-word title, a one-day trip and a
+  // two-character summary. The summary alone is nowhere near 50 chars, so
+  // this exercises the compose-a-fallback branch of metaDescription().
+  const minimal = { title: 'Mara', days: 1, nights: 0, summary: 'A.' };
+  const description = metaDescription(minimal);
+  assert.ok(
+    description.length >= 50 && description.length <= 165,
+    `description length ${description.length} outside 50-165: "${description}"`,
+  );
 });

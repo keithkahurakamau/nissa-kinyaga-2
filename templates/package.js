@@ -33,25 +33,58 @@ function truncateToEscapedLimit(text, maxLen) {
   return candidate.trim();
 }
 
+// Fixed, truthful marketing copy used only as a last-resort suffix to pull
+// a composed description up to the 50-char floor. It's long enough on its
+// own (48 chars) that appending it to even a one-word title and a
+// one-character summary clears the floor — see the "guarantees the
+// 50-char floor" test in test/build.test.js.
+const BOOKING_SUFFIX = 'Private, guided departures with Nissa Safaris.';
+
+/**
+ * Truncates to the ceiling if over it, otherwise returns as-is.
+ *
+ * @param {string} text
+ * @returns {string}
+ */
+function fitCeiling(text) {
+  return escapedLength(text) <= MAX_DESCRIPTION ? text : truncateToEscapedLimit(text, MAX_DESCRIPTION);
+}
+
 /**
  * Derives a meta description of 50-165 (escaped) characters from a package.
  *
- * `pkg.summary` is validated to be <= 200 chars, so it can already run long
- * (truncated at a word boundary) or, in principle, short (composed into a
- * fuller sentence from the package title, length and the summary itself).
- * Every branch is deterministic and produces a description in range for
- * all 21 packages in the current data set.
+ * `pkg.summary` is validated to be <= 200 chars (lib/validate.js), but has
+ * no minimum, and `pkg.title` has no length bound either — so the summary
+ * alone can legitimately fall under the 50-char floor. When it does, this
+ * composes progressively fuller — but always truthful — candidates until
+ * one clears the floor:
+ *   1. title + days/nights + summary
+ *   2. the above + a fixed booking sentence
+ * Candidate 2 is long enough by construction to clear the floor for any
+ * package that satisfies validatePackage (non-empty title, non-empty
+ * summary, days >= 1, nights >= 0), so the loop always returns from
+ * within range; it never falls through to the final guard.
  *
  * @param {object} pkg
  * @returns {string}
  */
-function metaDescription(pkg) {
+export function metaDescription(pkg) {
   const summary = pkg.summary.trim();
   const summaryLen = escapedLength(summary);
   if (summaryLen >= MIN_DESCRIPTION && summaryLen <= MAX_DESCRIPTION) return summary;
   if (summaryLen > MAX_DESCRIPTION) return truncateToEscapedLimit(summary, MAX_DESCRIPTION);
-  const composed = `${pkg.title} — a ${pkg.days}-day, ${pkg.nights}-night Kenya safari. ${summary}`;
-  return escapedLength(composed) <= MAX_DESCRIPTION ? composed : truncateToEscapedLimit(composed, MAX_DESCRIPTION);
+
+  const base = `${pkg.title} — a ${pkg.days}-day, ${pkg.nights}-night Kenya safari.`;
+  const candidates = [`${base} ${summary}`, `${base} ${summary} ${BOOKING_SUFFIX}`];
+
+  for (const candidate of candidates) {
+    const fitted = fitCeiling(candidate);
+    if (escapedLength(fitted) >= MIN_DESCRIPTION) return fitted;
+  }
+
+  // Unreachable for any package that passes validatePackage — kept only so
+  // this function never silently returns a description under the floor.
+  return fitCeiling(candidates[candidates.length - 1]);
 }
 
 /**
@@ -121,12 +154,18 @@ function inclExclSection(pkg) {
   <div class="wrap-narrow">
     <h2 class="h2">What's included</h2>
     <div class="incl-excl">
-      <ul class="incl">
-        ${included}
-      </ul>
-      <ul class="excl">
-        ${excluded}
-      </ul>
+      <div>
+        <h3 class="visually-hidden">Included</h3>
+        <ul class="incl">
+          ${included}
+        </ul>
+      </div>
+      <div>
+        <h3 class="visually-hidden">Not included</h3>
+        <ul class="excl">
+          ${excluded}
+        </ul>
+      </div>
     </div>
   </div>
 </section>`;
@@ -143,10 +182,10 @@ function bestTimeSection(pkg) {
 
 function faqSection(pkg) {
   const items = pkg.faqs.map(
-    (faq) => html`<div class="faq-item">
-      <h3 class="h4">${faq.q}</h3>
+    (faq) => html`<details class="faq-item">
+      <summary>${faq.q}</summary>
       <p>${faq.a}</p>
-    </div>`,
+    </details>`,
   );
   return html`<section class="section-alt">
   <div class="wrap-narrow">
