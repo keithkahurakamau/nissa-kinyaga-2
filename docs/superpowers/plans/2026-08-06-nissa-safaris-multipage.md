@@ -79,7 +79,7 @@ Every task's requirements implicitly include these. Values are copied verbatim f
   "engines": { "node": ">=22" },
   "scripts": {
     "build": "node build.js",
-    "test": "node --test test/",
+    "test": "node --test test/*.test.js",
     "dev": "node build.js && node --run serve",
     "serve": "cd dist && python3 -m http.server 8000"
   }
@@ -122,7 +122,9 @@ test('html() does not escape literal template text', () => {
 });
 
 test('html() nests without double-escaping', () => {
-  const inner = html`<em>R&D</em>`;
+  // Literal template text passes through untouched; only interpolations are
+  // escaped. If nesting double-escaped, this would come back as R&amp;amp;D.
+  const inner = html`<em>R&amp;D</em>`;
   assert.equal(renderToString(html`<p>${inner}</p>`), '<p><em>R&amp;D</em></p>');
 });
 
