@@ -46,3 +46,19 @@ test('the 6 Masai Mara & Rift Valley packages are present', () => {
   const mara = packages.filter((p) => p.category === 'Masai Mara & Rift Valley');
   assert.equal(mara.length, 6);
 });
+
+test('the 4 Amboseli & Tsavo packages are present', () => {
+  assert.equal(packages.filter((p) => p.category === 'Amboseli & Tsavo').length, 4);
+});
+
+test('the 5 Laikipia & the North packages are present', () => {
+  assert.equal(packages.filter((p) => p.category === 'Laikipia & the North').length, 5);
+});
+
+test('exactly 2 packages are flagged signature', () => {
+  const signature = packages.filter((p) => p.signature).map((p) => p.slug).sort();
+  assert.deepEqual(signature, [
+    '3-day-laikipia-walking-tracking-safari',
+    '4-day-borana-lewa-conservation-safari',
+  ]);
+});
