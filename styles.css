@@ -1167,6 +1167,38 @@ a { text-decoration: none; }
   background: rgba(206,142,52,0.50);
 }
 
+/* privacy / cookie consent banner (Task 11 — genuine gap: the original
+   single page positioned this with a style="..." attribute; the multipage
+   shell needs a class since inline styles are no longer permitted) */
+.consent {
+  display: none;
+  position: fixed;
+  left: 16px; right: 16px; bottom: 16px;
+  z-index: 130;
+  max-width: 600px;
+  margin: 0 auto;
+  flex-direction: column;
+  gap: 16px;
+  background: rgba(26,22,14,.96);
+  border: 1px solid rgba(201,162,75,.4);
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  border-radius: 16px;
+  padding: 22px 24px;
+}
+.consent p {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--muted-4);
+}
+.consent p a { color: var(--gold); }
+.consent-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 /* floating WhatsApp chat button */
 .nk-wa {
   position: fixed;
