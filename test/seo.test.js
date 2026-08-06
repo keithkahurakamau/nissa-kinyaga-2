@@ -72,15 +72,39 @@ test('touristTripSchema carries an Offer with the package price', () => {
   assert.match(schema.url, /^https:\/\/nissasafaris\.com\/safaris\/.+\/$/);
 });
 
-test('touristTripSchema itinerary length matches the package days', () => {
+test('touristTripSchema wraps the itinerary in an ItemList of the right length', () => {
   const pkg = packages.find((p) => p.days === 3);
-  assert.equal(touristTripSchema(pkg).itinerary.length, 3);
+  const { itinerary } = touristTripSchema(pkg);
+  assert.equal(itinerary['@type'], 'ItemList');
+  assert.equal(itinerary.itemListElement.length, 3);
+  assert.equal(itinerary.itemListElement[0]['@type'], 'ListItem');
+  assert.equal(itinerary.itemListElement[0].position, 1);
+  assert.equal(itinerary.itemListElement[0].item['@type'], 'TouristDestination');
 });
 
-test('placeSchema is a TouristAttraction in Kenya', () => {
+test('touristTripSchema uses no properties outside the Trip vocabulary', () => {
+  const allowed = new Set([
+    '@context', '@type', 'name', 'description', 'url', 'image', 'provider',
+    'itinerary', 'offers', 'touristType', 'arrivalTime', 'departureTime',
+    'partOfTrip', 'subTrip', 'tripOrigin',
+  ]);
+  for (const key of Object.keys(touristTripSchema(packages[0]))) {
+    assert.ok(allowed.has(key), `"${key}" is not a schema.org Trip/TouristTrip property`);
+  }
+});
+
+test('travelAgencySchema and personSchema cross-reference the same @ids', () => {
+  const agency = travelAgencySchema();
+  const person = personSchema();
+  assert.equal(person.worksFor['@id'], agency['@id']);
+  assert.equal(agency.founder['@id'], person['@id']);
+});
+
+test('placeSchema carries the destination name, url and image', () => {
   const schema = placeSchema(destinations[0]);
-  assert.equal(schema['@type'], 'TouristAttraction');
-  assert.equal(schema.address.addressCountry, 'KE');
+  assert.equal(schema.name, destinations[0].name);
+  assert.match(schema.url, /^https:\/\/nissasafaris\.com\/destinations\/.+\/$/);
+  assert.match(schema.image, /^https:\/\/nissasafaris\.com\/assets\//);
 });
 
 test('breadcrumbSchema numbers positions from 1', () => {
