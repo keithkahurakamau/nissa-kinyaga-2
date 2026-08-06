@@ -150,7 +150,7 @@ const packages = [
         a: 'Only if it happens to be in the area during your dates, and we never promise otherwise. The migration is a seasonal movement rather than a fixed schedule, roughly July through October in most years, and even then a river crossing can happen at any hour or on any day within that window.',
       },
     ],
-    signature: true,
+    signature: false,
   },
   {
     title: '4-Day Masai Mara & Lake Nakuru',
@@ -177,7 +177,7 @@ const packages = [
       {
         day: 2,
         title: 'Nakuru to the Mara',
-        body: "A short morning drive to close out our time at Nakuru, then we head southwest, skirting Nairobi and continuing on through Narok to reach the Mara reserve by mid-afternoon. We go straight into an afternoon game drive on arrival rather than waiting until the next morning, since there's still good light left in the day.",
+        body: "A short morning drive to close out our time at Nakuru, then we head southwest through Narok to reach the Mara reserve by mid-afternoon. We go straight into an afternoon game drive on arrival rather than waiting until the next morning, since there's still good light left in the day.",
       },
       {
         day: 3,
@@ -324,7 +324,7 @@ const packages = [
       'Rift Valley, the Mara and Amboseli in one loop: rhino at Nakuru, cats in the Mara, then a light-aircraft transfer to elephant herds under Kilimanjaro.',
     overview: [
       "This itinerary covers three very different landscapes in six days, so I build it around one flight rather than trying to drive the whole loop. The first half is a familiar Rift Valley opening: Lake Nakuru for rhino and lake-shore game, then two full days in the Mara. There is no practical direct road between the Mara and Amboseli, so on the morning we leave the Mara we take a light aircraft back to Wilson Airport and straight on to Amboseli's own airstrip, landing in time for an afternoon game drive under Kilimanjaro the same day.",
-      "Amboseli closes the trip on foot of the mountain, with its swamps drawing elephant out into the open in family herds, a different kind of game viewing from the cat-focused days in the Mara.",
+      "Amboseli closes the trip at the foot of the mountain, with its swamps drawing elephant out into the open in family herds, a different kind of game viewing from the cat-focused days in the Mara.",
     ],
     itinerary: [
       {
@@ -345,7 +345,7 @@ const packages = [
       {
         day: 4,
         title: 'Mara to Amboseli by air',
-        body: "An early game drive before breakfast, then we transfer to the nearest airstrip for a light-aircraft flight back to Wilson Airport and straight on to Amboseli, landing in the early afternoon. We check into camp and go straight out for a first game drive, with Kilimanjaro often clearest late in the day once the cloud that builds around the peak by midday has thinned.",
+        body: "An early game drive before breakfast, then we transfer to the nearest airstrip for a light-aircraft flight back to Wilson Airport and straight on to Amboseli, landing in the early afternoon. We check into camp and go straight out for a first game drive; the clearest view of the mountain itself will come the next morning, before cloud builds around the peak.",
       },
       {
         day: 5,
@@ -374,7 +374,7 @@ const packages = [
       'Travel insurance',
     ],
     bestTime:
-      'June through October and January through February give the clearest Kilimanjaro views over Amboseli and the driest conditions at Nakuru and in the Mara; late June through October also carries the best odds on the migration.',
+      'June through October and January through February give the driest conditions at Nakuru and in the Mara; the same months also bring the clearest early-morning Kilimanjaro views over Amboseli, before cloud builds around the peak later in the day. Late June through October also carries the best odds on the migration.',
     faqs: [
       {
         q: 'Why is there a flight in this itinerary rather than driving throughout?',
@@ -440,7 +440,7 @@ const packages = [
       {
         day: 6,
         title: 'Full day in Amboseli',
-        body: 'A day built around the swamps that pull elephant herds into the open to drink and graze, often for hours at a time. We work the swamp edges in the morning and return in the late afternoon, when Kilimanjaro is usually at its clearest and the light suits the classic elephant-and-mountain view.',
+        body: 'A day built around the swamps that pull elephant herds into the open to drink and graze, often for hours at a time. We work the swamp edges early, while Kilimanjaro is still clear of the cloud that builds around the peak as the day warms, and return again in the late afternoon for a second session.',
       },
       {
         day: 7,
@@ -465,7 +465,7 @@ const packages = [
       'Travel insurance',
     ],
     bestTime:
-      'June through October and January through February give the clearest Kilimanjaro views and the driest conditions across all four stops; late June through October also carries the best odds on the Mara migration.',
+      'June through October and January through February give the driest conditions across all four stops; the same months also bring the clearest early-morning Kilimanjaro views over Amboseli, before cloud builds around the peak later in the day. Late June through October also carries the best odds on the Mara migration.',
     faqs: [
       {
         q: 'Is this itinerary suitable for a first trip to Kenya?',
@@ -488,7 +488,7 @@ const packages = [
         a: 'A single supplement applies if you want your own room or tent rather than sharing; we quote it against the specific camps once chosen. The itinerary can also be trimmed, most often by dropping the Naivasha day, if seven days is more than you have available.',
       },
     ],
-    signature: true,
+    signature: false,
   },
 ];
 
