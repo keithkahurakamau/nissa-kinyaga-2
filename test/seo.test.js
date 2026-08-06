@@ -100,6 +100,12 @@ test('travelAgencySchema and personSchema cross-reference the same @ids', () => 
   assert.equal(agency.founder['@id'], person['@id']);
 });
 
+test('placeSchema is a TouristAttraction in Kenya', () => {
+  const schema = placeSchema(destinations[0]);
+  assert.equal(schema['@type'], 'TouristAttraction');
+  assert.equal(schema.address.addressCountry, 'KE');
+});
+
 test('placeSchema carries the destination name, url and image', () => {
   const schema = placeSchema(destinations[0]);
   assert.equal(schema.name, destinations[0].name);
