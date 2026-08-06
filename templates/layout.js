@@ -14,6 +14,27 @@ const FAVICON =
 const FONTS_HREF =
   'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&family=Mulish:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap';
 
+// The lens-refraction filters `.btn`/`.refract`/`#nk-cursor` reference via
+// `backdrop-filter: url(#nk-refract)` / `url(#nk-drop)` in styles.css. A
+// url(#id) filter with no matching element in the document resolves to
+// nothing, so this must render once per page. Ported verbatim from
+// index.html:171-184; ".filter-defs" replaces its inline
+// style="position:absolute;pointer-events:none" (no inline styles allowed).
+const SVG_FILTER_DEFS = `<svg width="0" height="0" class="filter-defs" aria-hidden="true"><defs>
+  <filter id="nk-refract" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+    <feImage preserveAspectRatio="none" x="0" y="0" width="100%" height="100%" result="map"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cdefs%3E%3ClinearGradient id='h' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23000'/%3E%3Cstop offset='1' stop-color='%23ff0000'/%3E%3C/linearGradient%3E%3ClinearGradient id='v' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23000'/%3E%3Cstop offset='1' stop-color='%2300ff00'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23h)'/%3E%3Crect width='100' height='100' fill='url(%23v)' style='mix-blend-mode:screen'/%3E%3C/svg%3E"/>
+    <feGaussianBlur in="map" stdDeviation="2" result="smap"/>
+    <feDisplacementMap in="SourceGraphic" in2="smap" scale="38" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <filter id="nk-drop" x="-40%" y="-40%" width="180%" height="180%" color-interpolation-filters="sRGB">
+    <feImage preserveAspectRatio="none" x="0" y="0" width="100%" height="100%" result="map"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cdefs%3E%3ClinearGradient id='h' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23000'/%3E%3Cstop offset='1' stop-color='%23ff0000'/%3E%3C/linearGradient%3E%3ClinearGradient id='v' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23000'/%3E%3Cstop offset='1' stop-color='%2300ff00'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23h)'/%3E%3Crect width='100' height='100' fill='url(%23v)' style='mix-blend-mode:screen'/%3E%3C/svg%3E"/>
+    <feGaussianBlur in="map" stdDeviation="1" result="smap"/>
+    <feDisplacementMap in="SourceGraphic" in2="smap" scale="16" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</defs></svg>`;
+
 function navItem(item, path, extraClass) {
   const isCurrent = item.href === path;
   return html`<a class="nav-link${extraClass ?? ''}"${isCurrent ? raw(' aria-current="page"') : ''} href="${item.href}">${item.label}</a>`;
@@ -148,6 +169,7 @@ ${preloadImage ? html`<link rel="preload" as="image" href="${preloadImage}" fetc
 ${allSchemas.map((schema) => jsonLd(schema))}
 </head>
 <body>
+${raw(SVG_FILTER_DEFS)}
 <a class="skip-link" href="#main">Skip to content</a>
 <div id="nk-cursor"></div>
 <div id="nk-dot"></div>
