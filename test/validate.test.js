@@ -89,3 +89,71 @@ test('assertAllValid throws listing every problem', () => {
 test('assertAllValid passes silently when all items are valid', () => {
   assert.doesNotThrow(() => assertAllValid([valid], validatePackage, 'package'));
 });
+
+test('destinations array elements must be non-empty strings', () => {
+  const bad = { ...valid, destinations: [42] };
+  assert.ok(validatePackage(bad).some((p) => p.includes('destinations')));
+});
+
+test('included array elements must be non-empty strings', () => {
+  const bad = { ...valid, included: ['', '', '', ''] };
+  assert.ok(validatePackage(bad).some((p) => p.includes('included')));
+});
+
+test('excluded array elements must be non-empty strings', () => {
+  const bad = { ...valid, excluded: ['', '', ''] };
+  assert.ok(validatePackage(bad).some((p) => p.includes('excluded')));
+});
+
+test('overview array elements must be non-empty strings in package', () => {
+  const bad = { ...valid, overview: ['Real paragraph', ''] };
+  assert.ok(validatePackage(bad).some((p) => p.includes('overview')));
+});
+
+test('overview array elements must be non-empty strings in destination', () => {
+  const bad = {
+    slug: 'tsavo',
+    name: 'Tsavo',
+    shortName: 'Tsavo',
+    hero: '/assets/p10.jpg',
+    heroAlt: 'Dust and thorn scrub under a wide sky',
+    summary: 'Kenya largest protected wilderness.',
+    overview: ['Real', ''],
+    wildlife: ['Elephant', 'Lion', 'Buffalo'],
+    bestTime: 'June to October.',
+    gettingThere: 'Five hours by road.',
+  };
+  assert.ok(validateDestination(bad).some((p) => p.includes('overview')));
+});
+
+test('wildlife array elements must be non-empty strings', () => {
+  const bad = {
+    slug: 'tsavo',
+    name: 'Tsavo',
+    shortName: 'Tsavo',
+    hero: '/assets/p10.jpg',
+    heroAlt: 'Dust and thorn scrub under a wide sky',
+    summary: 'Kenya largest protected wilderness.',
+    overview: ['One.', 'Two.'],
+    wildlife: ['Elephant', '', 'Buffalo'],
+    bestTime: 'June to October.',
+    gettingThere: 'Five hours by road.',
+  };
+  assert.ok(validateDestination(bad).some((p) => p.includes('wildlife')));
+});
+
+test('assertAllValid catches duplicate package slugs', () => {
+  const pkg1 = { ...valid, slug: 'same-slug' };
+  const pkg2 = { ...valid, slug: 'same-slug', title: 'Different Title' };
+  assert.throws(
+    () => assertAllValid([pkg1, pkg2], validatePackage, 'package'),
+    /duplicate.*slug|slug.*duplicate|same-slug/i
+  );
+});
+
+test('empty-string slug is identified in error message', () => {
+  const bad = { ...valid, slug: '', title: '2-Day Tsavo East' };
+  const problems = validatePackage(bad);
+  // Should have a problem string that includes identifying info, not just ": slug is required"
+  assert.ok(problems.some((p) => p !== ': slug is required'));
+});
