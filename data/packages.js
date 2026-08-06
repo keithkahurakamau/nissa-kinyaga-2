@@ -997,7 +997,7 @@ const packages = [
       'Four days on the conservancies where I spent thirteen years guiding: rhino tracked on foot, day and night drives, a horseback safari and an anti-poaching patrol.',
     overview: [
       "Borana and Lewa are the ground I know better than anywhere else in Kenya. I spent seven years at Lewa Safari Camp, starting as a safari guide and working up to camp assistant manager and head guide, then two years at Sirikoi before six years at Borana itself as head of staff and head guide, until I stepped back into freelance guiding in 2024. This itinerary is built around the activities that make these two conservancies different from a standard reserve safari: rhino tracked on foot, drives that run after dark, and a horseback outing across open country most parks won't let you ride through.",
-      "Both conservancies set their own vehicle limits and manage the land for livestock and wildlife side by side, which keeps them quieter than the southern circuit and gives room for activities a fenced national park doesn't allow. Over four days we track black rhino on foot with the anti-poaching team at first light, run a day drive and a night drive, spend a morning on horseback, and join rangers for an evening anti-poaching patrol — the same patrols I used to walk as head of staff at Borana, seeing the conservancy the way the men protecting it see it.",
+      "Both conservancies set their own vehicle limits and manage the land for livestock and wildlife side by side, which keeps them quieter than the southern circuit and gives room for activities a fenced national park doesn't allow. Over four days we track black rhino on foot with the anti-poaching team at first light, run a day drive and a night drive, spend a morning on horseback, and join rangers for an evening anti-poaching patrol — the same rhino and anti-poaching work I came to know closely over six years as head of staff and head guide at Borana.",
     ],
     itinerary: [
       {
@@ -1008,12 +1008,12 @@ const packages = [
       {
         day: 2,
         title: 'Rhino tracking on foot, and a night drive',
-        body: "We are out at first light with Borana's anti-poaching team, tracking black rhino on foot from fresh sign, moving on the ground the way I did for six years here — quietly, downwind, reading the same tracks that told me a herd had moved through the night before. It's slow work with a genuinely high success rate, though I won't promise a sighting on any given day; what it does give you is time on the ground with the people whose job is protecting these animals. After a rest through the heat, we go back out after dark for a night game drive, spotlighting for the nocturnal side of the conservancy that a normal day drive never shows.",
+        body: "We are out at first light with Borana's anti-poaching team, tracking black rhino on foot from fresh sign — ground I came to know closely over six years as head of staff and head guide here. It's slow work with a genuinely high success rate, though I won't promise a sighting on any given day; what it does give you is time on the ground with the people whose job is protecting these animals. After a rest through the heat, we go back out after dark for a night game drive, spotlighting for the nocturnal side of the conservancy that a normal day drive never shows.",
       },
       {
         day: 3,
         title: 'Horseback safari and an anti-poaching patrol',
-        body: "A morning on horseback across open grassland, riding among plains game in a way no vehicle allows, for guests who ride at an intermediate level or above. In the evening we join Borana's rangers for a stretch of their anti-poaching patrol, the same rounds I used to walk as head of staff here, and after dark, weather allowing, we take in the night sky over the conservancy, dark enough this far from any town to pick out the southern constellations clearly.",
+        body: "A morning on horseback across open grassland, riding among plains game in a way no vehicle allows, for guests who ride at an intermediate level or above. In the evening we join Borana's rangers for a stretch of their anti-poaching patrol, conservation work I got to know well over six years as head of staff here, and after dark, weather allowing, we take in the night sky over the conservancy, dark enough this far from any town to pick out the southern constellations clearly.",
       },
       {
         day: 4,
@@ -1077,7 +1077,7 @@ const packages = [
       "Three days on foot across Laikipia's conservancies, tracking game the way I learned to as a boy in the Mukogodo Forest.",
     overview: [
       "I grew up in the Mukogodo Forest, in northern Kenya, walking seven kilometres each way to primary school for eight years, and learning on that walk and on weekends as a herder boy to read the ground: when a hyena had new pups, when an aardvark had opened a fresh hole after termites, when buffalo had moved through overnight. That way of reading a landscape on foot is the whole basis of this itinerary. It has nothing to do with a vehicle's engine noise or a fixed route; it's slow, quiet, and it puts you close enough to sign and scent that you start to understand an animal's last few hours before you ever see it.",
-      "Laikipia's conservancies, Borana and Lewa among them, are some of the few places in Kenya where walking safaris are routinely on offer, since the vehicle limits and lower predator density here make it workable in a way it isn't in the Mara or Amboseli. Three days is built around two full days on foot with an armed tracker alongside your guide, bracketed by shorter drives to reach the walking ground and to close out each day.",
+      "Laikipia's conservancies, Borana and Lewa among them, are some of the few places in Kenya where walking safaris are routinely on offer, since the vehicle limits and lower predator density here make it workable in a way it isn't in the Mara or Amboseli. Three days is built around one full day on foot with an armed tracker alongside your guide, bracketed by a shorter orientation walk on arrival and a final morning walk before you leave, either side of the road transfers to and from Nairobi.",
     ],
     itinerary: [
       {
@@ -1099,7 +1099,7 @@ const packages = [
     included: [
       'Ground transport from and to Nairobi in a 4x4 safari vehicle',
       'Two nights full-board accommodation at a camp within a Laikipia conservancy',
-      'Two full days and one orientation walk with an armed tracker and driver-guide',
+      'One full day walking, plus a shorter orientation walk and a final morning walk, all with an armed tracker and driver-guide',
       'One game drive',
       'Laikipia conservancy fees',
       'Bottled water throughout',
@@ -1128,7 +1128,7 @@ const packages = [
       },
       {
         q: "What's the difference between this and the Borana & Lewa Conservation Safari?",
-        a: 'That itinerary is built around rhino tracking specifically, plus night drives and a horseback outing, with one full day of walking. This one puts almost the entire three days on foot, general tracking rather than rhino-focused, and suits guests who want walking to be the whole point of the trip rather than one activity among several.',
+        a: 'That itinerary is built around rhino tracking specifically, plus night drives and a horseback outing, with one full day of walking. This one is built around walking itself: the same one full day, bracketed by two shorter walks rather than a night drive and a ride, general tracking rather than rhino-focused, and suited to guests who want walking to be the central activity of the trip rather than one element among several.',
       },
       {
         q: 'What should we wear or bring?',
