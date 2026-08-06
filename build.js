@@ -6,6 +6,8 @@ import destinations from './data/destinations.js';
 import { validatePackage, validateDestination, assertAllValid } from './lib/validate.js';
 import { outputPath } from './lib/paths.js';
 import { packagePage } from './templates/package.js';
+import { destinationPage } from './templates/destination.js';
+import { destinationsIndexPage } from './templates/destinations.js';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const DIST = join(ROOT, 'dist');
@@ -17,6 +19,11 @@ export function pages() {
   const out = [];
   for (const pkg of packages) {
     out.push({ path: `/safaris/${pkg.slug}/`, html: packagePage(pkg) });
+  }
+  out.push({ path: '/destinations/', html: destinationsIndexPage(destinations) });
+  for (const dest of destinations) {
+    const here = packages.filter((p) => p.destinations.includes(dest.slug));
+    out.push({ path: `/destinations/${dest.slug}/`, html: destinationPage(dest, here) });
   }
   return out;
 }
