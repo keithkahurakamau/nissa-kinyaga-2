@@ -169,6 +169,13 @@ a { text-decoration: none; }
   flex-direction: column;
   line-height: 1;
 }
+/* the supplied logo file is roughly square, not a slim wordmark — constrain
+   by height only (auto width) so it fits the fixed 64px nav bar */
+.nav-logo img {
+  height: 40px;
+  width: auto;
+  display: block;
+}
 .nav-logo strong,
 .nav-logo .nav-logo-name {
   font-family: var(--font-display);
@@ -201,7 +208,13 @@ a { text-decoration: none; }
   transition: color .5s ease, opacity .3s ease;
 }
 .nav-link:hover { opacity: .7; }
-.nav-cta {
+/* Compound selector, not `.nav-cta` alone: `.btn`/`.btn-ink` are declared
+   later in this file (Buttons section) and share the `padding`/
+   `border-radius` properties at equal (single-class) specificity, so a
+   later-declared `.btn`/`.btn-ink` would otherwise win the cascade tie and
+   this sizing would never apply. `.btn.nav-cta` outranks both regardless of
+   declaration order. Always used paired with `.btn` in markup. */
+.btn.nav-cta {
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: .2em;
@@ -953,6 +966,13 @@ a { text-decoration: none; }
   align-items: flex-end;
   gap: 24px;
 }
+/* same square-logo constraint as .nav-logo img, sized up slightly since the
+   footer isn't pinned to a fixed-height row */
+.footer-logo {
+  height: 44px;
+  width: auto;
+  display: block;
+}
 .footer-links {
   display: flex;
   flex-wrap: wrap;
@@ -1298,6 +1318,34 @@ a { text-decoration: none; }
   border: 2px solid #25D366;
   animation: nk_wa_pulse 2.6s ease-out infinite;
   pointer-events: none;
+}
+/* Task 10 gap (ported now, Task 11 round 2): icon-only by default, label
+   reveals on hover/focus via max-width + opacity, matching index.html's
+   original behaviour rather than showing the label permanently. */
+.nk-wa-ico {
+  flex: none;
+  width: 58px; height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nk-wa-txt {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-width .4s var(--ease-glass), opacity .35s ease, padding .4s ease;
+  padding: 0;
+}
+.nk-wa:hover .nk-wa-txt,
+.nk-wa:focus-visible .nk-wa-txt {
+  max-width: 180px;
+  opacity: 1;
+  padding-right: 22px;
 }
 .nk-wa:hover {
   transform: translateY(-2px);
