@@ -1252,8 +1252,8 @@ const packages = [
       },
       {
         day: 4,
-        title: 'Mintos to the Chogoria forest, via Lake Ellis and Hall Tarns',
-        body: 'A gentler day through some of the mountain\'s best scenery: past Lake Ellis and the Hall Tarns, glacial pools set among moorland, before dropping into montane forest as the vegetation thickens and the air warms. We camp near the forest edge, close enough to the gate to make the final descent short the next morning.',
+        title: 'Mintos to the Chogoria forest, via Hall Tarns and Lake Ellis',
+        body: 'A gentler day through some of the mountain\'s best scenery: past the Hall Tarns, beside Mintos, then on down to Lake Ellis, glacial pools set among moorland, before dropping into montane forest as the vegetation thickens and the air warms. We camp near the forest edge, close enough to the gate to make the final descent short the next morning.',
       },
       {
         day: 5,
@@ -1281,7 +1281,7 @@ const packages = [
     faqs: [
       {
         q: 'Why cross from Sirimon to Chogoria instead of climbing and descending the same route?',
-        a: "Two reasons. Sirimon is the driest, most gradual way up, which suits acclimatisation, while Chogoria is widely rated the most scenic way down, past Lake Ellis, the Hall Tarns and the Gorges Valley. Doing both means five days shows you two genuinely different sides of the mountain rather than the same path twice.",
+        a: "Two reasons. Sirimon is the driest, most gradual way up, which suits acclimatisation, while Chogoria is widely rated the most scenic way down, past the Hall Tarns, Lake Ellis and the Gorges Valley. Doing both means five days shows you two genuinely different sides of the mountain rather than the same path twice.",
       },
       {
         q: 'What gear do I need to bring versus what you provide?',
@@ -1312,7 +1312,7 @@ const packages = [
       'Six days up the scenic Chogoria side and down through Naro Moru, with a built-in acclimatisation day that gives this route the best summit odds we offer.',
     overview: [
       "This is the itinerary for a trekker who wants the best chance of standing on Point Lenana and has the extra day to spend on it. We go up the Chogoria route, generally agreed to be the most scenic approach on the mountain, past Lake Ellis and the Hall Tarns into the Gorges Valley, and come down the shorter Naro Moru side afterward. The difference from our 5-Day Sirimon to Chogoria itinerary is a full extra day built in around Mintos Camp before the summit push, purely for acclimatisation.",
-      "That extra day is the point of this route, not an afterthought. Altitude sickness is caused by ascending faster than your body can adjust, not by fitness, and a rest day at around 4,300 metres before the final climb to 4,985 metres measurably improves your odds of reaching the summit compared with pushing straight through. We still can't promise a summit — nobody honestly can — but this is the itinerary I'd choose myself if the extra day were available.",
+      "That extra day is the point of this route, not an afterthought. Altitude sickness is caused by ascending faster than your body can adjust, not by fitness, and a rest day at around 4,300 metres before the final climb to 4,985 metres measurably improves your odds of reaching the summit compared with pushing straight through. We still can't promise a summit — nobody honestly can — but this is the itinerary I'd point most people toward if the extra day were available.",
     ],
     itinerary: [
       {
