@@ -1,0 +1,50 @@
+import { ORIGIN } from '../lib/paths.js';
+
+export default {
+  name: 'Nissa Safaris',
+  legalName: 'Nissa Safaris',
+  guide: 'Nissa Ole Kinyaga',
+  tagline: 'Journeys that connect you to nature',
+  description:
+    'Private safaris across Kenya led by Nissa Ole Kinyaga, a Silver-rated guide with over twenty years in the field — Maasai Mara, Samburu, Ol Pejeta, Tsavo, Laikipia, Mount Kenya and the Diani coast.',
+  origin: ORIGIN,
+  email: 'nissasafaris254@gmail.com',
+  phones: ['+254 707 415 444', '+254 722 449 514'],
+  whatsapp: '254707415444',
+  instagram: 'nissa_safaris_tours',
+  logo: '/assets/logo.png',
+  portrait: '/assets/portrait.jpg',
+  defaultShareImage: '/assets/lion.jpg',
+  nav: [
+    { label: 'Home', href: '/' },
+    { label: 'Safaris', href: '/safaris/' },
+    { label: 'Destinations', href: '/destinations/' },
+    { label: 'About', href: '/about/' },
+    { label: 'Gallery', href: '/gallery/' },
+    { label: 'Journal', href: '/journal/' },
+    { label: 'Contact', href: '/contact/' },
+  ],
+  footerLinks: [
+    { label: 'All safaris', href: '/safaris/' },
+    { label: 'Destinations', href: '/destinations/' },
+    { label: 'About Nissa', href: '/about/' },
+    { label: 'Contact', href: '/contact/' },
+    { label: 'Privacy', href: '/privacy/' },
+  ],
+  credentials: [
+    'Silver-rated safari guide — one of 59 in Kenya',
+    'Kenya Utalii College — Advanced Tour Guiding Certificate',
+    'Advanced ornithology',
+    'Walking safari qualification',
+    'Astronomy',
+    'Bush first aid',
+  ],
+  workedAt: [
+    { name: 'Lewa Wildlife Conservancy', role: 'Radio signaller, then guide' },
+    { name: 'Borana Conservancy', role: 'Safari guide' },
+    { name: 'Laragai House', role: 'Private guide' },
+    { name: 'Maasai Mara', role: 'Safari guide' },
+    { name: 'Tsavo East', role: 'Safari guide' },
+    { name: 'Tsavo West', role: 'Safari guide' },
+  ],
+};
