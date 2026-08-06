@@ -698,7 +698,16 @@ git commit -m "feat: add package and destination schema validators"
 | `mount-kenya` | `/assets/p16.jpg` |
 | `diani` | `/assets/p09.jpg` |
 
-**`nissaNote` rule:** write a first-hand note **only** for `masai-mara`, `tsavo` and `laikipia` (Borana/Lewa/Laragai House) — the places Nissa has actually worked. For the other five, set `nissaNote: null`. The template omits the block when null. Do not invent experience.
+**`nissaNote` rule:** write a first-hand note **only** where Nissa has actually worked, per `docs/nissa-biography-source.md`. Four destinations qualify:
+
+| Destination | Grounds |
+|---|---|
+| `laikipia` | Borana Conservancy (head guide, six years), Lewa Safari Camp, Sirikoi, Il Ngwesi, Tassia, Laragai House |
+| `masai-mara` | Angama Mara, during his freelance years |
+| `samburu` | Saruni Kalama and Sarara Camp in the Mathews Range — his "northern frontier" circuit |
+| `tsavo` | Listed by the user in the original brief. **Absent from Nissa's own account** — keep this note short and general, and do not name a camp or a date. |
+
+The other four (`amboseli`, `ol-pejeta`, `mount-kenya`, `diani`) get `nissaNote: null`. The template omits the block when null. **Do not invent experience** — an invented first-hand claim is the worst failure available in this task.
 
 - [ ] **Step 1: Write the failing test at `test/destinations.test.js`**
 
@@ -727,7 +736,7 @@ test('slugs are unique', () => {
 
 test('first-hand notes appear only where Nissa has worked', () => {
   const withNote = destinations.filter((d) => d.nissaNote).map((d) => d.slug).sort();
-  assert.deepEqual(withNote, ['laikipia', 'masai-mara', 'tsavo']);
+  assert.deepEqual(withNote, ['laikipia', 'masai-mara', 'samburu', 'tsavo']);
 });
 
 test('hero alt text never names a national park', () => {
