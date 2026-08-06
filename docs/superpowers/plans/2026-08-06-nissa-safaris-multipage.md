@@ -1144,9 +1144,39 @@ test('touristTripSchema carries an Offer with the package price', () => {
   assert.match(schema.url, /^https:\/\/nissasafaris\.com\/safaris\/.+\/$/);
 });
 
-test('touristTripSchema itinerary length matches the package days', () => {
+test('touristTripSchema wraps the itinerary in an ItemList of the right length', () => {
   const pkg = packages.find((p) => p.days === 3);
-  assert.equal(touristTripSchema(pkg).itinerary.length, 3);
+  const { itinerary } = touristTripSchema(pkg);
+  assert.equal(itinerary['@type'], 'ItemList');
+  assert.equal(itinerary.itemListElement.length, 3);
+  assert.equal(itinerary.itemListElement[0]['@type'], 'ListItem');
+  assert.equal(itinerary.itemListElement[0].position, 1);
+  assert.equal(itinerary.itemListElement[0].item['@type'], 'TouristDestination');
+});
+
+test('touristTripSchema uses no properties outside the Trip vocabulary', () => {
+  const allowed = new Set([
+    '@context', '@type', 'name', 'description', 'url', 'image', 'provider',
+    'itinerary', 'offers', 'touristType', 'arrivalTime', 'departureTime',
+    'partOfTrip', 'subTrip', 'tripOrigin',
+  ]);
+  for (const key of Object.keys(touristTripSchema(packages[0]))) {
+    assert.ok(allowed.has(key), `"${key}" is not a schema.org Trip/TouristTrip property`);
+  }
+});
+
+test('travelAgencySchema and personSchema cross-reference the same @ids', () => {
+  const agency = travelAgencySchema();
+  const person = personSchema();
+  assert.equal(person.worksFor['@id'], agency['@id']);
+  assert.equal(agency.founder['@id'], person['@id']);
+});
+
+test('placeSchema carries the destination name, url and image', () => {
+  const schema = placeSchema(destinations[0]);
+  assert.equal(schema.name, destinations[0].name);
+  assert.match(schema.url, /^https:\/\/nissasafaris\.com\/destinations\/.+\/$/);
+  assert.match(schema.image, /^https:\/\/nissasafaris\.com\/assets\//);
 });
 
 test('placeSchema is a TouristAttraction in Kenya', () => {
@@ -1266,12 +1296,17 @@ export function touristTripSchema(pkg) {
     url,
     image: absoluteUrl(pkg.hero),
     provider: { '@id': `${site.origin}/#organisation` },
-    tourBookingPage: `${site.origin}/contact/`,
-    itinerary: pkg.itinerary.map((entry, i) => ({
-      '@type': 'ListItem',
-      position: i + 1,
-      item: { '@type': 'TouristDestination', name: entry.title, description: entry.body },
-    })),
+    // Trip.itinerary's range is ItemList or Place — NOT a bare ListItem[].
+    // An unwrapped array is silently dropped by validators.
+    itinerary: {
+      '@type': 'ItemList',
+      numberOfItems: pkg.itinerary.length,
+      itemListElement: pkg.itinerary.map((entry, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        item: { '@type': 'TouristDestination', name: entry.title, description: entry.body },
+      })),
+    },
     offers: {
       '@type': 'Offer',
       price: String(PRICES[pkg.priceKey].fromUsd),
@@ -1324,7 +1359,7 @@ export function faqPageSchema(faqs) {
 - [ ] **Step 4: Run the test and verify it passes**
 
 Run: `node --test test/seo.test.js`
-Expected: PASS — 11 tests
+Expected: PASS — 14 tests
 
 - [ ] **Step 5: Commit**
 
