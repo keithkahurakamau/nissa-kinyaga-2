@@ -311,6 +311,46 @@
     });
   })();
 
+  /* ---------- safaris index: client-side filtering ----------
+     Progressive enhancement over the static /safaris/ index: every card
+     ships in the HTML already grouped by category (so JS-off visitors and
+     crawlers see all 21), and this only ever hides/shows via `.hidden`
+     once the two <select> filters are present on the page. */
+  function initSafariFilters() {
+    const destSelect = document.getElementById('filter-destination');
+    const daysSelect = document.getElementById('filter-duration');
+    if (!destSelect || !daysSelect) return;
+
+    const cards = [...document.querySelectorAll('.pkg-card[data-destinations]')];
+    const count = document.getElementById('filter-count');
+
+    function apply() {
+      const dest = destSelect.value;
+      const band = daysSelect.value;
+      let shown = 0;
+      for (const card of cards) {
+        const days = Number(card.dataset.days);
+        const matchesDest = dest === 'all' || card.dataset.destinations.split(' ').includes(dest);
+        const matchesBand =
+          band === 'all' ||
+          (band === 'short' && days <= 3) ||
+          (band === 'medium' && days >= 4 && days <= 6) ||
+          (band === 'long' && days >= 7);
+        const visible = matchesDest && matchesBand;
+        card.hidden = !visible;
+        if (visible) shown += 1;
+      }
+      for (const section of document.querySelectorAll('[data-category-section]')) {
+        section.hidden = !section.querySelector('.pkg-card:not([hidden])');
+      }
+      if (count) count.textContent = `Showing ${shown} of ${cards.length} safaris`;
+    }
+
+    destSelect.addEventListener('change', apply);
+    daysSelect.addEventListener('change', apply);
+  }
+  initSafariFilters();
+
   /* ---------- privacy / cookie consent ----------
      This site sets no tracking or advertising cookies. The banner records the
      visitor's choice in localStorage (a functional preference, not a tracker).
