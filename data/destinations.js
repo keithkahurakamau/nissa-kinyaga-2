@@ -9,7 +9,7 @@ const destinations = [
       "Kenya's best-known reserve, in Narok County, where the wildebeest migration crosses the Mara River each year and lion and cheetah sightings are a near-daily event.",
     overview: [
       "The Masai Mara sits in Narok County in Kenya's south-west, the northern extension of the Serengeti ecosystem that spans the border into Tanzania. Open rolling grassland is cut through by the Mara and Talek rivers, their banks thick with croton and riverine forest, and the Oloololo Escarpment rises along the reserve's western edge.",
-      "It is best known for the wildebeest migration, when close to two million wildebeest and zebra move north out of the Serengeti and cross the Mara River in search of fresh grazing, roughly from July through October. The crossings themselves are unpredictable and can happen at any hour, but the resident wildlife carries the reserve the rest of the year: this is some of the highest big cat density anywhere in Africa, with well-known lion prides, resident cheetah and a good chance of leopard along the river tree lines.",
+      "It is best known for the wildebeest migration, when huge numbers of wildebeest and zebra move north out of the Serengeti and cross the Mara River in search of fresh grazing, roughly from July through October. The crossings themselves are unpredictable and can happen at any hour, but the resident wildlife carries the reserve the rest of the year, with well-known lion prides, resident cheetah and a good chance of leopard along the river tree lines.",
       "Entry is by daily conservation fee, payable in US dollars, and the rate depends on season: non-residents currently pay USD 200 per day in high season and USD 100 per day in low season. Several private conservancies border the reserve itself and offer a quieter, lower-vehicle-density alternative for parts of a longer stay.",
     ],
     wildlife: [
@@ -25,7 +25,7 @@ const destinations = [
     gettingThere:
       "Daily scheduled flights from Nairobi's Wilson Airport reach the Mara's airstrips in around 45 minutes. By road via Narok, the drive from Nairobi takes five to six hours, longer in the rains.",
     nissaNote:
-      "Part of my freelance years was spent guiding out of Angama Mara, inside the reserve itself. That stretch taught me how the Mara moves through a day and a season — not just where the migration is, but where to be for it.",
+      "Part of my freelance years was spent guiding out of Angama Mara. That stretch taught me how the Mara moves through a day and a season — not just where the migration is, but where to be for it.",
     metaTitle: 'Masai Mara Safari Packages & Guide | Nissa Safaris',
     metaDescription:
       "Plan a Masai Mara safari with Nissa Safaris: migration river crossings, dense big cat sightings and expert guiding in Kenya's most famous reserve.",
@@ -69,7 +69,7 @@ const destinations = [
     summary:
       "A dry, northern reserve along the Ewaso Ng'iro river, home to species you won't find on the southern safari circuit, from Grevy's zebra to gerenuk.",
     overview: [
-      "Samburu National Reserve sits north of the equator, on the southern bank of the Ewaso Ng'iro river, whose name means 'river of brown water' in the local language. The country here is semi-arid, doum palm and acacia scrub rather than open grassland, and the river is the reason anything lives here at all: nearly every animal in the reserve is within a short walk of its banks at some point in the day.",
+      "Samburu National Reserve sits north of the equator, on the southern bank of the Ewaso Ng'iro river. The country here is semi-arid, doum palm and acacia scrub rather than open grassland, and the river is the reason anything lives here at all: nearly every animal in the reserve is within a short walk of its banks at some point in the day.",
       "This dry country produces its own set of wildlife, sometimes called the Special Five: Grevy's zebra, with narrower stripes and bigger ears than the plains zebra further south; reticulated giraffe, patterned in sharp, tile-like blocks; Beisa oryx; gerenuk, a long-necked antelope that browses standing on its hind legs; and Somali ostrich, with distinctive blue-grey legs.",
       "Samburu is quieter than the southern reserves, with far fewer vehicles at a sighting, and is usually paired with the neighbouring Buffalo Springs and Shaba reserves as part of a wider northern circuit.",
     ],
@@ -101,7 +101,7 @@ const destinations = [
       'A fenced, predator-friendly conservancy in Laikipia and the largest black rhino sanctuary in East Africa, also home to the world\'s last two northern white rhino.',
     overview: [
       'Ol Pejeta is a private, not-for-profit conservancy in Laikipia, fenced for security and run as a working sanctuary rather than a traditional open reserve. It holds the largest population of black rhino anywhere in East Africa, protected by round-the-clock ranger patrols, and it is where the world\'s last two northern white rhino live under permanent guard, the final animals of a subspecies that could not be saved from extinction in the wild.',
-      'Because the boundary is fenced, Ol Pejeta can support big predators alongside the rhino without the usual conflict with surrounding livestock country, and it has one of the more reliable populations of African wild dog on the safari circuit as a result.',
+      'Because the boundary is fenced, Ol Pejeta can support big predators alongside the rhino without the usual conflict with surrounding livestock country.',
       'The conservancy also runs a chimpanzee sanctuary, home to chimps rescued from the illegal pet and bushmeat trade elsewhere in Africa, none of them native to Kenya but all given permanent refuge here.',
     ],
     wildlife: [
@@ -109,7 +109,6 @@ const destinations = [
       'Northern white rhino',
       'Chimpanzee',
       'Lion',
-      'African wild dog',
       'Elephant',
     ],
     bestTime:
@@ -178,7 +177,7 @@ const destinations = [
     gettingThere:
       "Around three to four hours by road from Nairobi via Nanyuki, or a 40-minute scheduled flight from Wilson Airport to one of the conservancy airstrips.",
     nissaNote:
-      "Borana Conservancy is where I spent six years, first as head of staff and then head guide, before stepping back into freelance guiding in 2024. Before that I'd already put in seven years at Lewa Safari Camp, working up from safari guide to camp assistant manager and head guide, then two more seasons at Sirikoi. Il Ngwesi and Tassia, both community-run camps in this same stretch of country, were part of my circuit through the freelance years that followed. This is the ground I know better than anywhere else.",
+      "Borana Conservancy is where I spent six years, as head of staff and head guide, before stepping back into freelance guiding in 2024. Before that I'd already put in seven years at Lewa Safari Camp, working up from safari guide to camp assistant manager and head guide, then two more seasons at Sirikoi. Il Ngwesi and Tassia, both community-run camps in this same stretch of country, were part of my circuit through the freelance years that followed. This is the ground I know better than anywhere else.",
     metaTitle: 'Laikipia Safari Packages & Guide | Nissa Safaris',
     metaDescription:
       'Arrange a Laikipia safari with Nissa Safaris on the conservancies I know best: rhino country, walking and horseback outings, and Mount Kenya on the skyline.',
