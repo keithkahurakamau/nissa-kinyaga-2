@@ -226,7 +226,20 @@ a { text-decoration: none; }
   gap: 30px;
   animation: nk_fade .4s ease;
 }
-.menu-open { display: flex; }
+.menu-open {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+.menu-open span {
+  display: block;
+  width: 26px;
+  height: 2px;
+  background: var(--cream);
+  margin: 5px 0;
+}
 .menu-close {
   position: absolute;
   top: 26px; right: 30px;
@@ -237,7 +250,7 @@ a { text-decoration: none; }
   cursor: pointer;
   font-family: var(--font-display);
 }
-.menu-link {
+.menu-link, .nk-mlink {
   font-family: var(--font-display);
   font-size: 30px;
   color: var(--sand);
@@ -831,6 +844,101 @@ a { text-decoration: none; }
   cursor: pointer;
 }
 
+/* native date input — ported from #nk-date in index.html so the
+   calendar-picker icon reads against the dark form background under a
+   CSP that forbids inline styles */
+.field-date {
+  color-scheme: dark;
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(207,197,174,.35);
+  color: var(--cream-2);
+  font-family: var(--font-body);
+  font-size: 16px;
+  padding: 13px 0;
+  outline: none;
+}
+.field-date::-webkit-calendar-picker-indicator {
+  filter: invert(74%) sepia(34%) saturate(560%) hue-rotate(2deg) brightness(95%);
+  cursor: pointer;
+  opacity: .95;
+}
+.field-date::-webkit-datetime-edit { color: var(--cream-2); }
+.field-date:disabled { cursor: not-allowed; opacity: .45; }
+
+/* "choose a safari" custom listbox — ported from #nk-pkg-toggle / #nk-pkg /
+   .nk-pkg-opt / .nk-pkg-sel in index.html. Not in the Task 10 brief's
+   contractual class list (a real gap: this widget has markup precedent but
+   no assigned name), added here per fix-round-1 finding 4 so Task 17 can
+   build the form under a CSP with no inline styles. */
+.pkg-select-wrap { position: relative; }
+.pkg-select {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(207,197,174,.35);
+  color: #7F7560;
+  font-family: var(--font-body);
+  font-size: 16px;
+  padding: 14px 0;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+.pkg-select.has-value { color: var(--cream-2); }
+.pkg-select-icon {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: .1em;
+  flex: none;
+}
+.pkg-select-panel {
+  display: none;
+  position: absolute;
+  top: 56px;
+  left: 0; right: 0;
+  z-index: 21;
+  max-height: 264px;
+  overflow-y: auto;
+  background: #20180F;
+  border: 1px solid rgba(201,162,75,.35);
+  box-shadow: 0 24px 60px rgba(0,0,0,.6);
+  padding: 8px;
+  border-radius: 14px;
+  animation: nk_fade .25s ease;
+}
+.pkg-select-panel.is-open { display: block; }
+.pkg-select-opt {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-radius: 9px;
+  color: #DCD2BC;
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  padding: 11px 14px;
+  cursor: pointer;
+  transition: background .18s ease;
+}
+.pkg-select-opt:hover,
+.pkg-select-opt:focus-visible {
+  background: rgba(201,162,75,.18);
+  color: var(--cream-2);
+  outline: none;
+}
+.pkg-select-opt.is-selected {
+  background: rgba(201,162,75,.20);
+  color: var(--cream-2);
+}
+
 /* ---------- Footer ---------- */
 .footer {
   background: #1A1611;
@@ -898,8 +1006,11 @@ a { text-decoration: none; }
   top: 12px;
 }
 
-/* glass / refract — Apple-grade glassmorphism, ported verbatim from index.html */
-.glass {
+/* glass / refract — Apple-grade glassmorphism, ported verbatim from index.html.
+   Aliased to the legacy nk- prefixed names because app.js toggles those
+   classList tokens directly (nav scroll state, generated lightbox
+   figcaptions) rather than emitting the new contractual names. */
+.glass, .nk-glass {
   position: relative;
   background: rgba(231,221,198,.10);
   -webkit-backdrop-filter: blur(30px) saturate(180%);
@@ -908,7 +1019,7 @@ a { text-decoration: none; }
   box-shadow: 0 8px 40px rgba(20,15,9,.30), inset 0 1px 1px rgba(255,255,255,.22), inset 0 -1px 1px rgba(0,0,0,.10);
   isolation: isolate;
 }
-.glass::before {
+.glass::before, .nk-glass::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -922,7 +1033,7 @@ a { text-decoration: none; }
   -webkit-mask-composite: xor;
   mask-composite: exclude;
 }
-.glass::after {
+.glass::after, .nk-glass::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -932,18 +1043,18 @@ a { text-decoration: none; }
   background: linear-gradient(140deg, rgba(255,255,255,.14), rgba(255,255,255,0) 60%);
   mix-blend-mode: overlay;
 }
-.glass > * { position: relative; z-index: 1; }
-.glass-dark { background: rgba(28,22,14,.34); }
-.refract {
+.glass > *, .nk-glass > * { position: relative; z-index: 1; }
+.glass-dark, .nk-glass-dark { background: rgba(28,22,14,.34); }
+.refract, .nk-refract {
   -webkit-backdrop-filter: url(#nk-refract) blur(7px) saturate(190%) brightness(1.06);
   backdrop-filter: url(#nk-refract) blur(7px) saturate(190%) brightness(1.06);
 }
 @supports not (backdrop-filter: url(#nk-refract)) {
-  .refract { backdrop-filter: blur(30px) saturate(180%); }
+  .refract, .nk-refract { backdrop-filter: blur(30px) saturate(180%); }
 }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .glass { background: rgba(36,27,18,.86); }
-  .glass-dark { background: rgba(20,15,9,.9); }
+  .glass, .nk-glass { background: rgba(36,27,18,.86); }
+  .glass-dark, .nk-glass-dark { background: rgba(20,15,9,.9); }
 }
 
 /* cinematic reveal-on-scroll engine */
@@ -1045,6 +1156,7 @@ a { text-decoration: none; }
   pointer-events: none;
   opacity: .07;
   mix-blend-mode: overlay;
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxNjAnIGhlaWdodD0nMTYwJz48ZmlsdGVyIGlkPSduJz48ZmVUdXJidWxlbmNlIHR5cGU9J2ZyYWN0YWxOb2lzZScgYmFzZUZyZXF1ZW5jeT0nMC44NScgbnVtT2N0YXZlcz0nMycgc3RpdGNoVGlsZXM9J3N0aXRjaCcvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbHRlcj0ndXJsKCNuKScvPjwvc3ZnPg==');
 }
 .nk-wash {
   position: fixed;
@@ -1122,6 +1234,7 @@ a { text-decoration: none; }
 
 @media (max-width: 860px) {
   .nav-links { display: none !important; }
+  .menu-open { display: block; }
   .grid-3 { grid-template-columns: 1fr 1fr; }
   .grid-2 { grid-template-columns: 1fr; }
   .itinerary-day { grid-template-columns: 48px 1fr; gap: 16px; }
