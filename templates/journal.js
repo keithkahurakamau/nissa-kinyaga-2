@@ -1,7 +1,7 @@
 import { html } from '../lib/html.js';
 import { MAX_DESCRIPTION, escapedLength, truncateToEscapedLimit } from '../lib/text.js';
 import { layout } from './layout.js';
-import { ctaBlock, breadcrumbNav } from './partials.js';
+import { ctaBlock, breadcrumbNav, picture } from './partials.js';
 import journal from '../data/journal.js';
 
 // Authored well clear of the 50-165 (escaped) char range; truncateToEscapedLimit
@@ -21,7 +21,7 @@ function entryCard(entry) {
   const paragraphs = entry.body.map((para) => html`<p class="body">${para}</p>`);
   return html`<article class="card">
   <div class="card-media">
-    <img src="${entry.image}" alt="${entry.imageAlt}" loading="lazy" decoding="async">
+    ${picture({ src: entry.image, alt: entry.imageAlt })}
   </div>
   <div class="card-body">
     <p class="pkg-meta">${entry.category}</p>

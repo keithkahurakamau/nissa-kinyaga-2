@@ -2,7 +2,7 @@ import { html } from '../lib/html.js';
 import { travelAgencySchema, personSchema } from '../lib/seo.js';
 import { MAX_DESCRIPTION, escapedLength, truncateToEscapedLimit } from '../lib/text.js';
 import { layout } from './layout.js';
-import { packageCard, ctaBlock, sectionHeading, whatsappLink } from './partials.js';
+import { packageCard, ctaBlock, sectionHeading, whatsappLink, picture } from './partials.js';
 import site from '../data/site.js';
 
 // Authored well clear of the 50-165 (escaped) char range; truncateToEscapedLimit
@@ -79,7 +79,7 @@ function guideSection() {
     <div class="grid-2">
       <div class="card">
         <div class="card-media">
-          <img src="${site.portrait}" alt="Nissa Ole Kinyaga, founder and lead guide of Nissa Safaris" loading="lazy" decoding="async">
+          ${picture({ src: site.portrait, alt: 'Nissa Ole Kinyaga, founder and lead guide of Nissa Safaris' })}
         </div>
       </div>
       <div>
@@ -124,7 +124,7 @@ function destinationTile(dest) {
   const href = `/destinations/${dest.slug}/`;
   return html`<article class="card">
   <a class="card-media" href="${href}">
-    <img src="${dest.hero}" alt="${dest.heroAlt}" loading="lazy" decoding="async">
+    ${picture({ src: dest.hero, alt: dest.heroAlt })}
   </a>
   <div class="card-body">
     <h3 class="h4"><a href="${href}">${dest.shortName}</a></h3>

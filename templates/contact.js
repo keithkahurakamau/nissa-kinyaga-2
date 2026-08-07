@@ -1,7 +1,7 @@
 import { html, raw } from '../lib/html.js';
 import { MAX_DESCRIPTION, escapedLength, truncateToEscapedLimit } from '../lib/text.js';
 import { layout } from './layout.js';
-import { breadcrumbNav, whatsappLink } from './partials.js';
+import { breadcrumbNav, whatsappLink, picture } from './partials.js';
 import site from '../data/site.js';
 
 // Authored well clear of the 50-165 (escaped) char range; truncateToEscapedLimit
@@ -127,7 +127,7 @@ export function contactPage(packagesList) {
     </div>
   </header>
   <section class="section-forest">
-    <img class="photo-bg" loading="lazy" decoding="async" src="/assets/p14.jpg" alt="" aria-hidden="true">
+    ${picture({ src: '/assets/p14.jpg', alt: '', className: 'photo-bg', ariaHidden: true })}
     <div class="photo-overlay"></div>
     <div class="wrap photo-content">
       <div class="grid-2">

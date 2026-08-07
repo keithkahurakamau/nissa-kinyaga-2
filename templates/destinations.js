@@ -1,6 +1,6 @@
 import { html } from '../lib/html.js';
 import { layout } from './layout.js';
-import { breadcrumbNav } from './partials.js';
+import { breadcrumbNav, picture } from './partials.js';
 import packages from '../data/packages.js';
 
 const TITLE = 'Kenya Safari Destinations | Nissa Safaris';
@@ -16,7 +16,7 @@ function destinationCard(dest) {
   const count = packageCount(dest);
   return html`<article class="card">
   <a class="card-media" href="${href}">
-    <img src="${dest.hero}" alt="${dest.heroAlt}" loading="lazy" decoding="async">
+    ${picture({ src: dest.hero, alt: dest.heroAlt })}
   </a>
   <div class="card-body">
     <h3 class="h3"><a href="${href}">${dest.shortName}</a></h3>

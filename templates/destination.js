@@ -2,7 +2,7 @@ import { html } from '../lib/html.js';
 import { placeSchema } from '../lib/seo.js';
 import { MAX_DESCRIPTION, escapedLength, truncateToEscapedLimit } from '../lib/text.js';
 import { layout } from './layout.js';
-import { packageCard, ctaBlock, breadcrumbNav } from './partials.js';
+import { packageCard, ctaBlock, breadcrumbNav, picture } from './partials.js';
 
 /**
  * Derives a safe 50-165 (escaped) char meta description from a destination's
@@ -23,7 +23,7 @@ export function metaDescription(dest) {
 
 function heroSection(dest) {
   return html`<div class="dest-hero">
-  <img src="${dest.hero}" alt="${dest.heroAlt}" fetchpriority="high">
+  ${picture({ src: dest.hero, alt: dest.heroAlt, lazy: false })}
 </div>`;
 }
 

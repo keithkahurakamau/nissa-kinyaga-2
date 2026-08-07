@@ -2,7 +2,7 @@ import { html } from '../lib/html.js';
 import { personSchema } from '../lib/seo.js';
 import { MAX_DESCRIPTION, escapedLength, truncateToEscapedLimit } from '../lib/text.js';
 import { layout } from './layout.js';
-import { ctaBlock, breadcrumbNav, sectionHeading } from './partials.js';
+import { ctaBlock, breadcrumbNav, sectionHeading, picture } from './partials.js';
 import site from '../data/site.js';
 import about from '../data/about.js';
 
@@ -23,7 +23,7 @@ export function metaDescription() {
 // why no text content is ever nested inside this element.
 function heroSection() {
   return html`<div class="about-hero">
-  <img src="${site.portrait}" alt="Nissa Ole Kinyaga, founder and lead guide of Nissa Safaris" fetchpriority="high">
+  ${picture({ src: site.portrait, alt: 'Nissa Ole Kinyaga, founder and lead guide of Nissa Safaris', lazy: false })}
 </div>`;
 }
 
@@ -153,7 +153,7 @@ function philosophySection() {
   );
   const quote = about.quotes[1];
   return html`<section class="section-forest">
-  <img class="photo-bg" loading="lazy" decoding="async" src="/assets/giraffe.jpg" alt="" aria-hidden="true">
+  ${picture({ src: '/assets/giraffe.jpg', alt: '', className: 'photo-bg', ariaHidden: true })}
   <div class="photo-overlay"></div>
   <div class="wrap photo-content">
     ${sectionHeading({ number: '07', eyebrow: 'My safari philosophy', heading: 'A safari should leave the wild better than it found it.' })}

@@ -1,7 +1,7 @@
 import { html, raw, renderToString } from '../lib/html.js';
 import { headTags, jsonLd, breadcrumbSchema } from '../lib/seo.js';
 import site from '../data/site.js';
-import { whatsappLink } from './partials.js';
+import { whatsappLink, picture } from './partials.js';
 
 const CSP =
   "default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; " +
@@ -55,7 +55,7 @@ function nav(path) {
   );
   return html`<nav id="nk-nav" class="nav" aria-label="Primary">
   <div id="nk-navbar" class="nav-bar">
-    <a href="/" class="nav-logo"><img src="${site.logo}" alt="${site.name}"></a>
+    <a href="/" class="nav-logo">${picture({ src: site.logo, alt: site.name })}</a>
     <div class="nav-links" data-desktopnav>
       ${links}
     </div>
@@ -84,7 +84,7 @@ function footer() {
   return html`<footer class="footer">
   <div class="footer-grid">
     <div>
-      <img class="footer-logo" src="${site.logo}" alt="${site.name}">
+      ${picture({ src: site.logo, alt: site.name, className: 'footer-logo' })}
     </div>
     <nav class="footer-links" aria-label="Footer">
       ${links}

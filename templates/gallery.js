@@ -1,7 +1,7 @@
 import { html } from '../lib/html.js';
 import { MAX_DESCRIPTION, escapedLength, truncateToEscapedLimit } from '../lib/text.js';
 import { layout } from './layout.js';
-import { ctaBlock, breadcrumbNav } from './partials.js';
+import { ctaBlock, breadcrumbNav, picture } from './partials.js';
 import gallery from '../data/gallery.js';
 
 // Authored well clear of the 50-165 (escaped) char range; truncateToEscapedLimit
@@ -23,7 +23,7 @@ export function metaDescription() {
 // card back out of this markup instead of holding its own copy of the data.
 function galleryCard(item, i) {
   return html`<figure class="gal-item${i === 0 ? ' is-active' : ''}">
-  <img src="${item.src}" alt="${item.alt}" loading="lazy" decoding="async">
+  ${picture({ src: item.src, alt: item.alt })}
   <div class="gal-card-scrim" aria-hidden="true"></div>
   <figcaption class="glass glass-dark refract gal-card-caption">
     <span class="gal-card-cat">${item.category}</span>

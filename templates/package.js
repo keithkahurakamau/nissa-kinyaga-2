@@ -2,7 +2,7 @@ import { html } from '../lib/html.js';
 import { touristTripSchema, faqPageSchema } from '../lib/seo.js';
 import { MIN_DESCRIPTION, MAX_DESCRIPTION, escapedLength, truncateToEscapedLimit } from '../lib/text.js';
 import { layout } from './layout.js';
-import { packageCard, ctaBlock, breadcrumbNav } from './partials.js';
+import { packageCard, ctaBlock, breadcrumbNav, picture } from './partials.js';
 import packages, { PRICES } from '../data/packages.js';
 
 // Fixed, truthful marketing copy used only as a last-resort suffix to pull
@@ -73,7 +73,7 @@ function relatedPackages(pkg) {
 
 function heroSection(pkg) {
   return html`<div class="pkg-hero">
-  <img src="${pkg.hero}" alt="${pkg.heroAlt}" fetchpriority="high">
+  ${picture({ src: pkg.hero, alt: pkg.heroAlt, lazy: false })}
 </div>`;
 }
 
