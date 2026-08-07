@@ -171,30 +171,6 @@
     setTimeout(function(){ Array.prototype.forEach.call(els, function(el){ el.classList.add('nk-in'); }); }, 2600);
   })();
 
-  /* ---------- custom cursor ---------- */
-  (function(){
-    var ring = document.getElementById('nk-cursor');
-    var dot = document.getElementById('nk-dot');
-    if (!ring || !dot) return;
-    if (window.matchMedia && window.matchMedia('(hover:none),(pointer:coarse)').matches) return;
-    var rx = window.innerWidth/2, ry = window.innerHeight/2, cx = rx, cy = ry;
-    window.addEventListener('mousemove', function(e){
-      cx = e.clientX; cy = e.clientY;
-      dot.style.left = cx+'px'; dot.style.top = cy+'px';
-      ring.style.opacity = '1'; dot.style.opacity = '1';
-    }, { passive:true });
-    (function l(){
-      rx += (cx - rx) * 0.18; ry += (cy - ry) * 0.18;
-      ring.style.left = rx+'px'; ring.style.top = ry+'px';
-      requestAnimationFrame(l);
-    })();
-    document.addEventListener('mouseover', function(e){
-      var hot = e.target.closest('a,button,figure,article,[data-exp],input,textarea,[role="img"]');
-      ring.classList.toggle('nk-hot', !!hot);
-    }, { passive:true });
-    document.addEventListener('mouseleave', function(){ ring.style.opacity='0'; dot.style.opacity='0'; });
-  })();
-
   /* ---------- contact form + calendar ----------
      #nk-form only renders on /contact/ (templates/contact.js), every other
      page loads this same app.js bundle, so the whole block bails out early
