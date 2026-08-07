@@ -20,9 +20,9 @@ const FONTS_HREF =
 // render once per page. Ported verbatim from index.html:171-184;
 // ".filter-defs" replaces its inline
 // style="position:absolute;pointer-events:none" (no inline styles allowed).
-// The sibling `#nk-drop` filter the removed custom cursor (`#nk-cursor`)
-// used to reference has been removed along with it, `#nk-refract` is the
-// only definition still consumed by the stylesheet.
+// A sibling filter def that the old liquid-glass cursor referenced was
+// removed along with that cursor; `#nk-refract` is the only definition
+// still consumed by the stylesheet.
 const SVG_FILTER_DEFS = `<svg width="0" height="0" class="filter-defs" aria-hidden="true"><defs>
   <filter id="nk-refract" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
     <feImage preserveAspectRatio="none" x="0" y="0" width="100%" height="100%" result="map"
