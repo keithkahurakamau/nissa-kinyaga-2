@@ -8,7 +8,7 @@ import site from '../data/site.js';
 // is a safety net for escaping inflation, matching the pattern in
 // templates/about.js/destination.js/package.js.
 const DESCRIPTION =
-  'How Nissa Safaris handles your data — a static site with no backend, no tracking cookies and no third-party analytics by default.';
+  'How Nissa Safaris handles your data, a static site with no backend, no tracking cookies and no third-party analytics by default.';
 
 export function metaDescription() {
   const text = DESCRIPTION.trim();
@@ -34,7 +34,7 @@ export function privacyPage() {
     <div class="wrap">
       ${breadcrumbNav(crumbs)}
       <h1 class="display">Privacy</h1>
-      <p class="lede">Your privacy matters. This is a static website with no backend — here is exactly what that means for your data.</p>
+      <p class="lede">Your privacy matters. This is a static website with no backend, here is exactly what that means for your data.</p>
     </div>
   </header>
   <section class="section-alt">

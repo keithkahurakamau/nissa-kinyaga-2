@@ -33,7 +33,7 @@
      data/gallery.js) as real <figure class="gal-item"> elements holding a
      real <img> and a static caption, so crawlers index every photo. This
      reads the item data back out of that markup instead of holding its own
-     copy — the single source of truth is the DOM, not an inline array. */
+     copy, the single source of truth is the DOM, not an inline array. */
   var gal = document.getElementById('nk-gal');
   var galCards = gal ? Array.prototype.slice.call(gal.querySelectorAll('.gal-item')) : [];
   var items = galCards.map(function(fig){
@@ -68,7 +68,7 @@
   function openLb(i){ if (!lb) return; lbIndex = i; renderLb(); lb.classList.add('is-open'); }
   function closeLb(){ if (!lb) return; lbIndex = null; lb.classList.remove('is-open'); }
   function stepLb(d){ if (lbIndex === null) return; lbIndex = (lbIndex + d + items.length) % items.length; renderLb(); }
-  // #nk-lb only renders on /gallery/ (templates/gallery.js) — every other
+  // #nk-lb only renders on /gallery/ (templates/gallery.js), every other
   // page loads this same app.js bundle, so this whole block must be a
   // no-op there rather than throwing on a null lookup.
   if (lb) {
@@ -196,14 +196,14 @@
   })();
 
   /* ---------- contact form + calendar ----------
-     #nk-form only renders on /contact/ (templates/contact.js) — every other
+     #nk-form only renders on /contact/ (templates/contact.js), every other
      page loads this same app.js bundle, so the whole block bails out early
      rather than throwing on a null lookup.
 
      The package listbox's options are now server-rendered (Task 17: one
      real button per data/packages.js entry, generated in
      templates/contact.js, so the list can never drift from the 21
-     packages) instead of built here from a hardcoded, out-of-sync array —
+     packages) instead of built here from a hardcoded, out-of-sync array, 
      this reads the choice straight off the clicked .pkg-select-opt rather
      than re-rendering the panel from JS. Open/selected/has-value state is
      tracked with the .is-open/.is-selected/.has-value modifier classes

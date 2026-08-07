@@ -25,7 +25,7 @@ const destinations = [
     gettingThere:
       "Daily scheduled flights from Nairobi's Wilson Airport reach the Mara's airstrips in around 45 minutes. By road via Narok, the drive from Nairobi takes five to six hours, longer in the rains.",
     nissaNote:
-      "Part of my freelance years was spent guiding out of Angama Mara. That stretch taught me how the Mara moves through a day and a season — not just where the migration is, but where to be for it.",
+      "Part of my freelance years was spent guiding out of Angama Mara. That stretch taught me how the Mara moves through a day and a season, not just where the migration is, but where to be for it.",
     metaTitle: 'Masai Mara Safari Packages & Guide | Nissa Safaris',
     metaDescription:
       "Plan a Masai Mara safari with Nissa Safaris: migration river crossings, dense big cat sightings and expert guiding in Kenya's most famous reserve.",
@@ -86,7 +86,7 @@ const destinations = [
     gettingThere:
       "Scheduled flights from Nairobi reach Samburu's airstrips in about an hour. By road, the drive north via Nanyuki and Isiolo takes five to six hours.",
     nissaNote:
-      "My northern frontier circuit went through Saruni Kalama and Sarara Camp, out in the Mathews Range — community-conservancy country rather than a fenced reserve. It runs on its own rhythm, with its own specialities: gerenuk, Grevy's zebra, animals you don't find further south.",
+      "My northern frontier circuit went through Saruni Kalama and Sarara Camp, out in the Mathews Range, community-conservancy country rather than a fenced reserve. It runs on its own rhythm, with its own specialities: gerenuk, Grevy's zebra, animals you don't find further south.",
     metaTitle: 'Samburu Safari Packages & Guide | Nissa Safaris',
     metaDescription:
       "Discover a Samburu safari with Nissa Safaris: dry-country wildlife along the Ewaso Ng'iro river, from gerenuk to Grevy's zebra, with expert guiding.",

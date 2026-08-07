@@ -19,7 +19,7 @@ export function metaDescription() {
   return truncateToEscapedLimit(text, MAX_DESCRIPTION);
 }
 
-// Holds only the portrait image — see the .about-hero note in styles.css on
+// Holds only the portrait image, see the .about-hero note in styles.css on
 // why no text content is ever nested inside this element.
 function heroSection() {
   return html`<div class="about-hero">
@@ -32,7 +32,7 @@ function titleSection(crumbs) {
   <div class="wrap">
     ${breadcrumbNav(crumbs)}
     <h1 class="display">Nissa Ole Kinyaga</h1>
-    <p class="lede">Safari guide and founder of Nissa Safaris — freelance across Kenya's private conservancies and community lodges, with Maasai heritage at the centre of every itinerary.</p>
+    <p class="lede">Safari guide and founder of Nissa Safaris, freelance across Kenya's private conservancies and community lodges, with Maasai heritage at the centre of every itinerary.</p>
     <div class="stat-row">
       <div>
         <div class="stat-num">20+</div>
@@ -198,7 +198,7 @@ export function aboutPage() {
 </main>`;
 
   return layout({
-    title: 'About Nissa Ole Kinyaga — Kenya Safari Guide | Nissa Safaris',
+    title: 'About Nissa Ole Kinyaga, Kenya Safari Guide | Nissa Safaris',
     description: metaDescription(),
     path: '/about/',
     image: site.portrait,

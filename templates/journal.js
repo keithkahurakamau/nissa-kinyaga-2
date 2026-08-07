@@ -8,7 +8,7 @@ import journal from '../data/journal.js';
 // is a safety net for escaping inflation, matching the pattern in
 // templates/about.js/destination.js/package.js.
 const DESCRIPTION =
-  "Stories from the bush by Nissa Ole Kinyaga — field notes on patience with big cats, conservation and his own Mukogodo Forest heritage.";
+  "Stories from the bush by Nissa Ole Kinyaga, field notes on patience with big cats, conservation and his own Mukogodo Forest heritage.";
 
 export function metaDescription() {
   const text = DESCRIPTION.trim();
@@ -50,7 +50,7 @@ export function journalPage() {
     <div class="wrap">
       ${breadcrumbNav(crumbs)}
       <h1 class="display">Stories from the bush</h1>
-      <p class="lede">Field notes from Nissa's own years in the conservancies — on patience, conservation and where his own story began.</p>
+      <p class="lede">Field notes from Nissa's own years in the conservancies, on patience, conservation and where his own story began.</p>
     </div>
   </header>
   <section class="section-alt">
@@ -67,7 +67,7 @@ export function journalPage() {
 </main>`;
 
   return layout({
-    title: 'Journal — Stories from the Bush | Nissa Safaris',
+    title: 'Journal, Stories from the Bush | Nissa Safaris',
     description: metaDescription(),
     path: '/journal/',
     image: journal[0]?.image,

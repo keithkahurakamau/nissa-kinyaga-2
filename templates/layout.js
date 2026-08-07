@@ -42,7 +42,7 @@ function navItem(item, path, extraClass) {
 
 function menuItem(item, path, extraClass) {
   // app.js closes the mobile menu via document.querySelectorAll('.nk-mlink')
-  // on click — that literal class token must be present on the element
+  // on click, that literal class token must be present on the element
   // itself; the CSS-level `.menu-link, .nk-mlink` alias in styles.css only
   // covers styling, not app.js's DOM query.
   const isCurrent = item.href === path;
@@ -85,7 +85,7 @@ function footer() {
   <div class="footer-mark">
     ${picture({
       src: site.logoFull,
-      alt: `${site.name} — ${site.tagline}`,
+      alt: `${site.name}, ${site.tagline}`,
       className: 'footer-logo',
     })}
   </div>
@@ -122,21 +122,21 @@ function whatsappButton() {
  * shares: head metadata/SEO, nav, mobile menu, page body, footer, consent
  * banner and floating WhatsApp button.
  *
- * `body` must be (or contain) `<main id="main">…</main>` — the skip link
+ * `body` must be (or contain) `<main id="main">…</main>`, the skip link
  * emitted here targets `#main`, and this function does not wrap the
  * supplied content in a `<main>` itself. Callers (page templates) own that.
  *
  * @param {object} opts
  * @param {string} opts.title
  * @param {string} opts.description
- * @param {string} opts.path — site-relative path, e.g. "/safaris/"
- * @param {string} [opts.image] — absolute or root-relative share image
- * @param {string} [opts.type] — og:type, defaults to "website" (see headTags)
- * @param {object[]} [opts.schemas] — extra JSON-LD objects to emit
- * @param {{name: string, path: string}[]} [opts.crumbs] — breadcrumb trail;
+ * @param {string} opts.path, site-relative path, e.g. "/safaris/"
+ * @param {string} [opts.image], absolute or root-relative share image
+ * @param {string} [opts.type], og:type, defaults to "website" (see headTags)
+ * @param {object[]} [opts.schemas], extra JSON-LD objects to emit
+ * @param {{name: string, path: string}[]} [opts.crumbs], breadcrumb trail;
  *   a BreadcrumbList schema is emitted automatically when there are 2+
- * @param {string} [opts.preloadImage] — root-relative image to preload
- * @param {import('../lib/html.js').RawHtml} opts.body — page content,
+ * @param {string} [opts.preloadImage], root-relative image to preload
+ * @param {import('../lib/html.js').RawHtml} opts.body, page content,
  *   including the `<main id="main">` wrapper
  * @returns {string} the full HTML document
  */

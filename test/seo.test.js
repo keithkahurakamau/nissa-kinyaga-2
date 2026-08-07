@@ -67,7 +67,7 @@ test('touristTripSchema carries an Offer with the package price', () => {
   const schema = touristTripSchema(packages[0]);
   assert.equal(schema['@type'], 'TouristTrip');
   assert.equal(schema.offers['@type'], 'Offer');
-  assert.equal(schema.offers.priceCurrency, 'USD');
+  assert.equal(schema.offers.priceCurrency, 'KES');
   assert.ok(Number(schema.offers.price) > 0);
   assert.match(schema.url, /^https:\/\/nissasafaris\.com\/safaris\/.+\/$/);
 });

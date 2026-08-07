@@ -55,7 +55,7 @@ test('nav contains every entry from site.nav', () => {
 test('packageCard links to the package and shows its from-price', () => {
   const card = renderToString(packageCard(packages[0]));
   assert.match(card, new RegExp(`href="/safaris/${packages[0].slug}/"`));
-  assert.match(card, /From \$\d/);
+  assert.match(card, /From KSh [\d,]+/);
   assert.match(card, /\d+ days?/);
 });
 

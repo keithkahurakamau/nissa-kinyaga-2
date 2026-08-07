@@ -83,13 +83,13 @@ function categorySection(category, packagesHere, alt) {
 /**
  * Renders the safaris index: an intro, client-side filter controls, and
  * every package grouped under its category heading. Filtering is
- * progressive enhancement — all cards render in the static HTML with
+ * progressive enhancement, all cards render in the static HTML with
  * `data-destinations`/`data-days`/`data-category` attributes, and
  * `initSafariFilters()` in app.js hides/shows them; a visitor without JS,
  * and every crawler, sees the full list.
  *
- * @param {object[]} packagesList — the full `data/packages.js` array
- * @param {object[]} destinationsList — the full `data/destinations.js` array
+ * @param {object[]} packagesList, the full `data/packages.js` array
+ * @param {object[]} destinationsList, the full `data/destinations.js` array
  * @returns {string} the complete HTML document
  */
 export function safarisIndexPage(packagesList, destinationsList) {

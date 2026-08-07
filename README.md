@@ -1,8 +1,8 @@
-# Nissa Safaris — Multipage Site
+# Nissa Safaris, Multipage Site
 
 A 37-page static site for **Nissa Safaris**, the freelance safari company run by
 **Nissa Ole Kinyaga** out of Laikipia, Kenya. Built as data + templates and
-rendered to static HTML by a zero-dependency Node build script — no framework,
+rendered to static HTML by a zero-dependency Node build script, no framework,
 no runtime JS dependencies, no client-side rendering.
 
 ## Stack
@@ -14,46 +14,46 @@ loaded `defer`) and `styles.css` (all styling) are copied into `dist/` as-is.
 
 ```
 build.js              # orchestrates the build: pages() returns { path, html }[]
-data/                 # content as plain objects — packages, destinations,
+data/                 # content as plain objects, packages, destinations,
                        #   about, gallery, journal, site-wide config
 templates/             # render functions, one per page type, sharing layout.js
 lib/                    # html.js (escape/raw/html tagged template), paths.js
                         #   (ORIGIN, outputPath, slugify), seo.js, validate.js
 scripts/make-webp.js   # optional WebP generation, see below
-styles.css             # all styling — no inline styles, no CSS-in-JS
-app.js                 # all client behaviour — external so CSP can stay
+styles.css             # all styling, no inline styles, no CSS-in-JS
+app.js                 # all client behaviour, external so CSP can stay
                         #   script-src 'self', no inline scripts/handlers
 assets/*.jpg           # photographs, reused across destinations/packages;
                         #   alt text never claims a location the photo isn't from
-dist/                  # build output — gitignored, not committed; Vercel
+dist/                  # build output, gitignored, not committed; Vercel
                         #   runs `npm run build` on deploy and serves this
 ```
 
 `dist/` is listed in `.gitignore`. It does not exist in the repo between
-builds — Vercel builds it fresh on every deploy (`vercel.json`'s
+builds, Vercel builds it fresh on every deploy (`vercel.json`'s
 `buildCommand`/`outputDirectory`), and locally you regenerate it with
 `npm run build` whenever you want to preview.
 
 The site covers: home, a safaris index and 21 individual package pages, a
 destinations index and 8 destination pages, about, gallery, journal, contact
-and privacy — plus a generated `sitemap.xml` and `robots.txt`. See
+and privacy, plus a generated `sitemap.xml` and `robots.txt`. See
 `docs/LAUNCH-CHECKLIST.md` for what's still outstanding before it goes live.
 
 ## Commands
 
 ```bash
-npm run build   # scripts/make-webp.js, then build.js — writes dist/
-npm test        # node --test test/*.test.js — 145+ tests across every template,
+npm run build   # scripts/make-webp.js, then build.js, writes dist/
+npm test        # node --test test/*.test.js, 145+ tests across every template,
                 #   data file, and the assembled site (link integrity, sitemap,
                 #   37-page count)
-npm run images  # scripts/make-webp.js on its own — regenerates assets/*.webp
+npm run images  # scripts/make-webp.js on its own, regenerates assets/*.webp
                 #   from assets/*.jpg via the system `cwebp` binary
 npm run dev     # build.js, then serve dist/ locally
 npm run serve   # serve an already-built dist/ on its own
 ```
 
 `npm run serve` runs `python3 -m http.server 8000` from `dist/`. Port 8000 was
-found already in use by another local process on the development machine — if
+found already in use by another local process on the development machine, if
 `npm run dev`/`npm run serve` fails to bind, either free port 8000 or edit the
 `serve` script in `package.json` to a less contended port
 (e.g. `python3 -m http.server 8080`) and open that port instead.
@@ -63,24 +63,24 @@ found already in use by another local process on the development machine — if
 `npm run build` runs `scripts/make-webp.js` first, which shells out to the
 system `cwebp` binary to generate a `.webp` sibling for every `assets/*.jpg`.
 `templates/partials.js`'s `picture()` helper checks for these siblings at
-render time and falls back to a plain `<img>` when one is missing — the build
+render time and falls back to a plain `<img>` when one is missing, the build
 never fails for lack of `cwebp`, it just serves JPEG-only. **`cwebp` is not
 installed on the current development machine**, so no `.webp` files exist yet
 and the LCP/bandwidth benefit is unrealised. Install it
 (`sudo apt install webp` on Debian/Ubuntu) and run `npm run images` before
-launch — see `docs/LAUNCH-CHECKLIST.md`.
+launch, see `docs/LAUNCH-CHECKLIST.md`.
 
 ## Contact details (live)
 
-- **Email** — nissasafaris254@gmail.com
-- **WhatsApp / phone** — +254 707 415 444 (main) · +254 722 449 514 (alternate)
-- **Instagram** — [@nissa_safaris_tours](https://instagram.com/nissa_safaris_tours)
+- **Email**, nissasafaris254@gmail.com
+- **WhatsApp / phone**, +254 707 415 444 (main) · +254 722 449 514 (alternate)
+- **Instagram**, [@nissa_safaris_tours](https://instagram.com/nissa_safaris_tours)
 - The contact page composes the enquiry and opens WhatsApp to the main number,
-  prefilled — no backend required.
+  prefilled, no backend required.
 
 ## Security & privacy
 
-- **No data collection** — there is no backend. The enquiry form composes a
+- **No data collection**, there is no backend. The enquiry form composes a
   message and hands it to the visitor's own WhatsApp/email; nothing is sent to
   or stored on a server. No tracking or advertising cookies are set.
 - **Strict Content-Security-Policy**: `script-src 'self'` (all JS external, no
@@ -103,7 +103,7 @@ launch — see `docs/LAUNCH-CHECKLIST.md`.
 
 - Form labels associated via `for`/`id`; `name`/`autocomplete`/`inputmode` set;
   visible `:focus-visible` rings throughout.
-- Respects `prefers-reduced-motion`. Honest `alt` text on every image — never
+- Respects `prefers-reduced-motion`. Honest `alt` text on every image, never
   claims a park or location the photo isn't actually from.
 - Spot-checked for horizontal overflow at 320 px and 1440 px; a full sweep of every template is on the launch checklist;
   `viewport-fit=cover` for notched devices.

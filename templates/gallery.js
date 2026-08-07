@@ -8,7 +8,7 @@ import gallery from '../data/gallery.js';
 // is a safety net for escaping inflation, matching the pattern in
 // templates/about.js/destination.js/package.js.
 const DESCRIPTION =
-  "Photographs from Nissa's own Kenya safaris, each with the story behind the frame — wildlife, landscapes and safari moments from the field.";
+  "Photographs from Nissa's own Kenya safaris, each with the story behind the frame, wildlife, landscapes and safari moments from the field.";
 
 export function metaDescription() {
   const text = DESCRIPTION.trim();
@@ -24,7 +24,7 @@ export function metaDescription() {
 function galleryCard(item, i) {
   return html`<figure class="gal-item${i === 0 ? ' is-active' : ''}">
   ${// the first frame is the preloaded LCP image (see the <link rel=preload>
-      // below) — lazy-loading it would contradict that preload
+      // below), lazy-loading it would contradict that preload
       picture({ src: item.src, alt: item.alt, lazy: i !== 0 })}
   <div class="gal-card-scrim" aria-hidden="true"></div>
   <figcaption class="glass glass-dark refract gal-card-caption">
@@ -97,7 +97,7 @@ export function galleryPage() {
 ${lightbox()}`;
 
   return layout({
-    title: 'Photo Gallery — Kenya Safaris | Nissa Safaris',
+    title: 'Photo Gallery, Kenya Safaris | Nissa Safaris',
     description: metaDescription(),
     path: '/gallery/',
     image: gallery[0]?.src,

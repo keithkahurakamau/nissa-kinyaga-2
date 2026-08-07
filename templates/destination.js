@@ -8,8 +8,8 @@ import { packageCard, ctaBlock, breadcrumbNav, picture } from './partials.js';
  * Derives a safe 50-165 (escaped) char meta description from a destination's
  * `metaDescription` field. Every destination's field is authored well clear
  * of both the 50-char floor and the 165-char ceiling (see data/destinations.js),
- * so this ceiling guard is a safety net for escaping inflation — apostrophes
- * becoming `&#39;` — rather than something normal operation should rely on.
+ * so this ceiling guard is a safety net for escaping inflation, apostrophes
+ * becoming `&#39;`, rather than something normal operation should rely on.
  *
  * @param {object} dest
  * @returns {string}
@@ -73,7 +73,7 @@ function factsSection(dest) {
 
 // Renders only when `dest.nissaNote` is truthy. These are first-hand claims
 // about Nissa's own professional history, and only four of the eight
-// destinations carry one — rendering an empty block, or a note on ground he
+// destinations carry one, rendering an empty block, or a note on ground he
 // has not worked, would misrepresent him. `interpolate()` turns `null` into
 // `''`, so this guard has to be explicit rather than left to the template
 // literal.
@@ -103,8 +103,8 @@ function packagesSection(dest, packagesHere) {
 /**
  * Renders a full destination detail page.
  *
- * @param {object} dest — an entry from `data/destinations.js`
- * @param {object[]} packagesHere — packages whose `destinations` include
+ * @param {object} dest, an entry from `data/destinations.js`
+ * @param {object[]} packagesHere, packages whose `destinations` include
  *   `dest.slug`
  * @returns {string} the complete HTML document
  */

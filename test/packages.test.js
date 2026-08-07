@@ -17,8 +17,8 @@ test('slugs are unique', () => {
 test('every priceKey resolves to a price entry', () => {
   for (const pkg of packages) {
     assert.ok(PRICES[pkg.priceKey], `no PRICES entry for ${pkg.priceKey}`);
-    assert.equal(typeof PRICES[pkg.priceKey].fromUsd, 'number');
-    assert.ok(PRICES[pkg.priceKey].fromUsd > 0);
+    assert.equal(typeof PRICES[pkg.priceKey].fromKes, 'number');
+    assert.ok(PRICES[pkg.priceKey].fromKes > 0);
   }
 });
 
@@ -33,7 +33,7 @@ test('every destination slug on a package exists in destinations.js', () => {
 
 test('the PLACEHOLDER price warning is present', () => {
   const source = readFileSync(new URL('../data/packages.js', import.meta.url), 'utf8');
-  assert.match(source, /PLACEHOLDER — EDIT BEFORE LAUNCH/);
+  assert.match(source, /PLACEHOLDER, EDIT BEFORE LAUNCH/);
 });
 
 test('no price is hard-coded outside the PRICES block', () => {

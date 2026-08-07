@@ -8,7 +8,7 @@ import packages, { PRICES } from '../data/packages.js';
 // Fixed, truthful marketing copy used only as a last-resort suffix to pull
 // a composed description up to the 50-char floor. It's long enough on its
 // own (48 chars) that appending it to even a one-word title and a
-// one-character summary clears the floor — see the "guarantees the
+// one-character summary clears the floor, see the "guarantees the
 // 50-char floor" test in test/build.test.js.
 const BOOKING_SUFFIX = 'Private, guided departures with Nissa Safaris.';
 
@@ -26,9 +26,9 @@ function fitCeiling(text) {
  * Derives a meta description of 50-165 (escaped) characters from a package.
  *
  * `pkg.summary` is validated to be <= 200 chars (lib/validate.js), but has
- * no minimum, and `pkg.title` has no length bound either — so the summary
+ * no minimum, and `pkg.title` has no length bound either, so the summary
  * alone can legitimately fall under the 50-char floor. When it does, this
- * composes progressively fuller — but always truthful — candidates until
+ * composes progressively fuller, but always truthful, candidates until
  * one clears the floor:
  *   1. title + days/nights + summary
  *   2. the above + a fixed booking sentence
@@ -46,7 +46,7 @@ export function metaDescription(pkg) {
   if (summaryLen >= MIN_DESCRIPTION && summaryLen <= MAX_DESCRIPTION) return summary;
   if (summaryLen > MAX_DESCRIPTION) return truncateToEscapedLimit(summary, MAX_DESCRIPTION);
 
-  const base = `${pkg.title} — a ${pkg.days}-day, ${pkg.nights}-night Kenya safari.`;
+  const base = `${pkg.title}, a ${pkg.days}-day, ${pkg.nights}-night Kenya safari.`;
   const candidates = [`${base} ${summary}`, `${base} ${summary} ${BOOKING_SUFFIX}`];
 
   for (const candidate of candidates) {
@@ -54,7 +54,7 @@ export function metaDescription(pkg) {
     if (escapedLength(fitted) >= MIN_DESCRIPTION) return fitted;
   }
 
-  // Unreachable for any package that passes validatePackage — kept only so
+  // Unreachable for any package that passes validatePackage, kept only so
   // this function never silently returns a description under the floor.
   return fitCeiling(candidates[candidates.length - 1]);
 }
@@ -84,7 +84,7 @@ function titleSection(pkg, crumbs) {
     ${breadcrumbNav(crumbs)}
     <h1 class="display">${pkg.title}</h1>
     <p class="pkg-meta">${pkg.days} days · ${pkg.nights} nights</p>
-    <p class="pkg-price">From $${price.fromUsd}<span> per person</span></p>
+    <p class="pkg-price">From KSh ${price.fromKes.toLocaleString('en-KE')}<span> per person</span></p>
     <p class="pkg-price-note">A guide price, not a quote. What you actually pay
       depends on how many of you there are, the season you travel in and the
       standard of camp you want. Tell me what you have in mind and I will price
@@ -190,7 +190,7 @@ function relatedSection(pkg) {
 /**
  * Renders a full safari package detail page.
  *
- * @param {object} pkg — an entry from `data/packages.js`
+ * @param {object} pkg, an entry from `data/packages.js`
  * @returns {string} the complete HTML document
  */
 export function packagePage(pkg) {
@@ -217,7 +217,7 @@ export function packagePage(pkg) {
 </main>`;
 
   return layout({
-    title: `${pkg.title} — Kenya Safari | Nissa Safaris`,
+    title: `${pkg.title}, Kenya Safari | Nissa Safaris`,
     description: metaDescription(pkg),
     path: `/safaris/${pkg.slug}/`,
     image: pkg.hero,

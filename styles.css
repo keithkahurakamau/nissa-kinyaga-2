@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Nissa Safaris — stylesheet
+   Nissa Safaris, stylesheet
    Design tokens + component classes, ported from the original single-page
    index.html cinematic design. Structure:
      1. Reset
@@ -89,7 +89,7 @@ a { text-decoration: none; }
 }
 
 /* ==========================================================================
-   4. Keyframes — names kept exactly as app.js / legacy markup reference them
+   4. Keyframes, names kept exactly as app.js / legacy markup reference them
    ========================================================================== */
 @keyframes nk_pan {
   0% { transform: scale(1.06); }
@@ -151,15 +151,15 @@ a { text-decoration: none; }
   transition: padding .5s ease;
 }
 /* Dark scrim behind the fixed nav. .nav-link is `var(--cream)` with no
-   per-page override (it can't have one — the nav is fixed and outside the
+   per-page override (it can't have one, the nav is fixed and outside the
    section it overlaps, so no descendant/background selector reaches it),
    so on pages that open on a light section (--sand, #F3ECDC) the links are
    ~1.03:1, effectively invisible. This gives every page a guaranteed dark
    backdrop regardless of what happens to be behind the nav.
    Solid to 68% (~109px) then fades to transparent by 160px: that covers the
    nav's full box in both states (108px unscrolled = 22+64+22, 92px scrolled
-   = 14+64+14) with solid colour, so the *link text itself* — vertically
-   centred inside that box — never sits in the fading tail where alpha (and
+   = 14+64+14) with solid colour, so the *link text itself*, vertically
+   centred inside that box, never sits in the fading tail where alpha (and
    therefore contrast) would be lower than the figure computed below.
    pointer-events:none so the scrim never intercepts clicks; z-index:-1 so,
    inside the stacking context .nav's own z-index:60 already establishes, it
@@ -167,7 +167,7 @@ a { text-decoration: none; }
    descendants" step, which is *after* the negative-z-index step) while
    still riding above ordinary page content the same way the rest of .nav
    already does. Do not remove the z-index:-1 without re-checking paint
-   order — a positive/auto value here previously painted the scrim OVER the
+   order, a positive/auto value here previously painted the scrim OVER the
    nav-bar (the exact "content under an overlay" bug class this project has
    shipped three times), which still passes a casual look but silently
    covers the links. */
@@ -208,7 +208,7 @@ a { text-decoration: none; }
   flex-direction: column;
   line-height: 1;
 }
-/* the supplied logo file is roughly square, not a slim wordmark — constrain
+/* the supplied logo file is roughly square, not a slim wordmark, constrain
    by height only (auto width) so it fits the fixed 64px nav bar */
 .nav-logo img {
   height: 54px;
@@ -314,21 +314,25 @@ a { text-decoration: none; }
   font-family: var(--font-display);
   font-weight: 600;
   font-size: clamp(32px, 4.4vw, 58px);
-  line-height: 1.04;
+  /* Cormorant Garamond has deep descenders; 1.04 clipped the "y" into the
+     line beneath it wherever a heading was followed directly by meta text. */
+  line-height: 1.14;
   letter-spacing: -.01em;
 }
 .display-lg {
   font-family: var(--font-display);
   font-weight: 600;
   font-size: clamp(48px, 8.2vw, 118px);
-  line-height: .94;
+  line-height: 1.02;
   letter-spacing: -.01em;
 }
 .h2 {
   font-family: var(--font-display);
   font-weight: 600;
   font-size: clamp(32px, 4.4vw, 58px);
-  line-height: 1.04;
+  /* Cormorant Garamond has deep descenders; 1.04 clipped the "y" into the
+     line beneath it wherever a heading was followed directly by meta text. */
+  line-height: 1.14;
 }
 .h3 {
   font-family: var(--font-display);
@@ -350,7 +354,7 @@ a { text-decoration: none; }
   line-height: 1.55;
   /* Default reads on the light .section/.section-alt backgrounds most
      `.lede` instances land on (destinations/destination/safaris index
-     intros). Dark sections override back to cream immediately below —
+     intros). Dark sections override back to cream immediately below, 
      see fix-round-1 finding 1: --cream-2 on --sand was ~1.01:1 contrast,
      effectively invisible. */
   color: var(--muted-2);
@@ -366,7 +370,7 @@ a { text-decoration: none; }
    backgrounds (ctaBlock's <h2 class="h2"> on .section-forest, and the
    about page's philosophy heading, both land here). Same technique as the
    .lede override immediately above: swap to a light token in dark context.
-   Task 16: `.hero` (the home page's cinematic header) added to this group —
+   Task 16: `.hero` (the home page's cinematic header) added to this group, 
    same hazard, its <h1> sits over the photographic hero, not a light section. */
 .section-ink h1, .section-ink h2, .section-ink h3, .section-ink h4,
 .section-forest h1, .section-forest h2, .section-forest h3, .section-forest h4,
@@ -397,7 +401,7 @@ a { text-decoration: none; }
   /* fix-round-2: --muted on light backgrounds was 3.49:1, below WCAG AA's
      4.5:1 for text this small. --muted-2 is the same swap .lede and .body
      already use for readable copy on --sand/--sand-2. Not yet used by any
-     live page/dark section — no override needed unless one lands here. */
+     live page/dark section, no override needed unless one lands here. */
   color: var(--muted-2);
 }
 .eyebrow {
@@ -560,6 +564,7 @@ a { text-decoration: none; }
   flex: 1;
 }
 .pkg-meta {
+  margin-top: 10px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -569,7 +574,7 @@ a { text-decoration: none; }
   text-transform: uppercase;
   /* fix-round-2: --muted on --cream/--sand was 3.85:1/3.49:1, below AA.
      .pkg-meta only ever renders on the light .pkg-card (--cream) / package
-     header (--sand) backgrounds — no dark instance exists to preserve. */
+     header (--sand) backgrounds, no dark instance exists to preserve. */
   color: var(--muted-2);
   margin-bottom: 10px;
 }
@@ -698,7 +703,7 @@ a { text-decoration: none; }
   font-family: var(--font-display);
   font-size: 34px;
   /* fix-round-2: --gold-dark on this list's --sand background was 2.70:1
-     — fails even the large-text 3:1 floor. --gold-deep clears both
+   , fails even the large-text 3:1 floor. --gold-deep clears both
      thresholds (5.39:1) and stays in the same gold family. */
   color: var(--gold-deep);
   line-height: 1;
@@ -965,7 +970,7 @@ a { text-decoration: none; }
    ported from index.html's #philosophy image treatment. Structured as two
    plain sibling elements (image, then gradient overlay) painted BEFORE the
    `.wrap` content div in DOM order, rather than as a ::after on the same
-   container the content lives in — a ::after paints last within its own
+   container the content lives in, a ::after paints last within its own
    element and would cover the content instead of sitting behind it. */
 .photo-bg {
   position: absolute;
@@ -1138,7 +1143,7 @@ a { text-decoration: none; }
   margin: 12px 0 0;
 }
 
-/* gallery card caption — Task 17: server-rendered <figure class="gal-item">
+/* gallery card caption, Task 17: server-rendered <figure class="gal-item">
    now carries a real <img> plus a caption overlay, ported from the inline
    style="..." block app.js used to inject per card (blocked under a CSP
    with no 'unsafe-inline' style-src). `.gal-card-caption` composes with the
@@ -1152,7 +1157,7 @@ a { text-decoration: none; }
 /* Compound selector, not `.gal-card-caption` alone: `.glass` is declared
    later in this file and sets `position: relative` at equal (single-class)
    specificity, which would win the cascade tie and drop the caption out of
-   absolute positioning — landing it at the top of the card instead of
+   absolute positioning, landing it at the top of the card instead of
    overlaying the bottom of the photograph. */
 .gal-item .gal-card-caption {
   position: absolute;
@@ -1194,7 +1199,7 @@ a { text-decoration: none; }
 
 /* ---------- Form ---------- */
 /* fix-round-3 (Task 17, defect 3): `.field-input`/`.field-textarea` etc.
-   below set --cream-2 text with no background of their own — the same
+   below set --cream-2 text with no background of their own, the same
    latent pattern that made `.lede` invisible at ~1.01:1 (see fix-round-1
    finding 1) once composed onto a light section. `.form` previously relied
    entirely on an ambient dark ancestor (the legacy `nk-glass nk-refract`
@@ -1260,7 +1265,7 @@ a { text-decoration: none; }
   cursor: pointer;
 }
 
-/* native date input — ported from #nk-date in index.html so the
+/* native date input, ported from #nk-date in index.html so the
    calendar-picker icon reads against the dark form background under a
    CSP that forbids inline styles */
 .field-date {
@@ -1283,7 +1288,7 @@ a { text-decoration: none; }
 .field-date::-webkit-datetime-edit { color: var(--cream-2); }
 .field-date:disabled { cursor: not-allowed; opacity: .45; }
 
-/* "choose a safari" custom listbox — ported from #nk-pkg-toggle / #nk-pkg /
+/* "choose a safari" custom listbox, ported from #nk-pkg-toggle / #nk-pkg /
    .nk-pkg-opt / .nk-pkg-sel in index.html. Not in the Task 10 brief's
    contractual class list (a real gap: this widget has markup precedent but
    no assigned name), added here per fix-round-1 finding 4 so Task 17 can
@@ -1359,7 +1364,7 @@ a { text-decoration: none; }
 }
 .form-submit { width: 100%; }
 
-/* the form's post-submit thank-you panel — replaces the form inside
+/* the form's post-submit thank-you panel, replaces the form inside
    #nk-form-wrap via app.js. Built from static classes (no style="..."), and
    given the same guaranteed --ink background as .form for the same
    contrast reason. */
@@ -1419,7 +1424,7 @@ a { text-decoration: none; }
 /* same square-logo constraint as .nav-logo img, sized up slightly since the
    footer isn't pinned to a fixed-height row */
 .footer-logo {
-  /* The full card is portrait (880x1194), so width drives height — keep it to
+  /* The full card is portrait (880x1194), so width drives height, keep it to
      a normal footer brand-block size rather than a hero. */
   height: auto;
   width: clamp(150px, 17vw, 200px);
@@ -1479,7 +1484,7 @@ a { text-decoration: none; }
   top: 12px;
 }
 
-/* glass / refract — Apple-grade glassmorphism, ported verbatim from index.html.
+/* glass / refract, Apple-grade glassmorphism, ported verbatim from index.html.
    Aliased to the legacy nk- prefixed names because app.js toggles those
    classList tokens directly (nav scroll state, generated lightbox
    figcaptions) rather than emitting the new contractual names. */
@@ -1598,7 +1603,7 @@ a { text-decoration: none; }
   text-transform: uppercase;
   /* fix-round-2: --muted on the header's --sand background was 3.49:1,
      below AA. breadcrumbNav only ever renders inside a light .section
-     header — no dark instance exists to preserve. */
+     header, no dark instance exists to preserve. */
   color: var(--muted-2);
   padding: 18px 0;
 }
@@ -1718,7 +1723,7 @@ a { text-decoration: none; }
   background: rgba(206,142,52,0.50);
 }
 
-/* privacy / cookie consent banner (Task 11 — genuine gap: the original
+/* privacy / cookie consent banner (Task 11, genuine gap: the original
    single page positioned this with a style="..." attribute; the multipage
    shell needs a class since inline styles are no longer permitted) */
 .consent {
@@ -1819,8 +1824,8 @@ a { text-decoration: none; }
   width: 100%;
   overflow: hidden;
 }
-/* No inline style="..." is permitted (CSP), so the hero photograph — always
-   lion.jpg on this one page, per site copy — is baked into the class rather
+/* No inline style="..." is permitted (CSP), so the hero photograph, always
+   lion.jpg on this one page, per site copy, is baked into the class rather
    than set per-instance the way index.html's background-image once was. */
 .hero-media {
   position: absolute;
@@ -1834,7 +1839,7 @@ a { text-decoration: none; }
    overlay layered above the dark vignette). Anchored to .hero-media itself
    (its own ::after) rather than another markup child of .hero, so the hero
    element still holds only the one real child the about/dest/pkg hero
-   contract expects — see the "hero holds only the image" note this file's
+   contract expects, see the "hero holds only the image" note this file's
    header points to. */
 .hero-media::after {
   content: "";
@@ -1856,7 +1861,7 @@ a { text-decoration: none; }
    carries text directly over the photograph, matching index.html. Text
    would otherwise paint UNDER .hero-media (position:absolute, so it's a
    z-index:auto positioned box) and under .hero::after (a generated pseudo,
-   always last in paint order regardless of markup position) — this wrapper
+   always last in paint order regardless of markup position), this wrapper
    gets its own z-index so it always wins that stack, independent of DOM
    order relative to the ::after pseudo. */
 .hero-content {
@@ -1916,7 +1921,7 @@ a { text-decoration: none; }
 }
 
 /* ==========================================================================
-   7. prefers-reduced-motion — disables all animation and transition
+   7. prefers-reduced-motion, disables all animation and transition
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -1956,8 +1961,8 @@ a { text-decoration: none; }
 }
 .filter-empty a { color: var(--gold-deep); text-underline-offset: .2em; }
 
-/* Footer mark: the complete supplied lockup — emblem, wordmark, tagline and
-   contact block — centred and given room, rather than the compact nav mark. */
+/* Footer mark: the complete supplied lockup, emblem, wordmark, tagline and
+   contact block, centred and given room, rather than the compact nav mark. */
 .footer-mark {
   display: flex;
   justify-content: center;

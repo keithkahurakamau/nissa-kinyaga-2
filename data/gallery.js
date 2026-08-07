@@ -1,11 +1,11 @@
-// The photo manifest for /gallery/ — migrated out of app.js (Task 17) so the
+// The photo manifest for /gallery/, migrated out of app.js (Task 17) so the
 // build emits real server-rendered <img> tags: before this, the whole reel
 // was built client-side from an inline array and crawlers indexed nothing.
 // app.js still drives the carousel/lightbox behaviour, but now reads each
 // item back out of the rendered DOM instead of holding its own copy.
 //
 // Fields: `src` (root-relative asset path), `alt` (a plain description of
-// the frame, for accessibility/SEO — independent of `title`, which is the
+// the frame, for accessibility/SEO, independent of `title`, which is the
 // caption shown in the gallery/lightbox), `category`, `title`, `story`.
 export default [
   {

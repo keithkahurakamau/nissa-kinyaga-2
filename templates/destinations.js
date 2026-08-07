@@ -30,7 +30,7 @@ function destinationCard(dest) {
  * Renders the destinations index: an intro followed by a card grid linking
  * to every destination detail page.
  *
- * @param {object[]} destinationsList — the full `data/destinations.js` array
+ * @param {object[]} destinationsList, the full `data/destinations.js` array
  * @returns {string} the complete HTML document
  */
 export function destinationsIndexPage(destinationsList) {
@@ -46,7 +46,7 @@ export function destinationsIndexPage(destinationsList) {
     <div class="wrap">
       ${breadcrumbNav(crumbs)}
       <h1 class="display">Destinations</h1>
-      <p class="lede">Eight places across Kenya, from the Mara's open plains to the Diani coast — each one part of the ground Nissa guides.</p>
+      <p class="lede">Eight places across Kenya, from the Mara's open plains to the Diani coast, each one part of the ground Nissa guides.</p>
     </div>
   </header>
   <section class="section-alt">

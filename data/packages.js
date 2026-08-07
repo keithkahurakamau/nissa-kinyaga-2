@@ -1,32 +1,33 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// PLACEHOLDER — EDIT BEFORE LAUNCH
-// Indicative 2026 Kenya market rates, USD per person sharing, low season,
-// mid-range accommodation, party of 4. Replace every figure with Nissa's own
-// rates before the site goes live. Nothing else in the codebase hard-codes a
-// price.
+// PLACEHOLDER, EDIT BEFORE LAUNCH
+// Indicative 2026 Kenya market rates, KES per person sharing, low season,
+// mid-range accommodation, party of 4. Converted from USD at 130 KES/USD and
+// rounded to the nearest 1,000, so treat these as ballpark only. Replace every
+// figure with Nissa's own rates before the site goes live. Nothing else in the
+// codebase hard-codes a price.
 // ─────────────────────────────────────────────────────────────────────────────
 export const PRICES = {
-  mara2: { fromUsd: 420, tier: 'mid-range' },
-  mara3: { fromUsd: 620, tier: 'mid-range' },
-  'mara-nakuru4': { fromUsd: 880, tier: 'mid-range' },
-  'mara-nakuru-naivasha5': { fromUsd: 1080, tier: 'mid-range' },
-  'mara-nakuru-amboseli6': { fromUsd: 1340, tier: 'mid-range' },
-  'best-of-kenya7': { fromUsd: 1590, tier: 'mid-range' },
-  amboseli3: { fromUsd: 590, tier: 'mid-range' },
-  tsavo2: { fromUsd: 390, tier: 'mid-range' },
-  tsavo3: { fromUsd: 610, tier: 'mid-range' },
-  'tsavo-amboseli4': { fromUsd: 850, tier: 'mid-range' },
-  samburu3: { fromUsd: 650, tier: 'mid-range' },
-  olpejeta2: { fromUsd: 430, tier: 'mid-range' },
-  'samburu-olpejeta4': { fromUsd: 940, tier: 'mid-range' },
-  'borana-lewa4': { fromUsd: 1180, tier: 'mid-range' },
-  'laikipia-walking3': { fromUsd: 890, tier: 'mid-range' },
-  'mtkenya-naromoru4': { fromUsd: 720, tier: 'mid-range' },
-  'mtkenya-sirimon5': { fromUsd: 980, tier: 'mid-range' },
-  'mtkenya-chogoria6': { fromUsd: 1180, tier: 'mid-range' },
-  diani4: { fromUsd: 560, tier: 'mid-range' },
-  'tsavo-diani6': { fromUsd: 1120, tier: 'mid-range' },
-  'mara-diani8': { fromUsd: 1780, tier: 'mid-range' },
+  mara2: { fromKes: 55000, tier: 'mid-range' },
+  mara3: { fromKes: 81000, tier: 'mid-range' },
+  'mara-nakuru4': { fromKes: 114000, tier: 'mid-range' },
+  'mara-nakuru-naivasha5': { fromKes: 140000, tier: 'mid-range' },
+  'mara-nakuru-amboseli6': { fromKes: 174000, tier: 'mid-range' },
+  'best-of-kenya7': { fromKes: 207000, tier: 'mid-range' },
+  amboseli3: { fromKes: 77000, tier: 'mid-range' },
+  tsavo2: { fromKes: 51000, tier: 'mid-range' },
+  tsavo3: { fromKes: 79000, tier: 'mid-range' },
+  'tsavo-amboseli4': { fromKes: 110000, tier: 'mid-range' },
+  samburu3: { fromKes: 84000, tier: 'mid-range' },
+  olpejeta2: { fromKes: 56000, tier: 'mid-range' },
+  'samburu-olpejeta4': { fromKes: 122000, tier: 'mid-range' },
+  'borana-lewa4': { fromKes: 153000, tier: 'mid-range' },
+  'laikipia-walking3': { fromKes: 116000, tier: 'mid-range' },
+  'mtkenya-naromoru4': { fromKes: 94000, tier: 'mid-range' },
+  'mtkenya-sirimon5': { fromKes: 127000, tier: 'mid-range' },
+  'mtkenya-chogoria6': { fromKes: 153000, tier: 'mid-range' },
+  diani4: { fromKes: 73000, tier: 'mid-range' },
+  'tsavo-diani6': { fromKes: 146000, tier: 'mid-range' },
+  'mara-diani8': { fromKes: 231000, tier: 'mid-range' },
 };
 
 const packages = [
@@ -119,7 +120,7 @@ const packages = [
       {
         day: 2,
         title: 'Full day in the Mara',
-        body: "This day is unstructured on purpose. We're out before sunrise for the morning drive, back at camp for lunch and a rest through the hot midday hours, then out again from mid-afternoon until the light goes. Where we drive depends on where the game has been the past few days — near the river for cat sightings, out onto the open plains if the migration herds are moving through, or toward the conservancies bordering the reserve for a quieter session.",
+        body: "This day is unstructured on purpose. We're out before sunrise for the morning drive, back at camp for lunch and a rest through the hot midday hours, then out again from mid-afternoon until the light goes. Where we drive depends on where the game has been the past few days, near the river for cat sightings, out onto the open plains if the migration herds are moving through, or toward the conservancies bordering the reserve for a quieter session.",
       },
       {
         day: 3,
@@ -236,7 +237,7 @@ const packages = [
       },
       {
         q: 'Is this a lot of driving?',
-        a: "There's more road time than a Mara-only trip, since Nakuru adds a leg, but splitting the journey into Nairobi–Nakuru and Nakuru–Mara keeps each individual drive shorter than the direct run, and neither day is purely a travel day — both include a game drive.",
+        a: "There's more road time than a Mara-only trip, since Nakuru adds a leg, but splitting the journey into Nairobi–Nakuru and Nakuru–Mara keeps each individual drive shorter than the direct run, and neither day is purely a travel day, both include a game drive.",
       },
     ],
     signature: false,
@@ -518,7 +519,7 @@ const packages = [
     summary:
       'Three days at the foot of Kilimanjaro, built around the two windows when elephant herds move onto open ground and the mountain is clearest of cloud.',
     overview: [
-      "Amboseli rewards a short stay better than almost anywhere else on the safari circuit, because the two things that make it worth visiting — the swamp-fed elephant herds and the view of Kilimanjaro across the border — both show best in short windows either side of the heat of the day. Three days gives us two full mornings and two full afternoons inside the park, without a long first or last day eaten up by road.",
+      "Amboseli rewards a short stay better than almost anywhere else on the safari circuit, because the two things that make it worth visiting, the swamp-fed elephant herds and the view of Kilimanjaro across the border, both show best in short windows either side of the heat of the day. Three days gives us two full mornings and two full afternoons inside the park, without a long first or last day eaten up by road.",
       'We drive south from Nairobi via Namanga or Emali, a run of about four hours that puts you into camp in time for lunch on the first day. From there the itinerary is built around the swamp edges, where elephant come out of the acacia to drink and graze often for hours at a stretch, and around the early morning light, when the mountain is most likely to be clear of the cloud that gathers around the peak as the day warms.',
     ],
     itinerary: [
@@ -1003,7 +1004,7 @@ const packages = [
       'Four days on the conservancies where I spent thirteen years guiding: rhino tracked on foot, day and night drives, a horseback safari and an anti-poaching patrol.',
     overview: [
       "Borana and Lewa are the ground I know better than anywhere else in Kenya. I spent seven years at Lewa Safari Camp, starting as a safari guide and working up to camp assistant manager and head guide, then two years at Sirikoi before six years at Borana itself as head of staff and head guide, until I stepped back into freelance guiding in 2024. This itinerary is built around the activities that make these two conservancies different from a standard reserve safari: rhino tracked on foot, drives that run after dark, and a horseback outing across open country most parks won't let you ride through.",
-      "Both conservancies set their own vehicle limits and manage the land for livestock and wildlife side by side, which keeps them quieter than the southern circuit and gives room for activities a fenced national park doesn't allow. Over four days we track black rhino on foot with the anti-poaching team at first light, run a day drive and a night drive, spend a morning on horseback, and join rangers for an evening anti-poaching patrol — the same rhino and anti-poaching work I came to know closely over six years as head of staff and head guide at Borana.",
+      "Both conservancies set their own vehicle limits and manage the land for livestock and wildlife side by side, which keeps them quieter than the southern circuit and gives room for activities a fenced national park doesn't allow. Over four days we track black rhino on foot with the anti-poaching team at first light, run a day drive and a night drive, spend a morning on horseback, and join rangers for an evening anti-poaching patrol, the same rhino and anti-poaching work I came to know closely over six years as head of staff and head guide at Borana.",
     ],
     itinerary: [
       {
@@ -1014,7 +1015,7 @@ const packages = [
       {
         day: 2,
         title: 'Rhino tracking on foot, and a night drive',
-        body: "We are out at first light with Borana's anti-poaching team, tracking black rhino on foot from fresh sign — ground I came to know closely over six years as head of staff and head guide here. It's slow work with a genuinely high success rate, though I won't promise a sighting on any given day; what it does give you is time on the ground with the people whose job is protecting these animals. After a rest through the heat, we go back out after dark for a night game drive, spotlighting for the nocturnal side of the conservancy that a normal day drive never shows.",
+        body: "We are out at first light with Borana's anti-poaching team, tracking black rhino on foot from fresh sign, ground I came to know closely over six years as head of staff and head guide here. It's slow work with a genuinely high success rate, though I won't promise a sighting on any given day; what it does give you is time on the ground with the people whose job is protecting these animals. After a rest through the heat, we go back out after dark for a night game drive, spotlighting for the nocturnal side of the conservancy that a normal day drive never shows.",
       },
       {
         day: 3,
@@ -1052,7 +1053,7 @@ const packages = [
       },
       {
         q: 'Do we need riding experience for the horseback safari?',
-        a: "Yes, an intermediate level or above — comfortable at a walk, trot and controlled canter in open country, since this isn't a lead-rein outing. If you or anyone in your group hasn't ridden before, tell us at booking and we can swap that morning for an additional game drive instead.",
+        a: "Yes, an intermediate level or above, comfortable at a walk, trot and controlled canter in open country, since this isn't a lead-rein outing. If you or anyone in your group hasn't ridden before, tell us at booking and we can swap that morning for an additional game drive instead.",
       },
       {
         q: 'What vehicle do we travel in, and is the night drive different?',
@@ -1144,7 +1145,7 @@ const packages = [
     signature: true,
   },
   {
-    title: '4-Day Mount Kenya — Naro Moru Route',
+    title: '4-Day Mount Kenya, Naro Moru Route',
     slug: '4-day-mount-kenya-naro-moru-route',
     days: 4,
     nights: 3,
@@ -1157,7 +1158,7 @@ const packages = [
       'The shortest way to Point Lenana: up and down the Naro Moru side in four days, the fastest route on the mountain and the one that asks the most of your lungs.',
     overview: [
       "Naro Moru is the route I put people on when the calendar, not the mountain, is setting the limit: four days is enough to stand on Point Lenana and be back at the gate, but it compresses the climb most other routes spread over five. You go from the Met Station at just over 3,000 metres to the summit ridge at 4,985 metres in two days of walking, which is a serious amount of altitude to gain that fast.",
-      "I say this plainly because it matters: Naro Moru has the lowest summit success rate of the three main routes, precisely because it gives your body the least time to adjust. If four days is genuinely all you have, we take it seriously and build in what acclimatisation we can — a slow pace, an early night before the push, and a guide watching you as closely as the trail. If your dates have any flexibility, the 5-Day Sirimon to Chogoria route gives your body an extra day and climbs the summit odds accordingly.",
+      "I say this plainly because it matters: Naro Moru has the lowest summit success rate of the three main routes, precisely because it gives your body the least time to adjust. If four days is genuinely all you have, we take it seriously and build in what acclimatisation we can, a slow pace, an early night before the push, and a guide watching you as closely as the trail. If your dates have any flexibility, the 5-Day Sirimon to Chogoria route gives your body an extra day and climbs the summit odds accordingly.",
     ],
     itinerary: [
       {
@@ -1168,7 +1169,7 @@ const packages = [
       {
         day: 2,
         title: "Met Station to Mackinder's Camp, via the Vertical Bog",
-        body: "The day trekkers remember for the wrong reasons: the Vertical Bog, a steep, often waterlogged climb out of the forest onto open moorland, gaining several hundred metres in a short distance. Beyond it the ground opens into tussock grass and giant groundsel before Mackinder's Camp at around 4,200 metres, set below the peaks with the Teleki Valley falling away below. We keep the afternoon deliberately quiet — short walk, food, rest — since tomorrow starts in the dark.",
+        body: "The day trekkers remember for the wrong reasons: the Vertical Bog, a steep, often waterlogged climb out of the forest onto open moorland, gaining several hundred metres in a short distance. Beyond it the ground opens into tussock grass and giant groundsel before Mackinder's Camp at around 4,200 metres, set below the peaks with the Teleki Valley falling away below. We keep the afternoon deliberately quiet, short walk, food, rest, since tomorrow starts in the dark.",
       },
       {
         day: 3,
@@ -1209,7 +1210,7 @@ const packages = [
       },
       {
         q: "What happens if I can't continue?",
-        a: "Your guide is watching for the early signs of altitude sickness — headache, nausea, poor coordination — throughout the climb, and their word on turning back is final, not a suggestion. If you need to stop, a porter or the guide accompanies you back down to a lower camp; we don't leave anyone on the mountain alone, and it doesn't affect the rest of your trip if you have onward travel booked.",
+        a: "Your guide is watching for the early signs of altitude sickness, headache, nausea, poor coordination, throughout the climb, and their word on turning back is final, not a suggestion. If you need to stop, a porter or the guide accompanies you back down to a lower camp; we don't leave anyone on the mountain alone, and it doesn't affect the rest of your trip if you have onward travel booked.",
       },
       {
         q: 'Is a summit guaranteed on this route?',
@@ -1219,7 +1220,7 @@ const packages = [
     signature: false,
   },
   {
-    title: '5-Day Mount Kenya — Sirimon to Chogoria',
+    title: '5-Day Mount Kenya, Sirimon to Chogoria',
     slug: '5-day-mount-kenya-sirimon-to-chogoria',
     days: 5,
     nights: 4,
@@ -1232,7 +1233,7 @@ const packages = [
       'Up the drier Sirimon side, down through Chogoria: five days that give your body a real extra day to acclimatise before the push to Point Lenana.',
     overview: [
       "This is the route I recommend most often when someone asks which way up Mount Kenya. Sirimon is the gentlest and driest approach on the way up, climbing gradually through forest and open moorland to Shipton's Camp below the peaks; Chogoria, on the way down, is generally agreed to be the most scenic face of the mountain, with the Gorges Valley and a string of glacial tarns underfoot. Crossing between the two on summit day means you see two quite different sides of Mount Kenya rather than retracing your own footprints.",
-      "The extra day over our 4-Day Naro Moru itinerary is not padding. Spreading the ascent across five days gives your body a genuinely better chance to adjust to altitude before the summit push, and it shows in the numbers: Sirimon to Chogoria carries a noticeably better success rate than the faster Naro Moru route, for a very simple reason — more time.",
+      "The extra day over our 4-Day Naro Moru itinerary is not padding. Spreading the ascent across five days gives your body a genuinely better chance to adjust to altitude before the summit push, and it shows in the numbers: Sirimon to Chogoria carries a noticeably better success rate than the faster Naro Moru route, for a very simple reason, more time.",
     ],
     itinerary: [
       {
@@ -1299,7 +1300,7 @@ const packages = [
     signature: false,
   },
   {
-    title: '6-Day Mount Kenya — Chogoria Traverse',
+    title: '6-Day Mount Kenya, Chogoria Traverse',
     slug: '6-day-mount-kenya-chogoria-traverse',
     days: 6,
     nights: 5,
@@ -1312,7 +1313,7 @@ const packages = [
       'Six days up the scenic Chogoria side and down through Naro Moru, with a built-in acclimatisation day that gives this route the best summit odds we offer.',
     overview: [
       "This is the itinerary for a trekker who wants the best chance of standing on Point Lenana and has the extra day to spend on it. We go up the Chogoria route, generally agreed to be the most scenic approach on the mountain, past Lake Ellis and the Hall Tarns into the Gorges Valley, and come down the shorter Naro Moru side afterward. The difference from our 5-Day Sirimon to Chogoria itinerary is a full extra day built in around Mintos Camp before the summit push, purely for acclimatisation.",
-      "That extra day is the point of this route, not an afterthought. Altitude sickness is caused by ascending faster than your body can adjust, not by fitness, and a rest day at around 4,300 metres before the final climb to 4,985 metres measurably improves your odds of reaching the summit compared with pushing straight through. We still can't promise a summit — nobody honestly can — but this is the itinerary I'd point most people toward if the extra day were available.",
+      "That extra day is the point of this route, not an afterthought. Altitude sickness is caused by ascending faster than your body can adjust, not by fitness, and a rest day at around 4,300 metres before the final climb to 4,985 metres measurably improves your odds of reaching the summit compared with pushing straight through. We still can't promise a summit, nobody honestly can, but this is the itinerary I'd point most people toward if the extra day were available.",
     ],
     itinerary: [
       {
@@ -1338,7 +1339,7 @@ const packages = [
       {
         day: 5,
         title: "Summit day: Point Lenana, then down to Mackinder's Camp",
-        body: "Up around 2 to 3 am for the climb over Simba Col to Point Lenana, cold enough by then to be genuinely below freezing, reaching the 4,985-metre summit for sunrise with Batian and Nelion's technical faces close beside us — peaks we don't attempt on this trek. We descend the Naro Moru side past Austrian Hut to Mackinder's Camp at around 4,200 metres for the night, a long day but a shorter one than crossing all the way to the gate.",
+        body: "Up around 2 to 3 am for the climb over Simba Col to Point Lenana, cold enough by then to be genuinely below freezing, reaching the 4,985-metre summit for sunrise with Batian and Nelion's technical faces close beside us, peaks we don't attempt on this trek. We descend the Naro Moru side past Austrian Hut to Mackinder's Camp at around 4,200 metres for the night, a long day but a shorter one than crossing all the way to the gate.",
       },
       {
         day: 6,

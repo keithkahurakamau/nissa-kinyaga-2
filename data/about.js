@@ -1,4 +1,4 @@
-// Nissa's biography, sourced entirely from docs/nissa-biography-source.md —
+// Nissa's biography, sourced entirely from docs/nissa-biography-source.md, 
 // his own account, supplied 2026-08-06, which overrides the legacy
 // index.html prose wherever the two disagree. Do not add, remove or
 // reorder facts; do not invent a routine the source doesn't describe.
@@ -9,7 +9,7 @@ export default {
   // eastern/northern frontier circuit.
   origins: [
     "I was born and brought up as what we call a bushbaby, in the Mukogodo Forest of northern Kenya. For eight years I walked seven kilometres each way to primary school, and on that walk, and as a herder boy in the forest on weekends and school holidays, I learned to read the land long before I ever called it work: when a hyena had new pups, when an aardvark had freshly dug for termites, when buffalo had migrated north, when African painted wolves had moved into the area, a bushbuck running for her life. I built a deep knowledge of the forest's general flora and fauna, and a deliberate one of its herbal trees and the symbiotic relationships among its bird species.",
-    "My heritage is Maasai, and it runs through everything I do. At college I specialised in social anthropology — the wide range of human social life and tribes — which became the foundation of the safari circuit I now run across Kenya's eastern and northern frontiers.",
+    "My heritage is Maasai, and it runs through everything I do. At college I specialised in social anthropology, the wide range of human social life and tribes, which became the foundation of the safari circuit I now run across Kenya's eastern and northern frontiers.",
   ],
 
   // 1997 tertiary, 1998 Lewa ranger research, 1999 Utalii College.
@@ -20,7 +20,7 @@ export default {
     },
     {
       year: '1998',
-      body: "I joined the ranger research department at Lewa Wildlife Conservancy as head radio signalling officer — the link between conservationists and the Kenya Wildlife Service, the state wildlife watchdog, feeding the wildlife analysis that supported population growth.",
+      body: "I joined the ranger research department at Lewa Wildlife Conservancy as head radio signalling officer, the link between conservationists and the Kenya Wildlife Service, the state wildlife watchdog, feeding the wildlife analysis that supported population growth.",
     },
     {
       year: '1999',
@@ -29,7 +29,7 @@ export default {
   ],
 
   // The five career stages, in order, from the source document. Durations
-  // he gave as durations stay durations — no invented start years.
+  // he gave as durations stay durations, no invented start years.
   career: [
     {
       period: '2002–2009',
@@ -66,7 +66,7 @@ export default {
     'Private guiding',
   ],
 
-  // Migrated verbatim from index.html's #expertise section — accurate and
+  // Migrated verbatim from index.html's #expertise section, accurate and
   // in his voice.
   expertise: [
     {

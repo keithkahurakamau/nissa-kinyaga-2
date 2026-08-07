@@ -6,7 +6,7 @@ export default {
   guide: 'Nissa Ole Kinyaga',
   tagline: 'Journeys that connect you to nature',
   description:
-    'Private, freelance safaris across Kenya led by Nissa Ole Kinyaga of Nissa Safaris — over twenty years guiding across Maasai Mara, Samburu, Ol Pejeta, Tsavo, Laikipia, Mount Kenya and the Diani coast.',
+    'Private, freelance safaris across Kenya led by Nissa Ole Kinyaga of Nissa Safaris, over twenty years guiding across Maasai Mara, Samburu, Ol Pejeta, Tsavo, Laikipia, Mount Kenya and the Diani coast.',
   origin: ORIGIN,
   email: 'nissasafaris254@gmail.com',
   phones: ['+254 707 415 444', '+254 722 449 514'],
@@ -44,7 +44,7 @@ export default {
     { name: 'Tassia Lodge', role: 'Freelance guide' },
     { name: 'Borana Conservancy', role: 'Head guide and head of staff' },
     // The source document records these three only because the client listed
-  // them; it states no role for any of them. Do not invent one — the launch
+  // them; it states no role for any of them. Do not invent one, the launch
   // checklist tracks confirming them with Nissa.
   { name: 'Laragai House', role: null },
     { name: 'Tsavo East', role: null },
