@@ -1295,7 +1295,10 @@ a { text-decoration: none; }
   background: transparent;
   border: none;
   border-bottom: 1px solid rgba(207,197,174,.35);
-  color: #7F7560;
+  /* 3.72:1 on --ink and fails AA. This is the DEFAULT state of the enquiry
+     form's package field, so it is what every visitor reads first.
+     --muted-3 gives 6.24:1 and matches the sibling .field-label. */
+  color: var(--muted-3);
   font-family: var(--font-body);
   font-size: 16px;
   padding: 14px 0;
