@@ -298,11 +298,20 @@ a { text-decoration: none; }
   animation: nk_fade .4s ease;
 }
 .menu-open {
+  /* display: none at rest, switched to inline-flex (not block) at the 860px
+     breakpoint below so this centering actually applies once the icon is
+     shown. min-width/min-height give a real 44x44 tap target regardless of
+     the 26px glyph's own box, measured via CDP after the change (44x44). */
   display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 8px;
+  padding: 0;
 }
 .menu-open span {
   display: block;
@@ -313,7 +322,17 @@ a { text-decoration: none; }
 }
 .menu-close {
   position: absolute;
-  top: 26px; right: 30px;
+  /* Anchors the box, not the glyph: min-width/min-height plus flex
+     centering guarantee a real 44x44 tap target around the "x" glyph,
+     which previously had no padding and measured well under 44px on
+     either axis. */
+  top: 14px; right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  line-height: 1;
   background: none;
   border: none;
   color: var(--sand);
@@ -1290,6 +1309,11 @@ a { text-decoration: none; }
   font-size: 13.5px;
   color: var(--muted-3);
   cursor: pointer;
+  /* The label (not just the 16px checkbox) is the click/tap target since
+     the input is nested inside it; min-height keeps that target >=44px
+     tall on touch devices without changing the row's visual density on
+     desktop, where align-items: center just adds breathing room. */
+  min-height: 44px;
 }
 .field-check input {
   width: 16px;
@@ -1868,7 +1892,7 @@ a { text-decoration: none; }
 
 @media (max-width: 860px) {
   .nav-links { display: none !important; }
-  .menu-open { display: block; }
+  .menu-open { display: inline-flex; }
   .grid-3 { grid-template-columns: 1fr 1fr; }
   .grid-2 { grid-template-columns: 1fr; }
   .itinerary-day { grid-template-columns: 48px 1fr; gap: 16px; }
