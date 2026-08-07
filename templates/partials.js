@@ -97,13 +97,17 @@ export function whatsappLink(packageTitle) {
 export function packageCard(pkg) {
   const price = PRICES[pkg.priceKey];
   const href = `/safaris/${pkg.slug}/`;
+  // The whole card is clickable via a stretched-link pseudo-element on the
+  // title anchor, rather than wrapping the <article> in an <a>. That keeps one
+  // real link per card (so screen readers announce the trip name, not the whole
+  // card's text), keeps the markup valid, and leaves text selectable.
   return html`<article class="pkg-card">
-  <a class="pkg-card-media" href="${href}">
+  <div class="pkg-card-media">
     ${picture({ src: pkg.hero, alt: pkg.heroAlt })}
-  </a>
+  </div>
   <div class="pkg-card-body">
     ${pkg.signature && html`<span class="badge badge-signature">Signature</span>`}
-    <h3 class="h3"><a href="${href}">${pkg.title}</a></h3>
+    <h3 class="h3"><a class="pkg-card-link" href="${href}">${pkg.title}</a></h3>
     <p class="body">${pkg.summary}</p>
     <p class="pkg-meta">${pkg.days} days · ${pkg.destinations.length} ${pkg.destinations.length === 1 ? 'destination' : 'destinations'}</p>
     <p class="pkg-price">From KSh ${price.fromKes.toLocaleString('en-KE')}<span> per person</span></p>

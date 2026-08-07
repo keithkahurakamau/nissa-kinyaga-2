@@ -1995,3 +1995,21 @@ a { text-decoration: none; }
 /* Every other page opens with a breadcrumb row that clears the fixed nav.
    The 404 has none, so it needs the offset explicitly. */
 .section-notfound { padding-top: clamp(110px, 12vw, 150px); }
+
+/* Whole-card click target. The title anchor stretches over the entire card
+   via ::after, so one real link covers it without nesting anchors or
+   wrapping the <article>. Text stays selectable because the overlay sits
+   above the card but the anchor itself is not a block wrapper. */
+.pkg-card { position: relative; }
+.pkg-card-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+}
+.pkg-card:hover { cursor: pointer; }
+.pkg-card-link:focus-visible::after {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
