@@ -49,7 +49,14 @@ function main() {
     }
 
     try {
-      execFileSync('cwebp', ['-q', '82', inPath, '-o', outPath], { stdio: 'ignore' });
+      // -q 82 -> 85. 88 was tried first: on the sharpened source it pushed
+      // the full asset set from 6.59 MB to 9.66 MB (+47%) for a result that
+      // was not visibly different from 85 in a side-by-side crop (checked
+      // on p08.jpg, a wildlife close-up, and p18.jpg, a wide landscape with
+      // sky). 85 lands at 8.51 MB (+29%), a smaller jump that still reads
+      // more solid than the original 82 output on fine texture (fur,
+      // foliage) at normal viewing sizes.
+      execFileSync('cwebp', ['-q', '85', inPath, '-o', outPath], { stdio: 'ignore' });
       written += 1;
       console.log(`webp: ${file} -> ${basename(outPath)}`);
     } catch (err) {
