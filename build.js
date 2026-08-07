@@ -14,6 +14,7 @@ import { homePage } from './templates/home.js';
 import { galleryPage } from './templates/gallery.js';
 import { journalPage } from './templates/journal.js';
 import { contactPage } from './templates/contact.js';
+import { notFoundPage } from './templates/not-found.js';
 import { privacyPage } from './templates/privacy.js';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
@@ -39,8 +40,15 @@ export function pages() {
   out.push({ path: '/journal/', html: journalPage() });
   out.push({ path: '/contact/', html: contactPage(packages) });
   out.push({ path: '/privacy/', html: privacyPage() });
+  // Vercel serves /404.html for any unmatched path. Emitted as a file, not a
+  // directory, so the sitemap's `endsWith('/')` filter excludes it.
+  out.push({ path: '/404.html', html: notFoundPage() });
 
-  const htmlPaths = out.map((page) => page.path);
+
+  // Only directory URLs are crawlable pages. Filtering here rather than
+  // relying on every entry happening to end in "/" — /404.html is the first
+  // file artifact in `out`, and any future one must be excluded too.
+  const htmlPaths = out.map((page) => page.path).filter((path) => path.endsWith('/'));
   const urls = htmlPaths
     .map((path) => `  <url><loc>${ORIGIN}${path}</loc><changefreq>monthly</changefreq></url>`)
     .join('\n');

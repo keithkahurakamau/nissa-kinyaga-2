@@ -149,8 +149,7 @@ export function layout({
   schemas = [],
   crumbs = [],
   preloadImage,
-  body,
-}) {
+  body, robots }) {
   const allSchemas = crumbs.length > 1 ? [...schemas, breadcrumbSchema(crumbs)] : schemas;
 
   const page = html`<!DOCTYPE html>
@@ -164,7 +163,7 @@ export function layout({
 <meta name="theme-color" content="#22291E">
 <meta name="format-detection" content="telephone=no">
 <link rel="icon" href="${FAVICON}">
-${headTags({ title, description, path, image, type })}
+${headTags({ title, description, path, image, type, robots })}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="${FONTS_HREF}" rel="stylesheet">

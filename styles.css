@@ -1982,3 +1982,16 @@ a { text-decoration: none; }
   max-width: 52ch;
   margin: 10px 0 0;
 }
+
+/* 404 */
+.notfound-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: clamp(28px, 4vw, 40px) 0 clamp(24px, 3vw, 32px);
+}
+.notfound-help { max-width: 54ch; }
+.notfound-help a { color: var(--gold-deep); }
+/* Every other page opens with a breadcrumb row that clears the fixed nav.
+   The 404 has none, so it needs the offset explicitly. */
+.section-notfound { padding-top: clamp(110px, 12vw, 150px); }
