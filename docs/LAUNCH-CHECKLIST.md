@@ -21,7 +21,7 @@ highest-leverage work left to do once the site is live.
 - [ ] Create a **Google Business Profile** for Nissa Safaris; verify it; add photos, service area and the website link
 - [ ] Submit `https://nissasafaris.com/sitemap.xml` in Google Search Console
 - [ ] Collect guest reviews on the Business Profile, TripAdvisor and SafariBookings
-- [ ] Request backlinks from Borana, Lewa, Laragai House and Lengishu
+- [ ] Request backlinks from the conservancies and camps Nissa has worked with — Borana, Lewa, Sirikoi, Il Ngwesi, Tassia, Sarara, Saruni Kalama, Angama Mara, Ol Donyo
 - [ ] Link the site from the `@nissa_safaris_tours` Instagram bio
 
 ## Verify after deploy

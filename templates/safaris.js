@@ -46,7 +46,14 @@ function filterBar(total) {
       <p id="filter-count" class="filter-count" aria-live="polite">Showing ${total} of ${total} safaris</p>
     </div>
   </div>
-</section>`;
+</section>
+<div class="wrap">
+  <p id="filter-empty" class="filter-empty" hidden>
+    No safari matches that combination yet &mdash; there is no trip of that length to
+    that destination on the list. Try a different length, or
+    <a href="/contact/">ask Nissa to build one</a>.
+  </p>
+</div>`;
 }
 
 // packageCard() has a fixed one-arg signature shared by three other

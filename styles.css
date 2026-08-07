@@ -180,7 +180,10 @@ a { text-decoration: none; }
   pointer-events: none;
   z-index: -1;
 }
-.nav.nk-scrolled { padding: 14px 18px; }
+/* Scrolled state is a full-bleed rectangle, not an inset pill: the glass
+   spans edge to edge so it reads as a bar, while the inner content stays
+   aligned to the same 1320px column as the resting state. */
+.nav.nk-scrolled { padding: 0; }
 .nav-bar {
   max-width: var(--wrap-w);
   margin: 0 auto;
@@ -192,7 +195,13 @@ a { text-decoration: none; }
   border-radius: 0;
   transition: padding .5s ease, border-radius .5s ease;
 }
-.nav.nk-scrolled .nav-bar { border-radius: 40px; }
+.nav.nk-scrolled .nav-bar {
+  border-radius: 0;
+  max-width: none;
+  /* Keep the content on the 1320px column: pad by whatever spills past it,
+     falling back to the resting 28px on narrower viewports. */
+  padding: 0 max(28px, calc((100% - var(--wrap-w)) / 2 + 28px));
+}
 .nav-logo {
   text-decoration: none;
   display: flex;
@@ -202,7 +211,7 @@ a { text-decoration: none; }
 /* the supplied logo file is roughly square, not a slim wordmark — constrain
    by height only (auto width) so it fits the fixed 64px nav bar */
 .nav-logo img {
-  height: 40px;
+  height: 46px;
   width: auto;
   display: block;
 }
@@ -1140,7 +1149,12 @@ a { text-decoration: none; }
   background: linear-gradient(transparent 38%, rgba(20,15,9,.62));
   pointer-events: none;
 }
-.gal-card-caption {
+/* Compound selector, not `.gal-card-caption` alone: `.glass` is declared
+   later in this file and sets `position: relative` at equal (single-class)
+   specificity, which would win the cascade tie and drop the caption out of
+   absolute positioning — landing it at the top of the card instead of
+   overlaying the bottom of the photograph. */
+.gal-item .gal-card-caption {
   position: absolute;
   left: 16px;
   right: 16px;
@@ -1402,7 +1416,7 @@ a { text-decoration: none; }
 /* same square-logo constraint as .nav-logo img, sized up slightly since the
    footer isn't pinned to a fixed-height row */
 .footer-logo {
-  height: 44px;
+  height: 72px;
   width: auto;
   display: block;
 }
@@ -1918,3 +1932,20 @@ a { text-decoration: none; }
   .gal-item, .gal-item.is-active { transform: none; transition: opacity .25s ease; }
   .nk-wa::after { animation: none; }
 }
+
+/* Empty state for the safaris filter. 7 of the 36 destination/length
+   combinations have no package, and without this the page renders blank. */
+.filter-empty {
+  font-family: var(--font-body);
+  font-size: clamp(15px, 1.5vw, 18px);
+  line-height: 1.6;
+  color: var(--muted-2);
+  max-width: 46ch;
+  margin: clamp(40px, 6vw, 72px) auto;
+  padding: 28px 32px;
+  text-align: center;
+  border: 1px solid rgba(36, 27, 18, .14);
+  border-radius: 4px;
+  background: var(--sand-2);
+}
+.filter-empty a { color: var(--gold-deep); text-underline-offset: .2em; }

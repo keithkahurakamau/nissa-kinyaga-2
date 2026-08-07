@@ -323,6 +323,11 @@
         section.hidden = !section.querySelector('.pkg-card:not([hidden])');
       }
       if (count) count.textContent = `Showing ${shown} of ${cards.length} safaris`;
+      // 7 of the 36 destination/length combinations legitimately have no
+      // package (there is no 7+ day Samburu-only trip, no short Mount Kenya
+      // climb). Without this the page just goes blank.
+      const empty = document.getElementById('filter-empty');
+      if (empty) empty.hidden = shown !== 0;
     }
 
     destSelect.addEventListener('change', apply);
