@@ -25,11 +25,13 @@ const POPULAR_SLUGS = [
 ];
 
 // Short, factual teaser — full biography lives at /about/. Every claim here
-// traces to docs/nissa-biography-source.md: freelance, founder of Nissa
-// Safaris, 1998 at Lewa, Utalii College distinction. No computed years, no
-// invented routine, no Silver rating, no Lengishu.
+// traces to docs/nissa-biography-source.md: his career with Kenya's
+// conservancies began in 1998 (Lewa Wildlife Conservancy, ranger research —
+// not a guiding role), he has guided professionally since 2002 (Lewa Safari
+// Camp), freelance, founder of Nissa Safaris, Utalii College distinction.
+// No computed years, no invented routine, no Silver rating, no Lengishu.
 const GUIDE_TEASER =
-  "Nissa Ole Kinyaga has guided across Kenya's private conservancies and community lodges since 1998, from Lewa and Sirikoi to Borana. A Kenya Utalii College graduate with distinction, he now guides freelance as the founder of Nissa Safaris, planning and leading every safari on this site himself.";
+  "Nissa Ole Kinyaga's career with Kenya's conservancies began in 1998, and he has guided professionally since 2002 — across Lewa, Sirikoi and Borana. A Kenya Utalii College graduate with distinction, he now guides freelance as the founder of Nissa Safaris, planning and leading every safari on this site himself.";
 
 export function metaDescription() {
   const text = DESCRIPTION.trim();
@@ -48,13 +50,19 @@ function bySlug(list, slugs) {
 // stacking context (.hero-content, z-index:1) so it isn't painted underneath
 // the image/gradient. See the styles.css comments on .hero-media/.hero::after
 // /.hero-content for why this differs from .about-hero/.dest-hero/.pkg-hero.
+//
+// The aria-label describes only what is in the frame — this exact file
+// (/assets/lion.jpg) is reused across destinations it was not shot in (see
+// its heroAlt on the 2-Day Ol Pejeta package, data/packages.js:106: "A maned
+// lion sitting upright and alert in golden dry grass"), so it carries no
+// location claim, matching that established alt text for the same photo.
 function heroSection() {
   return html`<header class="hero">
-  <div class="hero-media" role="img" aria-label="Lion at first light on the Borana Conservancy"></div>
+  <div class="hero-media" role="img" aria-label="A maned lion sitting upright and alert in golden dry grass"></div>
   <div class="hero-content">
     <div class="wrap">
       <h1 class="display-lg">Nissa Safaris</h1>
-      <p class="lede">Private, freelance safaris across Kenya, led personally by Nissa Ole Kinyaga — from his own ground at Borana and Lewa to the Masai Mara, Samburu and the Diani coast.</p>
+      <p class="lede">Private, freelance safaris across Kenya, led personally by Nissa Ole Kinyaga — the Masai Mara, Samburu and the Diani coast, plus his own ground at Borana and Lewa.</p>
       <div class="hero-actions">
         <a class="btn btn-gold" href="/safaris/">See all safaris</a>
         <a class="btn" href="${whatsappLink()}" target="_blank" rel="noopener noreferrer">Talk to Nissa</a>

@@ -10,7 +10,7 @@ import about from '../data/about.js';
 // is a safety net for escaping inflation (apostrophes -> `&#39;`), matching
 // the pattern in templates/destination.js and templates/package.js.
 const DESCRIPTION =
-  'Nissa Ole Kinyaga has guided across Kenya since 1998: Lewa, Sirikoi, Borana and beyond. Maasai heritage, Utalii College distinction, founder of Nissa Safaris.';
+  'Nissa Ole Kinyaga has guided across Kenya since 2002: Lewa, Sirikoi, Borana and beyond. Maasai heritage, Utalii College distinction, founder of Nissa Safaris.';
 
 export function metaDescription() {
   const text = DESCRIPTION.trim();
