@@ -10,6 +10,7 @@ import { destinationPage } from './templates/destination.js';
 import { destinationsIndexPage } from './templates/destinations.js';
 import { safarisIndexPage } from './templates/safaris.js';
 import { aboutPage } from './templates/about.js';
+import { homePage } from './templates/home.js';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const DIST = join(ROOT, 'dist');
@@ -19,6 +20,7 @@ export function pages() {
   assertAllValid(destinations, validateDestination, 'destination');
 
   const out = [];
+  out.push({ path: '/', html: homePage(packages, destinations) });
   out.push({ path: '/safaris/', html: safarisIndexPage(packages, destinations) });
   for (const pkg of packages) {
     out.push({ path: `/safaris/${pkg.slug}/`, html: packagePage(pkg) });

@@ -326,9 +326,12 @@ a { text-decoration: none; }
    headings render on, but unreadable on the dark .section-ink/.section-forest
    backgrounds (ctaBlock's <h2 class="h2"> on .section-forest, and the
    about page's philosophy heading, both land here). Same technique as the
-   .lede override immediately above: swap to a light token in dark context. */
+   .lede override immediately above: swap to a light token in dark context.
+   Task 16: `.hero` (the home page's cinematic header) added to this group —
+   same hazard, its <h1> sits over the photographic hero, not a light section. */
 .section-ink h1, .section-ink h2, .section-ink h3, .section-ink h4,
-.section-forest h1, .section-forest h2, .section-forest h3, .section-forest h4 {
+.section-forest h1, .section-forest h2, .section-forest h3, .section-forest h4,
+.hero h1, .hero h2, .hero h3, .hero h4 {
   color: var(--cream);
 }
 /* `.quote`/`.cite` (the attributed pull-quote pattern) default to colours
@@ -1620,12 +1623,30 @@ a { text-decoration: none; }
   width: 100%;
   overflow: hidden;
 }
+/* No inline style="..." is permitted (CSP), so the hero photograph — always
+   lion.jpg on this one page, per site copy — is baked into the class rather
+   than set per-instance the way index.html's background-image once was. */
 .hero-media {
   position: absolute;
   inset: 0;
+  background-image: url('/assets/lion.jpg');
   background-size: cover;
   background-position: center 40%;
   animation: nk_pan 22s ease-out forwards;
+}
+/* Golden-hour wash, ported from index.html's hero (a separate soft-light
+   overlay layered above the dark vignette). Anchored to .hero-media itself
+   (its own ::after) rather than another markup child of .hero, so the hero
+   element still holds only the one real child the about/dest/pkg hero
+   contract expects — see the "hero holds only the image" note this file's
+   header points to. */
+.hero-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(206,142,52,.40);
+  mix-blend-mode: soft-light;
+  pointer-events: none;
 }
 .hero::after {
   content: "";
@@ -1633,6 +1654,29 @@ a { text-decoration: none; }
   inset: 0;
   background: linear-gradient(180deg, rgba(20,15,9,.55) 0%, rgba(20,15,9,.15) 32%, rgba(20,15,9,.32) 64%, rgba(20,15,9,.85) 100%);
   pointer-events: none;
+}
+/* Title/tagline/CTAs for the cinematic hero. Unlike .about-hero/.dest-hero/
+   .pkg-hero (image-only; title lives in a sibling .section), the home hero
+   carries text directly over the photograph, matching index.html. Text
+   would otherwise paint UNDER .hero-media (position:absolute, so it's a
+   z-index:auto positioned box) and under .hero::after (a generated pseudo,
+   always last in paint order regardless of markup position) — this wrapper
+   gets its own z-index so it always wins that stack, independent of DOM
+   order relative to the ::after pseudo. */
+.hero-content {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 9vh;
+}
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 34px;
 }
 
 /* ==========================================================================
