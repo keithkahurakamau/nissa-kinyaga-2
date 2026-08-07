@@ -211,7 +211,7 @@ a { text-decoration: none; }
 /* the supplied logo file is roughly square, not a slim wordmark — constrain
    by height only (auto width) so it fits the fixed 64px nav bar */
 .nav-logo img {
-  height: 46px;
+  height: 54px;
   width: auto;
   display: block;
 }
@@ -1419,8 +1419,11 @@ a { text-decoration: none; }
 /* same square-logo constraint as .nav-logo img, sized up slightly since the
    footer isn't pinned to a fixed-height row */
 .footer-logo {
-  height: 72px;
-  width: auto;
+  /* The full card is portrait (880x1194), so width drives height — keep it to
+     a normal footer brand-block size rather than a hero. */
+  height: auto;
+  width: clamp(150px, 17vw, 200px);
+  max-width: 100%;
   display: block;
 }
 .footer-links {
@@ -1952,3 +1955,25 @@ a { text-decoration: none; }
   background: var(--sand-2);
 }
 .filter-empty a { color: var(--gold-deep); text-underline-offset: .2em; }
+
+/* Footer mark: the complete supplied lockup — emblem, wordmark, tagline and
+   contact block — centred and given room, rather than the compact nav mark. */
+.footer-mark {
+  display: flex;
+  justify-content: center;
+  padding: 0 24px clamp(28px, 4vw, 44px);
+}
+.footer-mark .footer-logo,
+.footer-mark picture { display: block; }
+
+/* Standing note under the from-price. The figures assume low season,
+   mid-range accommodation and a party of four (data/packages.js), so the
+   page must not read as a firm quote. */
+.pkg-price-note {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--muted-2);
+  max-width: 52ch;
+  margin: 10px 0 0;
+}

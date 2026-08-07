@@ -85,6 +85,10 @@ function titleSection(pkg, crumbs) {
     <h1 class="display">${pkg.title}</h1>
     <p class="pkg-meta">${pkg.days} days · ${pkg.nights} nights</p>
     <p class="pkg-price">From $${price.fromUsd}<span> per person</span></p>
+    <p class="pkg-price-note">A guide price, not a quote. What you actually pay
+      depends on how many of you there are, the season you travel in and the
+      standard of camp you want. Tell me what you have in mind and I will price
+      it properly.</p>
   </div>
 </header>`;
 }

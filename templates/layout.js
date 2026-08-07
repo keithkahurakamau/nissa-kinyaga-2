@@ -82,10 +82,14 @@ function footer() {
     (link) => html`<a href="${link.href}">${link.label}</a>`,
   );
   return html`<footer class="footer">
+  <div class="footer-mark">
+    ${picture({
+      src: site.logoFull,
+      alt: `${site.name} — ${site.tagline}`,
+      className: 'footer-logo',
+    })}
+  </div>
   <div class="footer-grid">
-    <div>
-      ${picture({ src: site.logo, alt: site.name, className: 'footer-logo' })}
-    </div>
     <nav class="footer-links" aria-label="Footer">
       ${links}
     </nav>
@@ -168,7 +172,7 @@ ${preloadImage ? html`<link rel="preload" as="image" href="${preloadImage}" fetc
 <link rel="stylesheet" href="/styles.css">
 ${allSchemas.map((schema) => jsonLd(schema))}
 </head>
-<body>
+<body data-wa="${site.whatsapp}" data-email="${site.email}" data-phone="${site.phones[0]}">
 ${raw(SVG_FILTER_DEFS)}
 <a class="skip-link" href="#main">Skip to content</a>
 <div id="nk-cursor"></div>

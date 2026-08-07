@@ -105,7 +105,7 @@ export function packageCard(pkg) {
     ${pkg.signature && html`<span class="badge badge-signature">Signature</span>`}
     <h3 class="h3"><a href="${href}">${pkg.title}</a></h3>
     <p class="body">${pkg.summary}</p>
-    <p class="pkg-meta">${pkg.days} days · ${pkg.destinations.length} destination(s)</p>
+    <p class="pkg-meta">${pkg.days} days · ${pkg.destinations.length} ${pkg.destinations.length === 1 ? 'destination' : 'destinations'}</p>
     <p class="pkg-price">From $${price.fromUsd}<span> per person</span></p>
   </div>
 </article>`;

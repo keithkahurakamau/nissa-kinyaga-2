@@ -23,7 +23,9 @@ export function metaDescription() {
 // card back out of this markup instead of holding its own copy of the data.
 function galleryCard(item, i) {
   return html`<figure class="gal-item${i === 0 ? ' is-active' : ''}">
-  ${picture({ src: item.src, alt: item.alt })}
+  ${// the first frame is the preloaded LCP image (see the <link rel=preload>
+      // below) — lazy-loading it would contradict that preload
+      picture({ src: item.src, alt: item.alt, lazy: i !== 0 })}
   <div class="gal-card-scrim" aria-hidden="true"></div>
   <figcaption class="glass glass-dark refract gal-card-caption">
     <span class="gal-card-cat">${item.category}</span>

@@ -13,6 +13,7 @@ export default {
   whatsapp: '254707415444',
   instagram: 'nissa_safaris_tours',
   logo: '/assets/logo.png',
+  logoFull: '/assets/logo-full.png',
   portrait: '/assets/portrait.jpg',
   defaultShareImage: '/assets/lion.jpg',
   nav: [
@@ -31,16 +32,6 @@ export default {
     { label: 'Contact', href: '/contact/' },
     { label: 'Privacy', href: '/privacy/' },
   ],
-  credentials: [
-    'Kenya Utalii College — safari guiding and administration, graduated with distinction',
-    'Wildlife biology',
-    'Ornithology',
-    'Social anthropology',
-    'Geology',
-    'Astronomy',
-    'Entomology',
-    'Silver-rated safari guide — one of 59 in Kenya',
-  ],
   workedAt: [
     { name: 'Lewa Wildlife Conservancy', role: 'Head radio signalling officer, ranger research' },
     { name: 'Lewa Safari Camp', role: 'Safari guide, then head guide and camp assistant manager' },
@@ -52,8 +43,11 @@ export default {
     { name: 'Il Ngwesi Lodge', role: 'Freelance guide' },
     { name: 'Tassia Lodge', role: 'Freelance guide' },
     { name: 'Borana Conservancy', role: 'Head guide and head of staff' },
-    { name: 'Laragai House', role: 'Private guide' },
-    { name: 'Tsavo East', role: 'Safari guide' },
-    { name: 'Tsavo West', role: 'Safari guide' },
+    // The source document records these three only because the client listed
+  // them; it states no role for any of them. Do not invent one — the launch
+  // checklist tracks confirming them with Nissa.
+  { name: 'Laragai House', role: null },
+    { name: 'Tsavo East', role: null },
+    { name: 'Tsavo West', role: null },
   ],
 };

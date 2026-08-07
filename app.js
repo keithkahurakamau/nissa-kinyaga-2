@@ -281,11 +281,17 @@
         'Experience: ' + (pkgSel || '-') + '\n' +
         'When: ' + fmtWhen() + '\n' +
         'Hoping to see: ' + (wish || '-');
-      window.open('https://wa.me/254707415444?text=' + encodeURIComponent(lines), '_blank', 'noopener');
+      // Contact details live in data/site.js. app.js is copied verbatim and
+      // cannot import, so read them from the DOM the layout already renders
+      // rather than keeping a third hardcoded copy that can silently drift.
+      var wa = document.body.getAttribute('data-wa') || '';
+      var mail = document.body.getAttribute('data-email') || '';
+      var tel = document.body.getAttribute('data-phone') || '';
+      window.open('https://wa.me/' + wa + '?text=' + encodeURIComponent(lines), '_blank', 'noopener');
       if (wrap) wrap.innerHTML =
         '<div class="form-success">'+
           '<div class="form-success-heading">Asante sana.</div>'+
-          '<p class="form-success-body">Your enquiry has opened in WhatsApp, just hit send and it comes straight to Nissa. If nothing opened, message <a href="https://wa.me/254707415444" target="_blank" rel="noopener noreferrer">+254 707 415 444</a> or email <a href="mailto:nissasafaris254@gmail.com">nissasafaris254@gmail.com</a>.</p>'+
+          '<p class="form-success-body">Your enquiry has opened in WhatsApp, just hit send and it comes straight to Nissa. If nothing opened, message <a href="https://wa.me/'+wa+'" target="_blank" rel="noopener noreferrer">'+tel+'</a> or email <a href="mailto:'+mail+'">'+mail+'</a>.</p>'+
         '</div>';
     });
   })();

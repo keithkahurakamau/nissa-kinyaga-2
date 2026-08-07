@@ -105,7 +105,7 @@ launch — see `docs/LAUNCH-CHECKLIST.md`.
   visible `:focus-visible` rings throughout.
 - Respects `prefers-reduced-motion`. Honest `alt` text on every image — never
   claims a park or location the photo isn't actually from.
-- Verified no horizontal overflow from 320 px to 1920 px on every template;
+- Spot-checked for horizontal overflow at 320 px and 1440 px; a full sweep of every template is on the launch checklist;
   `viewport-fit=cover` for notched devices.
 
 ## Performance

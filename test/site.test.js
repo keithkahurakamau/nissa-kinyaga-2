@@ -37,11 +37,8 @@ test('workedAt lists every place from the spec', () => {
   ]);
 });
 
-test('credentials keep the Silver rating last and unchanged', () => {
-  assert.equal(
-    site.credentials[site.credentials.length - 1],
-    'Silver-rated safari guide — one of 59 in Kenya',
-  );
+test('no credentials array survives — it was dead data carrying the unconfirmed Silver claim', () => {
+  assert.equal('credentials' in site, false);
 });
 
 test('logo and portrait point at the paths the user will supply', () => {
