@@ -180,7 +180,7 @@ a { text-decoration: none; }
   pointer-events: none;
   z-index: -1;
 }
-/* Scrolled state is a full-bleed rectangle, not an inset pill: the glass
+/* Scrolled state is a full-bleed rectangle, not an inset pill: the bar
    spans edge to edge so it reads as a bar, while the inner content stays
    aligned to the same 1320px column as the resting state. */
 .nav.nk-scrolled { padding: 0; }
@@ -193,14 +193,33 @@ a { text-decoration: none; }
   align-items: center;
   justify-content: space-between;
   border-radius: 0;
-  transition: padding .5s ease, border-radius .5s ease;
+  /* Resting state: fully transparent, .nav::before's gradient scrim above
+     is what keeps --cream nav-link text readable over the hero/page top.
+     Declared as explicit zero-alpha colours (not the `transparent`
+     keyword) purely so background-color/border-color have a real value to
+     interpolate from into the scrolled state below. */
+  background-color: rgba(36,27,18,0);
+  border-bottom: 1px solid rgba(201,162,75,0);
+  box-shadow: 0 8px 24px rgba(20,15,9,0);
+  transition: padding .5s ease, border-radius .5s ease,
+    background-color .5s ease, border-color .5s ease, box-shadow .5s ease;
 }
+/* Replaces the former backdrop-filter: blur(30px) saturate(180%) glass
+   panel (plus an SVG feDisplacementMap "refraction" filter) with a plain
+   near-solid fill in the existing --ink token: cheaper to paint, consistent
+   across browsers, and still reads as a distinct bar once scrolled off the
+   hero. --cream nav links (#FBF7EF) on --ink (#241B12) is ~15.8:1, far past
+   the 4.5:1 floor, so the scrim from .nav::before (needed for the
+   transparent resting state) is redundant but harmless here. */
 .nav.nk-scrolled .nav-bar {
   border-radius: 0;
   max-width: none;
   /* Keep the content on the 1320px column: pad by whatever spills past it,
      falling back to the resting 28px on narrower viewports. */
   padding: 0 max(28px, calc((100% - var(--wrap-w)) / 2 + 28px));
+  background-color: var(--ink);
+  border-bottom: 1px solid rgba(201,162,75,.22);
+  box-shadow: 0 8px 24px rgba(20,15,9,.28);
 }
 .nav-logo {
   text-decoration: none;
@@ -1499,10 +1518,14 @@ a { text-decoration: none; }
 }
 
 /* glass / refract, Apple-grade glassmorphism, ported verbatim from index.html.
-   Aliased to the legacy nk- prefixed names because app.js toggles those
-   classList tokens directly (nav scroll state, generated lightbox
-   figcaptions) rather than emitting the new contractual names. */
-.glass, .nk-glass {
+   Used today only by the gallery caption (templates/gallery.js's
+   `glass glass-dark refract gal-card-caption`). The scrolled nav used to
+   reuse this via legacy `nk-` prefixed aliases app.js toggled on scroll;
+   that navbar treatment has been replaced by the plain, opaque
+   `.nav.nk-scrolled .nav-bar` rule below (no backdrop-filter, no SVG
+   displacement), so the `nk-glass`/`nk-glass-dark`/`nk-refract` aliases are
+   gone from these selectors, this component is unrelated to the nav now. */
+.glass {
   position: relative;
   background: rgba(231,221,198,.10);
   -webkit-backdrop-filter: blur(30px) saturate(180%);
@@ -1511,7 +1534,7 @@ a { text-decoration: none; }
   box-shadow: 0 8px 40px rgba(20,15,9,.30), inset 0 1px 1px rgba(255,255,255,.22), inset 0 -1px 1px rgba(0,0,0,.10);
   isolation: isolate;
 }
-.glass::before, .nk-glass::before {
+.glass::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -1525,7 +1548,7 @@ a { text-decoration: none; }
   -webkit-mask-composite: xor;
   mask-composite: exclude;
 }
-.glass::after, .nk-glass::after {
+.glass::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -1535,18 +1558,18 @@ a { text-decoration: none; }
   background: linear-gradient(140deg, rgba(255,255,255,.14), rgba(255,255,255,0) 60%);
   mix-blend-mode: overlay;
 }
-.glass > *, .nk-glass > * { position: relative; z-index: 1; }
-.glass-dark, .nk-glass-dark { background: rgba(28,22,14,.34); }
-.refract, .nk-refract {
+.glass > * { position: relative; z-index: 1; }
+.glass-dark { background: rgba(28,22,14,.34); }
+.refract {
   -webkit-backdrop-filter: url(#nk-refract) blur(7px) saturate(190%) brightness(1.06);
   backdrop-filter: url(#nk-refract) blur(7px) saturate(190%) brightness(1.06);
 }
 @supports not (backdrop-filter: url(#nk-refract)) {
-  .refract, .nk-refract { backdrop-filter: blur(30px) saturate(180%); }
+  .refract { backdrop-filter: blur(30px) saturate(180%); }
 }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .glass, .nk-glass { background: rgba(36,27,18,.86); }
-  .glass-dark, .nk-glass-dark { background: rgba(20,15,9,.9); }
+  .glass { background: rgba(36,27,18,.86); }
+  .glass-dark { background: rgba(20,15,9,.9); }
 }
 
 /* cinematic reveal-on-scroll engine */

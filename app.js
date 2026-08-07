@@ -1,15 +1,17 @@
 (function(){
   "use strict";
 
-  /* ---------- nav scroll + progress ---------- */
+  /* ---------- nav scroll + progress ----------
+     The scrolled bar's appearance (solid fill, hairline rule, shadow) is
+     driven entirely by the `.nk-scrolled` class in CSS (see
+     `.nav.nk-scrolled .nav-bar` in styles.css) now that the old
+     backdrop-filter glass panel is gone, so this only ever toggles the one
+     class rather than also juggling glass/refract class names on #nk-navbar. */
   var nav = document.getElementById('nk-nav');
   var bar = document.getElementById('nk-progress');
-  var navbar = document.getElementById('nk-navbar');
   function onScroll(){
     var s = window.scrollY > 60;
     nav.classList.toggle('nk-scrolled', s);
-    if (s) navbar.classList.add('nk-glass','nk-glass-dark','nk-refract');
-    else navbar.classList.remove('nk-glass','nk-glass-dark','nk-refract');
     if (bar){
       var h = document.documentElement.scrollHeight - window.innerHeight;
       bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
