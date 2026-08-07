@@ -21,13 +21,27 @@ test('nav entries all have a label and an absolute path', () => {
 
 test('workedAt lists every place from the spec', () => {
   assert.deepEqual(site.workedAt.map((w) => w.name).sort(), [
+    'Angama Mara',
     'Borana Conservancy',
+    'Il Ngwesi Lodge',
     'Laragai House',
+    'Lewa Safari Camp',
     'Lewa Wildlife Conservancy',
-    'Maasai Mara',
+    'Ol Donyo Lodge, Chyulu Hills',
+    'Sarara Camp, Mathews Range',
+    'Saruni Kalama',
+    'Sirikoi Camp, Lewa',
+    'Tassia Lodge',
     'Tsavo East',
     'Tsavo West',
   ]);
+});
+
+test('credentials keep the Silver rating last and unchanged', () => {
+  assert.equal(
+    site.credentials[site.credentials.length - 1],
+    'Silver-rated safari guide — one of 59 in Kenya',
+  );
 });
 
 test('logo and portrait point at the paths the user will supply', () => {

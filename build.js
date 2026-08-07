@@ -9,6 +9,7 @@ import { packagePage } from './templates/package.js';
 import { destinationPage } from './templates/destination.js';
 import { destinationsIndexPage } from './templates/destinations.js';
 import { safarisIndexPage } from './templates/safaris.js';
+import { aboutPage } from './templates/about.js';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const DIST = join(ROOT, 'dist');
@@ -27,6 +28,7 @@ export function pages() {
     const here = packages.filter((p) => p.destinations.includes(dest.slug));
     out.push({ path: `/destinations/${dest.slug}/`, html: destinationPage(dest, here) });
   }
+  out.push({ path: '/about/', html: aboutPage() });
   return out;
 }
 
