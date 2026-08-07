@@ -150,6 +150,36 @@ a { text-decoration: none; }
   padding: 22px 18px;
   transition: padding .5s ease;
 }
+/* Dark scrim behind the fixed nav. .nav-link is `var(--cream)` with no
+   per-page override (it can't have one — the nav is fixed and outside the
+   section it overlaps, so no descendant/background selector reaches it),
+   so on pages that open on a light section (--sand, #F3ECDC) the links are
+   ~1.03:1, effectively invisible. This gives every page a guaranteed dark
+   backdrop regardless of what happens to be behind the nav.
+   Solid to 68% (~109px) then fades to transparent by 160px: that covers the
+   nav's full box in both states (108px unscrolled = 22+64+22, 92px scrolled
+   = 14+64+14) with solid colour, so the *link text itself* — vertically
+   centred inside that box — never sits in the fading tail where alpha (and
+   therefore contrast) would be lower than the figure computed below.
+   pointer-events:none so the scrim never intercepts clicks; z-index:-1 so,
+   inside the stacking context .nav's own z-index:60 already establishes, it
+   paints behind .nav-bar (non-positioned, so it paints in the "in-flow
+   descendants" step, which is *after* the negative-z-index step) while
+   still riding above ordinary page content the same way the rest of .nav
+   already does. Do not remove the z-index:-1 without re-checking paint
+   order — a positive/auto value here previously painted the scrim OVER the
+   nav-bar (the exact "content under an overlay" bug class this project has
+   shipped three times), which still passes a casual look but silently
+   covers the links. */
+.nav::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 160px;
+  background: linear-gradient(to bottom, rgba(20,15,9,.65) 0%, rgba(20,15,9,.65) 68%, transparent 100%);
+  pointer-events: none;
+  z-index: -1;
+}
 .nav.nk-scrolled { padding: 14px 18px; }
 .nav-bar {
   max-width: var(--wrap-w);
@@ -1058,9 +1088,111 @@ a { text-decoration: none; }
   text-align: center;
   max-width: 680px;
 }
+.lb-figure {
+  margin: 0;
+  max-width: 1100px;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.lb-close {
+  position: absolute;
+  top: 24px;
+  right: 30px;
+  background: none;
+  border: none;
+  color: var(--cream-2);
+  font-size: 38px;
+  line-height: 1;
+  cursor: pointer;
+  font-family: var(--font-display);
+}
+.lb-cat {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.lb-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 22px;
+  color: var(--cream-2);
+  margin-top: 4px;
+}
+.lb-story {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--muted-4);
+  margin: 12px 0 0;
+}
+
+/* gallery card caption — Task 17: server-rendered <figure class="gal-item">
+   now carries a real <img> plus a caption overlay, ported from the inline
+   style="..." block app.js used to inject per card (blocked under a CSP
+   with no 'unsafe-inline' style-src). `.gal-card-caption` composes with the
+   existing `.glass .glass-dark .refract` utilities for the frosted panel. */
+.gal-card-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 38%, rgba(20,15,9,.62));
+  pointer-events: none;
+}
+.gal-card-caption {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  padding: 18px;
+  border-radius: 14px;
+}
+.gal-card-cat {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+}
+.gal-card-title {
+  font-family: var(--font-display);
+  font-size: 23px;
+  color: var(--cream);
+  margin: 5px 0 8px;
+  line-height: 1.15;
+}
+.gal-card-story {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--muted-4);
+  margin: 0 0 14px;
+}
+.gal-counter {
+  text-align: center;
+  margin-top: 26px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .24em;
+  color: var(--muted);
+}
+.gal-counter-sep { color: var(--gold); }
 
 /* ---------- Form ---------- */
+/* fix-round-3 (Task 17, defect 3): `.field-input`/`.field-textarea` etc.
+   below set --cream-2 text with no background of their own — the same
+   latent pattern that made `.lede` invisible at ~1.01:1 (see fix-round-1
+   finding 1) once composed onto a light section. `.form` previously relied
+   entirely on an ambient dark ancestor (the legacy `nk-glass nk-refract`
+   frosted panel over `#contact`'s dark background) to stay readable; a
+   `.form` rendered anywhere else would be near-invisible cream-on-cream.
+   This now declares its own solid, guaranteed background so the pairing is
+   correct regardless of context: --cream-2 (#F6EFDE) on --ink (#241B12) is
+   ~14.8:1, far past WCAG AA's 4.5:1 floor. */
 .form {
+  background: var(--ink);
+  border: 1px solid rgba(201,162,75,.25);
+  box-shadow: 0 24px 60px rgba(0,0,0,.35);
   padding: 72px 48px 80px;
   border-radius: 16px;
 }
@@ -1208,6 +1340,50 @@ a { text-decoration: none; }
   background: rgba(201,162,75,.20);
   color: var(--cream-2);
 }
+.form-submit { width: 100%; }
+
+/* the form's post-submit thank-you panel — replaces the form inside
+   #nk-form-wrap via app.js. Built from static classes (no style="..."), and
+   given the same guaranteed --ink background as .form for the same
+   contrast reason. */
+.form-success {
+  background: var(--ink);
+  border: 1px solid rgba(201,162,75,.4);
+  padding: 48px 36px;
+  text-align: center;
+  border-radius: 16px;
+}
+.form-success-heading {
+  font-family: var(--font-display);
+  font-size: 30px;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+.form-success-body {
+  font-size: 15px;
+  color: var(--muted-4);
+  line-height: 1.6;
+  margin: 0;
+}
+.form-success-body a { color: var(--gold); }
+
+/* ---------- Contact page ---------- */
+.contact-info { display: flex; flex-direction: column; gap: 22px; }
+.contact-row { display: flex; flex-direction: column; }
+.contact-link {
+  font-family: var(--font-display);
+  font-size: 23px;
+  color: var(--cream);
+}
+.contact-alt {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted-3);
+  margin-top: 4px;
+}
+.contact-alt a { color: var(--muted-4); }
+.contact-actions { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+.contact-social { display: flex; gap: 12px; margin-top: 6px; flex-wrap: wrap; }
 
 /* ---------- Footer ---------- */
 .footer {

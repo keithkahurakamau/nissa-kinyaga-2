@@ -11,6 +11,10 @@ import { destinationsIndexPage } from './templates/destinations.js';
 import { safarisIndexPage } from './templates/safaris.js';
 import { aboutPage } from './templates/about.js';
 import { homePage } from './templates/home.js';
+import { galleryPage } from './templates/gallery.js';
+import { journalPage } from './templates/journal.js';
+import { contactPage } from './templates/contact.js';
+import { privacyPage } from './templates/privacy.js';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const DIST = join(ROOT, 'dist');
@@ -31,6 +35,10 @@ export function pages() {
     out.push({ path: `/destinations/${dest.slug}/`, html: destinationPage(dest, here) });
   }
   out.push({ path: '/about/', html: aboutPage() });
+  out.push({ path: '/gallery/', html: galleryPage() });
+  out.push({ path: '/journal/', html: journalPage() });
+  out.push({ path: '/contact/', html: contactPage(packages) });
+  out.push({ path: '/privacy/', html: privacyPage() });
   return out;
 }
 

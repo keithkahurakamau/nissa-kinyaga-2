@@ -1,30 +1,5 @@
 (function(){
   "use strict";
-  var items = [
-    { src:'assets/p04.jpg', title:'Leopard at first light', cat:'Wildlife', story:'She had been on this acacia since before dawn. We cut the engine and simply waited, the mountain behind her turning gold.' },
-    { src:'assets/lion.jpg', title:'The watch at golden hour', cat:'Wildlife', story:'A coalition male surveying his territory in the last warm light. He held the pose long enough for the whole vehicle to fall silent.' },
-    { src:'assets/p14.jpg', title:'Lion in the green season', cat:'Wildlife', story:'After the rains the grass comes up sweet and the prides grow fat. This old male barely lifted his head as we passed.' },
-    { src:'assets/kudu.jpg', title:'Greater kudu, low sun', cat:'Wildlife', story:'A bull stepping out of the thicket at the edge of light. Those spiralled horns take six years to reach full turn.' },
-    { src:'assets/giraffe.jpg', title:'Giraffe at dusk', cat:'Landscapes', story:'The everyday miracle of Borana, a giraffe browsing the acacia line as the sky burns out behind the hills.' },
-    { src:'assets/p05.jpg', title:'King of the koppie', cat:'Wildlife', story:'Lions love a vantage point. From these rocks he can read the whole valley, and so can we.' },
-    { src:'assets/p06.jpg', title:'Stillness in the grass', cat:'Wildlife', story:'A leopard waiting out the heat. Patience is the whole craft here, the longer you sit, the more the bush forgets you.' },
-    { src:'assets/p08.jpg', title:'Rhino at golden hour', cat:'Conservation', story:'A black rhino grazing under guard. Every one on this conservancy is known by name to the rangers who protect them.' },
-    { src:'assets/p12.jpg', title:'Rhino and her escorts', cat:'Conservation', story:'Cattle egrets ride alongside, picking insects from the grass she disturbs. A small partnership, played out daily.' },
-    { src:'assets/p10.jpg', title:'Elephants at the river', cat:'Safari Moments', story:'Two bulls crossing below the doum palms in the late afternoon, unhurried, the way only elephants can be.' },
-    { src:'assets/p01.jpg', title:'Morning at the waterhole', cat:'Safari Moments', story:'First light at the water draws everyone in. We come early and let the morning fill up around us.' },
-    { src:'assets/p03.jpg', title:'Gathering at the shore', cat:'Landscapes', story:'The herds move down to drink as the heat builds. Stand still long enough and the whole plain comes to you.' },
-    { src:'assets/p11.jpg', title:"A mother's watch", cat:'Wildlife', story:'A topi standing sentinel over her calf in the long grass, eyes never quite leaving the tree line.' },
-    { src:'assets/p02.jpg', title:'Tawny eagle, Rift Valley', cat:'Birdlife', story:'A favourite of mine to point out, perched and scanning. Northern Kenya holds over a thousand species of bird.' },
-    { src:'assets/p09.jpg', title:'Gerenuk, Northern Kenya', cat:'Wildlife', story:'The gerenuk rises onto its hind legs to reach what others cannot, a desert antelope built for the dry country.' },
-    { src:'assets/p13.jpg', title:'Greater kudu in the bush', cat:'Wildlife', story:'Half-hidden in green, watching us watch him. Read the ears and you will always know the moment before he bolts.' },
-    { src:'assets/plane.jpg', title:'Wheels down at the airstrip', cat:'Safari Moments', story:'The bush plane touching down on the conservancy strip, where most journeys into the Northern Frontier begin.' },
-    { src:'assets/p15.jpg', title:'Brothers in the gold', cat:'Wildlife', story:'Two coalition males holding the high grass at sundown. Where you find one, look for the other, they rarely range far apart.' },
-    { src:'assets/p16.jpg', title:'The dam at last light', cat:'Landscapes', story:'A quiet waterhole below the hills as the day cools. Sit here long enough and the whole conservancy comes down to drink.' },
-    { src:'assets/p17.jpg', title:'Wings over the frontier', cat:'Safari Moments', story:'The helicopter waiting under an acacia. For the far reaches of the Northern Frontier, sometimes the only way in is from the air.' },
-    { src:'assets/p18.jpg', title:'Down to the sand river', cat:'Landscapes', story:'The green line of a seasonal sand river cutting through the dry country, a magnet for elephant, kudu and a hundred smaller lives.' }
-  ];
-
-  var esc = function(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); };
 
   /* ---------- nav scroll + progress ---------- */
   var nav = document.getElementById('nk-nav');
@@ -53,23 +28,26 @@
     a.addEventListener('click', closeMenu);
   });
 
-  /* ---------- gallery carousel ---------- */
+  /* ---------- gallery carousel ----------
+     The reel is now server-rendered (templates/gallery.js, from
+     data/gallery.js) as real <figure class="gal-item"> elements holding a
+     real <img> and a static caption, so crawlers index every photo. This
+     reads the item data back out of that markup instead of holding its own
+     copy — the single source of truth is the DOM, not an inline array. */
   var gal = document.getElementById('nk-gal');
-  function card(it, idx){
-    var fig = document.createElement('figure');
-    fig.className = 'nk-gcard';
-    fig.innerHTML =
-      '<img src="'+it.src+'" alt="'+esc(it.title)+'" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"/>'+
-      '<div style="position:absolute;inset:0;background:linear-gradient(transparent 38%,rgba(20,15,9,.62));"></div>'+
-      '<figcaption class="nk-glass nk-glass-dark nk-refract" style="position:absolute;left:16px;right:16px;bottom:16px;padding:18px;border-radius:14px;">'+
-        '<span style="font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#E6C879;">'+esc(it.cat)+'</span>'+
-        '<div style="font-family:\'Cormorant Garamond\',serif;font-size:23px;color:#FBF7EF;margin:5px 0 8px;line-height:1.15;">'+esc(it.title)+'</div>'+
-        '<p style="font-size:13px;line-height:1.55;color:#DAD0BC;margin:0 0 14px;">'+esc(it.story)+'</p>'+
-        '<button type="button" class="nk-gbtn" data-lb="'+idx+'" style="font-family:\'DM Mono\',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#FBF7EF;padding:10px 18px;cursor:pointer;border-radius:30px;">View image</button>'+
-      '</figcaption>';
-    return fig;
-  }
-  if (gal) items.forEach(function(it,i){ gal.appendChild(card(it,i)); });
+  var galCards = gal ? Array.prototype.slice.call(gal.querySelectorAll('.gal-item')) : [];
+  var items = galCards.map(function(fig){
+    var img = fig.querySelector('img');
+    var cat = fig.querySelector('.gal-card-cat');
+    var title = fig.querySelector('.gal-card-title');
+    var story = fig.querySelector('.gal-card-story');
+    return {
+      src: img ? img.getAttribute('src') : '',
+      cat: cat ? cat.textContent : '',
+      title: title ? title.textContent : '',
+      story: story ? story.textContent : ''
+    };
+  });
 
   /* ---------- lightbox ---------- */
   var lb = document.getElementById('nk-lb');
@@ -87,19 +65,24 @@
     lbTitle.textContent = it.title;
     lbStory.textContent = it.story;
   }
-  function openLb(i){ lbIndex = i; renderLb(); lb.style.display = 'flex'; }
-  function closeLb(){ lbIndex = null; lb.style.display = 'none'; }
+  function openLb(i){ if (!lb) return; lbIndex = i; renderLb(); lb.classList.add('is-open'); }
+  function closeLb(){ if (!lb) return; lbIndex = null; lb.classList.remove('is-open'); }
   function stepLb(d){ if (lbIndex === null) return; lbIndex = (lbIndex + d + items.length) % items.length; renderLb(); }
-  document.getElementById('nk-lb-close').addEventListener('click', closeLb);
-  document.getElementById('nk-lb-prev').addEventListener('click', function(e){ e.stopPropagation(); stepLb(-1); });
-  document.getElementById('nk-lb-next').addEventListener('click', function(e){ e.stopPropagation(); stepLb(1); });
-  lb.addEventListener('click', function(e){ if (e.target === lb) closeLb(); });
-  window.addEventListener('keydown', function(e){
-    if (lbIndex === null) return;
-    if (e.key === 'Escape') closeLb();
-    if (e.key === 'ArrowRight') stepLb(1);
-    if (e.key === 'ArrowLeft') stepLb(-1);
-  });
+  // #nk-lb only renders on /gallery/ (templates/gallery.js) — every other
+  // page loads this same app.js bundle, so this whole block must be a
+  // no-op there rather than throwing on a null lookup.
+  if (lb) {
+    document.getElementById('nk-lb-close').addEventListener('click', closeLb);
+    document.getElementById('nk-lb-prev').addEventListener('click', function(e){ e.stopPropagation(); stepLb(-1); });
+    document.getElementById('nk-lb-next').addEventListener('click', function(e){ e.stopPropagation(); stepLb(1); });
+    lb.addEventListener('click', function(e){ if (e.target === lb) closeLb(); });
+    window.addEventListener('keydown', function(e){
+      if (lbIndex === null) return;
+      if (e.key === 'Escape') closeLb();
+      if (e.key === 'ArrowRight') stepLb(1);
+      if (e.key === 'ArrowLeft') stepLb(-1);
+    });
+  }
 
   /* ---------- carousel controller (snap + arrows + keyboard) ----------
      Native scroll-snap drives touch swipe and trackpad on every device; arrows,
@@ -107,7 +90,7 @@
      up for a focal transition. */
   (function(){
     if (!gal) return;
-    var cards = Array.prototype.slice.call(gal.querySelectorAll('.nk-gcard'));
+    var cards = galCards;
     if (!cards.length) return;
     var prevBtn = document.getElementById('nk-prev');
     var nextBtn = document.getElementById('nk-next');
@@ -212,33 +195,31 @@
     document.addEventListener('mouseleave', function(){ ring.style.opacity='0'; dot.style.opacity='0'; });
   })();
 
-  /* ---------- contact form + calendar ---------- */
+  /* ---------- contact form + calendar ----------
+     #nk-form only renders on /contact/ (templates/contact.js) — every other
+     page loads this same app.js bundle, so the whole block bails out early
+     rather than throwing on a null lookup.
+
+     The package listbox's options are now server-rendered (Task 17: one
+     real button per data/packages.js entry, generated in
+     templates/contact.js, so the list can never drift from the 21
+     packages) instead of built here from a hardcoded, out-of-sync array —
+     this reads the choice straight off the clicked .pkg-select-opt rather
+     than re-rendering the panel from JS. Open/selected/has-value state is
+     tracked with the .is-open/.is-selected/.has-value modifier classes
+     already defined in styles.css, not direct style assignment. */
   (function(){
     var form = document.getElementById('nk-form');
+    if (!form) return;
     var wrap = document.getElementById('nk-form-wrap');
     var dateInput = document.getElementById('nk-date');
     var flexInput = document.getElementById('nk-flex');
-    var pkg = document.getElementById('nk-pkg');
+    var pkgPanel = document.getElementById('nk-pkg');
     var pkgToggle = document.getElementById('nk-pkg-toggle');
     var pkgLabel = document.getElementById('nk-pkg-label');
-    var pkgIcon = document.getElementById('nk-pkg-icon');
-    var PACKAGES = [
-      'Tracking Rhino on Foot, at Dawn',
-      'Predator Tracking',
-      'Plains & Migration Safaris',
-      'Photographic Safaris',
-      'Conservation Safaris',
-      'Day & Night Game Drives',
-      'Horseback Safari',
-      'Helicopter & Fixed-Wing',
-      'Mountain & E-Biking',
-      'High-Altitude Trout Fishing',
-      'Quad & Sand Rivers',
-      'Anti-Poaching Patrol',
-      'Astronomy of the South',
-      'Not sure yet — help me choose'
-    ];
+    var pkgOpts = pkgPanel ? Array.prototype.slice.call(pkgPanel.querySelectorAll('.pkg-select-opt')) : [];
     var pkgSel = null;
+    var pkgSelEl = null;
     var pkgOpen = false;
     var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
@@ -247,8 +228,8 @@
     function iso(d){ return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2); }
     if (dateInput) dateInput.min = iso(t0);
     if (flexInput) flexInput.addEventListener('change', function(){
-      if (flexInput.checked){ dateInput.value = ''; dateInput.disabled = true; dateInput.style.opacity = '.45'; }
-      else { dateInput.disabled = false; dateInput.style.opacity = ''; }
+      if (flexInput.checked){ dateInput.value = ''; dateInput.disabled = true; }
+      else { dateInput.disabled = false; }
     });
     function fmtWhen(){
       if (flexInput && flexInput.checked) return 'Flexible / not sure yet';
@@ -259,33 +240,31 @@
       return '-';
     }
 
-    /* ----- experience / package dropdown ----- */
+    /* ----- experience / package listbox ----- */
     function syncPkg(){
-      pkgLabel.textContent = pkgSel || 'Choose a safari';
-      pkgToggle.style.color = pkgSel ? '#F6EFDE' : '#7F7560';
-      pkgIcon.textContent = pkgOpen ? 'CLOSE' : 'SELECT';
-      pkgToggle.setAttribute('aria-expanded', pkgOpen ? 'true' : 'false');
+      if (pkgLabel) pkgLabel.textContent = pkgSel || 'Choose a safari';
+      if (pkgToggle){
+        pkgToggle.classList.toggle('has-value', !!pkgSel);
+        pkgToggle.setAttribute('aria-expanded', pkgOpen ? 'true' : 'false');
+      }
     }
-    function renderPkg(){
-      var html = '';
-      PACKAGES.forEach(function(name){
-        var isSel = pkgSel === name;
-        html += '<button type="button" role="option" class="nk-pkg-opt'+(isSel?' nk-pkg-sel':'')+'" data-pkg="'+name.replace(/"/g,'&quot;')+'" aria-selected="'+(isSel?'true':'false')+'">'+name+'</button>';
+    function openPkg(){ pkgOpen = true; if (pkgPanel) pkgPanel.classList.add('is-open'); syncPkg(); }
+    function closePkg(){ pkgOpen = false; if (pkgPanel) pkgPanel.classList.remove('is-open'); syncPkg(); }
+    if (pkgToggle) pkgToggle.addEventListener('click', function(){ pkgOpen ? closePkg() : openPkg(); });
+    pkgOpts.forEach(function(opt){
+      opt.addEventListener('click', function(){
+        if (pkgSelEl){ pkgSelEl.classList.remove('is-selected'); pkgSelEl.setAttribute('aria-selected', 'false'); }
+        pkgSelEl = opt;
+        pkgSel = opt.getAttribute('data-pkg');
+        opt.classList.add('is-selected');
+        opt.setAttribute('aria-selected', 'true');
+        closePkg();
       });
-      pkg.innerHTML = html;
-    }
-    function openPkg(){ pkgOpen = true; pkg.style.display = 'block'; renderPkg(); syncPkg(); }
-    function closePkg(){ pkgOpen = false; pkg.style.display = 'none'; syncPkg(); }
-    pkgToggle.addEventListener('click', function(){ pkgOpen ? closePkg() : openPkg(); });
-    pkg.addEventListener('click', function(e){
-      var t = e.target.closest('[data-pkg]'); if (!t) return;
-      pkgSel = t.getAttribute('data-pkg');
-      closePkg();
     });
 
     /* close the package menu when clicking outside it */
     document.addEventListener('click', function(e){
-      if (pkgOpen && !pkg.contains(e.target) && e.target !== pkgToggle && !pkgToggle.contains(e.target)) closePkg();
+      if (pkgOpen && pkgPanel && !pkgPanel.contains(e.target) && e.target !== pkgToggle && pkgToggle && !pkgToggle.contains(e.target)) closePkg();
     });
 
     form.addEventListener('submit', function(e){
@@ -303,10 +282,10 @@
         'When: ' + fmtWhen() + '\n' +
         'Hoping to see: ' + (wish || '-');
       window.open('https://wa.me/254707415444?text=' + encodeURIComponent(lines), '_blank', 'noopener');
-      wrap.innerHTML =
-        '<div style="background:#2C3325;border:1px solid rgba(201,162,75,.4);padding:48px 36px;text-align:center;">'+
-          '<div style="font-family:\'Cormorant Garamond\',serif;font-size:30px;color:#C9A24B;margin-bottom:12px;">Asante sana.</div>'+
-          '<p style="font-size:15px;color:#CFC5AE;line-height:1.6;margin:0 0 18px;">Your enquiry has opened in WhatsApp, just hit send and it comes straight to Nissa. If nothing opened, message <a href="https://wa.me/254707415444" target="_blank" rel="noopener noreferrer" style="color:#C9A24B;">+254 707 415 444</a> or email <a href="mailto:nissasafaris254@gmail.com" style="color:#C9A24B;">nissasafaris254@gmail.com</a>.</p>'+
+      if (wrap) wrap.innerHTML =
+        '<div class="form-success">'+
+          '<div class="form-success-heading">Asante sana.</div>'+
+          '<p class="form-success-body">Your enquiry has opened in WhatsApp, just hit send and it comes straight to Nissa. If nothing opened, message <a href="https://wa.me/254707415444" target="_blank" rel="noopener noreferrer">+254 707 415 444</a> or email <a href="mailto:nissasafaris254@gmail.com">nissasafaris254@gmail.com</a>.</p>'+
         '</div>';
     });
   })();
