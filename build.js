@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import packages from './data/packages.js';
 import destinations from './data/destinations.js';
 import { validatePackage, validateDestination, assertAllValid } from './lib/validate.js';
-import { outputPath } from './lib/paths.js';
+import { outputPath, ORIGIN } from './lib/paths.js';
 import { packagePage } from './templates/package.js';
 import { destinationPage } from './templates/destination.js';
 import { destinationsIndexPage } from './templates/destinations.js';
@@ -39,6 +39,19 @@ export function pages() {
   out.push({ path: '/journal/', html: journalPage() });
   out.push({ path: '/contact/', html: contactPage(packages) });
   out.push({ path: '/privacy/', html: privacyPage() });
+
+  const htmlPaths = out.map((page) => page.path);
+  const urls = htmlPaths
+    .map((path) => `  <url><loc>${ORIGIN}${path}</loc><changefreq>monthly</changefreq></url>`)
+    .join('\n');
+  out.push({
+    path: '/sitemap.xml',
+    html: `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`,
+  });
+  out.push({
+    path: '/robots.txt',
+    html: `User-agent: *\nAllow: /\n\nSitemap: ${ORIGIN}/sitemap.xml\n`,
+  });
   return out;
 }
 
