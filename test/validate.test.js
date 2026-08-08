@@ -9,7 +9,6 @@ const valid = {
   nights: 1,
   category: 'Amboseli & Tsavo',
   destinations: ['tsavo'],
-  priceKey: 'tsavo2',
   hero: '/assets/p10.jpg',
   heroAlt: 'Red dust rising behind a herd of elephant',
   summary: 'A short run into the red earth of Tsavo East.',
@@ -157,3 +156,4 @@ test('empty-string slug is identified in error message', () => {
   // Should have a problem string that includes identifying info, not just ": slug is required"
   assert.ok(problems.some((p) => p !== ': slug is required'));
 });
+

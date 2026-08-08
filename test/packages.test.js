@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import packages, { PRICES } from '../data/packages.js';
+import packages from '../data/packages.js';
 import destinations from '../data/destinations.js';
 import { validatePackage, assertAllValid } from '../lib/validate.js';
 
@@ -14,14 +14,6 @@ test('slugs are unique', () => {
   assert.equal(new Set(slugs).size, slugs.length);
 });
 
-test('every priceKey resolves to a price entry', () => {
-  for (const pkg of packages) {
-    assert.ok(PRICES[pkg.priceKey], `no PRICES entry for ${pkg.priceKey}`);
-    assert.equal(typeof PRICES[pkg.priceKey].fromKes, 'number');
-    assert.ok(PRICES[pkg.priceKey].fromKes > 0);
-  }
-});
-
 test('every destination slug on a package exists in destinations.js', () => {
   const known = new Set(destinations.map((d) => d.slug));
   for (const pkg of packages) {
@@ -31,15 +23,11 @@ test('every destination slug on a package exists in destinations.js', () => {
   }
 });
 
-test('the PLACEHOLDER price warning is present', () => {
+test('no price is hard-coded in the package copy', () => {
   const source = readFileSync(new URL('../data/packages.js', import.meta.url), 'utf8');
-  assert.match(source, /PLACEHOLDER, EDIT BEFORE LAUNCH/);
-});
-
-test('no price is hard-coded outside the PRICES block', () => {
-  const source = readFileSync(new URL('../data/packages.js', import.meta.url), 'utf8');
-  const afterPrices = source.slice(source.indexOf('export default'));
-  assert.doesNotMatch(afterPrices, /\$\s?\d/, 'a dollar figure appears in package copy');
+  assert.doesNotMatch(source, /From KSh/, '"From KSh" appears in package copy');
+  assert.doesNotMatch(source, /PRICES/, 'a PRICES block appears in package copy');
+  assert.doesNotMatch(source, /\$\s?\d/, 'a dollar figure appears in package copy');
 });
 
 test('the 6 Masai Mara & Rift Valley packages are present', () => {

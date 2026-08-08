@@ -1,7 +1,6 @@
 import { existsSync } from 'node:fs';
 import { html, raw } from '../lib/html.js';
 import site from '../data/site.js';
-import { PRICES } from '../data/packages.js';
 
 /**
  * The `.webp` path that would sit alongside `src` if `scripts/make-webp.js`
@@ -95,7 +94,6 @@ export function whatsappLink(packageTitle) {
  * @returns {import('../lib/html.js').RawHtml}
  */
 export function packageCard(pkg) {
-  const price = PRICES[pkg.priceKey];
   const href = `/safaris/${pkg.slug}/`;
   // The whole card is clickable via a stretched-link pseudo-element on the
   // title anchor, rather than wrapping the <article> in an <a>. That keeps one
@@ -110,7 +108,6 @@ export function packageCard(pkg) {
     <h3 class="h3"><a class="pkg-card-link" href="${href}">${pkg.title}</a></h3>
     <p class="body">${pkg.summary}</p>
     <p class="pkg-meta">${pkg.days} days · ${pkg.destinations.length} ${pkg.destinations.length === 1 ? 'destination' : 'destinations'}</p>
-    <p class="pkg-price">From KSh ${price.fromKes.toLocaleString('en-KE')}<span> per person</span></p>
   </div>
 </article>`;
 }

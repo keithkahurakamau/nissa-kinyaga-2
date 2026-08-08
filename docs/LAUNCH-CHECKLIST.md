@@ -8,7 +8,7 @@ highest-leverage work left to do once the site is live.
 
 - [x] Logo supplied and processed, `assets/logo.png` (compact mark, nav) and `assets/logo-full.png` (complete card, footer), both with a soft edge falloff so the black field blends rather than sitting in a box
 - [x] Field portrait supplied, `assets/portrait.jpg`
-- [ ] Replace all 21 placeholder prices in `data/packages.js` and delete the `PLACEHOLDER` banner
+- [x] Remove all package prices from the site. Deprecate published prices pending Nissa's real rates; enquiries now go through WhatsApp/contact form
 - [ ] Have Nissa fact-check the Amboseli, Lake Nakuru, Lake Naivasha and Diani itineraries, he has not worked those parks
 - [ ] Point `nissasafaris.com` DNS at Vercel and confirm the `www` redirect resolves
 - [ ] Run `npm run images` on a machine with `cwebp` installed before deploying. `cwebp` is absent from the development machine, so no `.webp` files were generated for this build. The build degrades gracefully, plain `<img>` tags, no broken `<source>` elements, but the LCP/bandwidth benefit of WebP is unrealised until this is run once on a machine that has it. On Debian/Ubuntu: `sudo apt install webp`.

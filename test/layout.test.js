@@ -52,10 +52,10 @@ test('nav contains every entry from site.nav', () => {
   }
 });
 
-test('packageCard links to the package and shows its from-price', () => {
+test('packageCard links to the package and shows no price', () => {
   const card = renderToString(packageCard(packages[0]));
   assert.match(card, new RegExp(`href="/safaris/${packages[0].slug}/"`));
-  assert.match(card, /From KSh [\d,]+/);
+  assert.doesNotMatch(card, /From KSh [\d,]+/);
   assert.match(card, /\d+ days?/);
 });
 

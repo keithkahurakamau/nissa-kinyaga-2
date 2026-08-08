@@ -1,35 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// PLACEHOLDER, EDIT BEFORE LAUNCH
-// Indicative 2026 Kenya market rates, KES per person sharing, low season,
-// mid-range accommodation, party of 4. Converted from USD at 130 KES/USD and
-// rounded to the nearest 1,000, so treat these as ballpark only. Replace every
-// figure with Nissa's own rates before the site goes live. Nothing else in the
-// codebase hard-codes a price.
-// ─────────────────────────────────────────────────────────────────────────────
-export const PRICES = {
-  mara2: { fromKes: 55000, tier: 'mid-range' },
-  mara3: { fromKes: 81000, tier: 'mid-range' },
-  'mara-nakuru4': { fromKes: 114000, tier: 'mid-range' },
-  'mara-nakuru-naivasha5': { fromKes: 140000, tier: 'mid-range' },
-  'mara-nakuru-amboseli6': { fromKes: 174000, tier: 'mid-range' },
-  'best-of-kenya7': { fromKes: 207000, tier: 'mid-range' },
-  amboseli3: { fromKes: 77000, tier: 'mid-range' },
-  tsavo2: { fromKes: 51000, tier: 'mid-range' },
-  tsavo3: { fromKes: 79000, tier: 'mid-range' },
-  'tsavo-amboseli4': { fromKes: 110000, tier: 'mid-range' },
-  samburu3: { fromKes: 84000, tier: 'mid-range' },
-  olpejeta2: { fromKes: 56000, tier: 'mid-range' },
-  'samburu-olpejeta4': { fromKes: 122000, tier: 'mid-range' },
-  'borana-lewa4': { fromKes: 153000, tier: 'mid-range' },
-  'laikipia-walking3': { fromKes: 116000, tier: 'mid-range' },
-  'mtkenya-naromoru4': { fromKes: 94000, tier: 'mid-range' },
-  'mtkenya-sirimon5': { fromKes: 127000, tier: 'mid-range' },
-  'mtkenya-chogoria6': { fromKes: 153000, tier: 'mid-range' },
-  diani4: { fromKes: 73000, tier: 'mid-range' },
-  'tsavo-diani6': { fromKes: 146000, tier: 'mid-range' },
-  'mara-diani8': { fromKes: 231000, tier: 'mid-range' },
-};
-
 const packages = [
   {
     title: '2-Day Masai Mara Escape',
@@ -38,7 +6,6 @@ const packages = [
     nights: 1,
     category: 'Masai Mara & Rift Valley',
     destinations: ['masai-mara'],
-    priceKey: 'mara2',
     hero: '/assets/p03.jpg',
     heroAlt: 'Four wildebeest walking along a still lake shore under a hazy sky',
     summary:
@@ -82,7 +49,7 @@ const packages = [
       },
       {
         q: 'Are park fees included?',
-        a: 'Yes. Masai Mara conservation and entry fees for both days are built into the price. The only fees not included are anything outside the reserve itself, such as a visa on arrival in Kenya.',
+        a: 'Yes. Masai Mara conservation and entry fees for both days are included. The only fees not included are anything outside the reserve itself, such as a visa on arrival in Kenya.',
       },
       {
         q: 'Is the migration guaranteed on this trip?',
@@ -102,7 +69,6 @@ const packages = [
     nights: 2,
     category: 'Masai Mara & Rift Valley',
     destinations: ['masai-mara'],
-    priceKey: 'mara3',
     hero: '/assets/lion.jpg',
     heroAlt: 'A maned lion sitting upright and alert in golden dry grass',
     summary:
@@ -175,7 +141,6 @@ const packages = [
     nights: 3,
     category: 'Masai Mara & Rift Valley',
     destinations: ['masai-mara'],
-    priceKey: 'mara-nakuru4',
     hero: '/assets/p01.jpg',
     heroAlt: 'A zebra drinking from a muddy waterhole with grazing zebra in the grass behind',
     summary:
@@ -229,7 +194,7 @@ const packages = [
       },
       {
         q: 'Are park fees included for both parks?',
-        a: 'Yes, both Lake Nakuru and Masai Mara entry fees are built into the price for the days you spend inside each. Anything outside the two parks, such as a Kenya entry visa, is not included.',
+        a: 'Yes, both Lake Nakuru and Masai Mara entry fees are included for the days you spend inside each. Anything outside the two parks, such as a Kenya entry visa, is not included.',
       },
       {
         q: 'Will we see the migration on this trip?',
@@ -249,7 +214,6 @@ const packages = [
     nights: 4,
     category: 'Masai Mara & Rift Valley',
     destinations: ['masai-mara'],
-    priceKey: 'mara-nakuru-naivasha5',
     hero: '/assets/p13.jpg',
     heroAlt: 'A kudu bull with tall spiralled horns looking through green bush foliage toward the camera',
     summary:
@@ -305,7 +269,7 @@ const packages = [
     faqs: [
       {
         q: 'Is the Naivasha boat ride included, or an add-on?',
-        a: 'Included, along with the Crescent Island walk. Both are built into the price for day one; no separate booking is needed once you confirm this itinerary.',
+        a: 'Included, along with the Crescent Island walk. Both are included for day one; no separate booking is needed once you confirm this itinerary.',
       },
       {
         q: 'What vehicle do we travel in?',
@@ -321,7 +285,7 @@ const packages = [
       },
       {
         q: 'Is there a single supplement?',
-        a: 'Yes. The price above is per person sharing a room or tent; travelling alone with your own room adds a supplement, which we can quote once we know which camps you have chosen at each stop.',
+        a: 'Yes. This itinerary is priced for two people sharing a room or tent; travelling alone with your own room adds a supplement, which we can quote once we know which camps you have chosen at each stop.',
       },
     ],
     signature: false,
@@ -333,7 +297,6 @@ const packages = [
     nights: 5,
     category: 'Masai Mara & Rift Valley',
     destinations: ['masai-mara', 'amboseli'],
-    priceKey: 'mara-nakuru-amboseli6',
     hero: '/assets/p14.jpg',
     heroAlt: 'A maned lion resting low in green grass, glancing off to one side',
     summary:
@@ -397,8 +360,8 @@ const packages = [
         a: "There is no reasonable direct road between the Mara and Amboseli, so linking the two by road would cost most of a day on rough tracks. The light-aircraft transfer takes under two hours in total including the stop at Wilson Airport, which is why we build it into this route rather than dropping one of the two parks.",
       },
       {
-        q: 'Are park fees and the flight included in the price?',
-        a: 'Yes. The flight, and entry fees for all three parks on the days you visit them, are built into the price above. Only items outside the itinerary, such as your international flight into Kenya, are excluded.',
+        q: 'Are park fees and the flight included?',
+        a: 'Yes. The flight, and entry fees for all three parks on the days you visit them, are included. Only items outside the itinerary, such as your international flight into Kenya, are excluded.',
       },
       {
         q: 'Is luggage limited on the light-aircraft leg?',
@@ -418,7 +381,6 @@ const packages = [
     nights: 6,
     category: 'Masai Mara & Rift Valley',
     destinations: ['masai-mara', 'amboseli'],
-    priceKey: 'best-of-kenya7',
     hero: '/assets/p15.jpg',
     heroAlt: 'A lioness standing on a termite mound in golden grass, looking directly at the camera',
     summary:
@@ -493,7 +455,7 @@ const packages = [
       },
       {
         q: 'Are park fees and the internal flight included?',
-        a: 'Yes, both are built into the price above, along with all listed accommodation and game drives. What is not included is your international flight into and out of Kenya.',
+        a: 'Yes, both are included, along with all listed accommodation and game drives. What is not included is your international flight into and out of Kenya.',
       },
       {
         q: 'Will we see the wildebeest migration?',
@@ -513,7 +475,6 @@ const packages = [
     nights: 2,
     category: 'Amboseli & Tsavo',
     destinations: ['amboseli'],
-    priceKey: 'amboseli3',
     hero: '/assets/p14.jpg',
     heroAlt: 'A maned lion resting low in green grass, glancing off to one side',
     summary:
@@ -566,7 +527,7 @@ const packages = [
       },
       {
         q: 'Are park fees included?',
-        a: 'Yes, Amboseli entry fees for both days inside the park are built into the price. Fees outside the park, such as a Kenya entry visa, are not included.',
+        a: 'Yes, Amboseli entry fees for both days inside the park are included. Fees outside the park, such as a Kenya entry visa, are not included.',
       },
       {
         q: 'How much walking is involved?',
@@ -582,7 +543,6 @@ const packages = [
     nights: 1,
     category: 'Amboseli & Tsavo',
     destinations: ['tsavo'],
-    priceKey: 'tsavo2',
     hero: '/assets/p10.jpg',
     heroAlt: 'Two elephants wading across a muddy river lined with doum palms',
     summary:
@@ -630,7 +590,7 @@ const packages = [
       },
       {
         q: 'Are park fees included?',
-        a: 'Yes, Tsavo East entry fees for both days are built into the price. Fees outside the park are not included.',
+        a: 'Yes, Tsavo East entry fees for both days are included. Fees outside the park are not included.',
       },
       {
         q: 'Is one night enough to see much?',
@@ -646,7 +606,6 @@ const packages = [
     nights: 2,
     category: 'Amboseli & Tsavo',
     destinations: ['tsavo'],
-    priceKey: 'tsavo3',
     hero: '/assets/p11.jpg',
     heroAlt: 'A topi antelope standing over a resting calf in golden grassland, hills hazy behind',
     summary:
@@ -704,7 +663,7 @@ const packages = [
       },
       {
         q: 'Are park fees for both parks included?',
-        a: 'Yes, entry fees for both Tsavo East and Tsavo West are built into the price for the days you spend inside each.',
+        a: 'Yes, entry fees for both Tsavo East and Tsavo West are included for the days you spend inside each.',
       },
     ],
     signature: false,
@@ -716,7 +675,6 @@ const packages = [
     nights: 3,
     category: 'Amboseli & Tsavo',
     destinations: ['tsavo', 'amboseli'],
-    priceKey: 'tsavo-amboseli4',
     hero: '/assets/p05.jpg',
     heroAlt: 'A lion resting atop a sunlit granite rock, blue sky and bush behind',
     summary:
@@ -774,7 +732,7 @@ const packages = [
       },
       {
         q: 'Are park fees for both parks included?',
-        a: 'Yes, entry fees for Tsavo East and Amboseli are both built into the price above.',
+        a: 'Yes, entry fees for Tsavo East and Amboseli are both included.',
       },
       {
         q: 'Will Kilimanjaro be visible?',
@@ -790,7 +748,6 @@ const packages = [
     nights: 2,
     category: 'Laikipia & the North',
     destinations: ['samburu'],
-    priceKey: 'samburu3',
     hero: '/assets/kudu.jpg',
     heroAlt: 'A greater kudu bull with tall spiralled horns standing in dry bush',
     summary:
@@ -859,7 +816,6 @@ const packages = [
     nights: 1,
     category: 'Laikipia & the North',
     destinations: ['ol-pejeta'],
-    priceKey: 'olpejeta2',
     hero: '/assets/p08.jpg',
     heroAlt: "Close-up of a rhino's head and horn lit by low golden sunlight in tall grass",
     summary:
@@ -911,7 +867,7 @@ const packages = [
       },
       {
         q: 'Is there a single supplement?',
-        a: 'Yes, if travelling alone and preferring your own room rather than sharing. The per-person price above assumes two people sharing, and we quote the supplement once we know the specific lodge you have chosen.',
+        a: 'Yes, if travelling alone and preferring your own room rather than sharing. This itinerary is priced for two people sharing, and we quote the supplement once we know the specific lodge you have chosen.',
       },
     ],
     signature: false,
@@ -923,7 +879,6 @@ const packages = [
     nights: 3,
     category: 'Laikipia & the North',
     destinations: ['samburu', 'ol-pejeta'],
-    priceKey: 'samburu-olpejeta4',
     hero: '/assets/giraffe.jpg',
     heroAlt: 'A giraffe silhouetted against an orange sunset, acacia trees on either side',
     summary:
@@ -997,7 +952,6 @@ const packages = [
     nights: 3,
     category: 'Laikipia & the North',
     destinations: ['laikipia'],
-    priceKey: 'borana-lewa4',
     hero: '/assets/p12.jpg',
     heroAlt: 'A rhino grazing in open grassland with cattle egrets around its feet and hills behind',
     summary:
@@ -1077,7 +1031,6 @@ const packages = [
     nights: 2,
     category: 'Laikipia & the North',
     destinations: ['laikipia'],
-    priceKey: 'laikipia-walking3',
     hero: '/assets/mukogodo.jpg',
     heroAlt: 'A figure in a red shawl standing on a rock outcrop above a wide valley at dawn',
     summary:
@@ -1151,7 +1104,6 @@ const packages = [
     nights: 3,
     category: 'Mount Kenya',
     destinations: ['mount-kenya'],
-    priceKey: 'mtkenya-naromoru4',
     hero: '/assets/p16.jpg',
     heroAlt: 'A still waterhole reflecting a pale sky, ringed by dry grass and low hills',
     summary:
@@ -1226,7 +1178,6 @@ const packages = [
     nights: 4,
     category: 'Mount Kenya',
     destinations: ['mount-kenya'],
-    priceKey: 'mtkenya-sirimon5',
     hero: '/assets/p17.jpg',
     heroAlt: 'Two helicopters parked on a grassy slope beneath a spreading acacia tree at dusk',
     summary:
@@ -1306,7 +1257,6 @@ const packages = [
     nights: 5,
     category: 'Mount Kenya',
     destinations: ['mount-kenya'],
-    priceKey: 'mtkenya-chogoria6',
     hero: '/assets/p18.jpg',
     heroAlt: 'Two buffalo standing on a red-earth bank above a still waterhole, forest and hills behind',
     summary:
@@ -1395,7 +1345,6 @@ const packages = [
     nights: 3,
     category: 'Coast',
     destinations: ['diani'],
-    priceKey: 'diani4',
     hero: '/assets/p09.jpg',
     heroAlt: 'A gerenuk standing upright on its hind legs to browse a thorn bush',
     summary:
@@ -1469,7 +1418,6 @@ const packages = [
     nights: 5,
     category: 'Coast',
     destinations: ['tsavo', 'diani'],
-    priceKey: 'tsavo-diani6',
     hero: '/assets/p04.jpg',
     heroAlt: 'A leopard resting on a tree branch, coat lit by low sun, a hazy mountain silhouette behind',
     summary:
@@ -1534,7 +1482,7 @@ const packages = [
       },
       {
         q: 'Are park fees and the ferry crossing included?',
-        a: 'Yes, Tsavo East entry fees and the Likoni ferry crossing are both built into the price above. What is not included is anything at the coast beyond the one snorkelling trip and one dhow trip specified.',
+        a: 'Yes, Tsavo East entry fees and the Likoni ferry crossing are both included. What is not included is anything at the coast beyond the one snorkelling trip and one dhow trip specified.',
       },
       {
         q: 'Do we need a different visa for the two halves of the trip?',
@@ -1554,7 +1502,6 @@ const packages = [
     nights: 7,
     category: 'Coast',
     destinations: ['masai-mara', 'diani'],
-    priceKey: 'mara-diani8',
     hero: '/assets/plane.jpg',
     heroAlt: 'A small bush plane lifting off a dirt airstrip, dust trailing behind it, hills beyond',
     summary:

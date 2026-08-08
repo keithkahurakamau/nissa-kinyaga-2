@@ -3,7 +3,7 @@ import { touristTripSchema, faqPageSchema } from '../lib/seo.js';
 import { MIN_DESCRIPTION, MAX_DESCRIPTION, escapedLength, truncateToEscapedLimit } from '../lib/text.js';
 import { layout } from './layout.js';
 import { packageCard, ctaBlock, breadcrumbNav, picture } from './partials.js';
-import packages, { PRICES } from '../data/packages.js';
+import packages from '../data/packages.js';
 
 // Fixed, truthful marketing copy used only as a last-resort suffix to pull
 // a composed description up to the 50-char floor. It's long enough on its
@@ -78,17 +78,11 @@ function heroSection(pkg) {
 }
 
 function titleSection(pkg, crumbs) {
-  const price = PRICES[pkg.priceKey];
   return html`<header class="section">
   <div class="wrap">
     ${breadcrumbNav(crumbs)}
     <h1 class="display">${pkg.title}</h1>
     <p class="pkg-meta">${pkg.days} days · ${pkg.nights} nights</p>
-    <p class="pkg-price">From KSh ${price.fromKes.toLocaleString('en-KE')}<span> per person</span></p>
-    <p class="pkg-price-note">A guide price, not a quote. What you actually pay
-      depends on how many of you there are, the season you travel in and the
-      standard of camp you want. Tell me what you have in mind and I will price
-      it properly.</p>
   </div>
 </header>`;
 }

@@ -30,7 +30,7 @@ test('a skip link is styled', () => {
 test('every contractual class name is present', () => {
   const required = [
     'wrap', 'section', 'nav-bar', 'nav-link', 'display', 'h2', 'lede', 'label',
-    'btn', 'pkg-card', 'pkg-price', 'badge-signature', 'grid-3', 'itinerary',
+    'btn', 'pkg-card', 'badge-signature', 'grid-3', 'itinerary',
     'incl-excl', 'faq', 'nissa-note', 'gal', 'lb', 'form', 'field-input',
     'footer-grid', 'visually-hidden', 'skip-link', 'reveal', 'crumbs',
   ];

@@ -63,12 +63,10 @@ test('personSchema names Nissa and lists his affiliations', () => {
   assert.ok(schema.alumniOf);
 });
 
-test('touristTripSchema carries an Offer with the package price', () => {
+test('touristTripSchema carries no Offer or price', () => {
   const schema = touristTripSchema(packages[0]);
   assert.equal(schema['@type'], 'TouristTrip');
-  assert.equal(schema.offers['@type'], 'Offer');
-  assert.equal(schema.offers.priceCurrency, 'KES');
-  assert.ok(Number(schema.offers.price) > 0);
+  assert.equal(schema.offers, undefined);
   assert.match(schema.url, /^https:\/\/nissasafaris\.com\/safaris\/.+\/$/);
 });
 
@@ -85,7 +83,7 @@ test('touristTripSchema wraps the itinerary in an ItemList of the right length',
 test('touristTripSchema uses no properties outside the Trip vocabulary', () => {
   const allowed = new Set([
     '@context', '@type', 'name', 'description', 'url', 'image', 'provider',
-    'itinerary', 'offers', 'touristType', 'arrivalTime', 'departureTime',
+    'itinerary', 'touristType', 'arrivalTime', 'departureTime',
     'partOfTrip', 'subTrip', 'tripOrigin',
   ]);
   for (const key of Object.keys(touristTripSchema(packages[0]))) {

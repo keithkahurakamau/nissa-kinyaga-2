@@ -119,7 +119,8 @@ launch, see `docs/LAUNCH-CHECKLIST.md`.
 ## Before launch
 
 See `docs/LAUNCH-CHECKLIST.md` for the full list. In short: the logo and a new
-portrait still need to be dropped into `assets/`, all 21 package prices are
-placeholders pending Nissa's real pricing, a handful of itineraries and
-biographical claims need his confirmation, WebP generation needs to run once
-on a machine with `cwebp`, and DNS + off-page SEO work is outstanding.
+portrait have been supplied and processed; package prices have been removed
+from the site pending Nissa's real rates, with enquiries going through
+WhatsApp/contact; a handful of itineraries and biographical claims need his
+confirmation, WebP generation needs to run once on a machine with `cwebp`, and
+DNS + off-page SEO work is outstanding.
