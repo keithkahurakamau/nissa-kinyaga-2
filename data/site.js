@@ -20,6 +20,7 @@ export default {
     { label: 'Home', href: '/' },
     { label: 'Safaris', href: '/safaris/' },
     { label: 'Destinations', href: '/destinations/' },
+    { label: 'Journeys', href: '/journeys/' },
     { label: 'About', href: '/about/' },
     { label: 'Gallery', href: '/gallery/' },
     { label: 'Journal', href: '/journal/' },
@@ -28,6 +29,7 @@ export default {
   footerLinks: [
     { label: 'All safaris', href: '/safaris/' },
     { label: 'Destinations', href: '/destinations/' },
+    { label: 'International journeys', href: '/journeys/' },
     { label: 'About Nissa', href: '/about/' },
     { label: 'Contact', href: '/contact/' },
     { label: 'Privacy', href: '/privacy/' },

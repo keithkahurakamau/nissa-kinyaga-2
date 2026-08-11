@@ -3,11 +3,14 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import packages from './data/packages.js';
 import destinations from './data/destinations.js';
-import { validatePackage, validateDestination, assertAllValid } from './lib/validate.js';
+import journeys from './data/journeys.js';
+import { validatePackage, validateDestination, validateCountry, assertAllValid } from './lib/validate.js';
 import { outputPath, ORIGIN } from './lib/paths.js';
 import { packagePage } from './templates/package.js';
 import { destinationPage } from './templates/destination.js';
 import { destinationsIndexPage } from './templates/destinations.js';
+import { journeyPage } from './templates/journey.js';
+import { journeysIndexPage } from './templates/journeys.js';
 import { safarisIndexPage } from './templates/safaris.js';
 import { aboutPage } from './templates/about.js';
 import { homePage } from './templates/home.js';
@@ -23,6 +26,7 @@ const DIST = join(ROOT, 'dist');
 export function pages() {
   assertAllValid(packages, validatePackage, 'package');
   assertAllValid(destinations, validateDestination, 'destination');
+  assertAllValid(journeys, validateCountry, 'journey country');
 
   const out = [];
   out.push({ path: '/', html: homePage(packages, destinations) });
@@ -34,6 +38,10 @@ export function pages() {
   for (const dest of destinations) {
     const here = packages.filter((p) => p.destinations.includes(dest.slug));
     out.push({ path: `/destinations/${dest.slug}/`, html: destinationPage(dest, here) });
+  }
+  out.push({ path: '/journeys/', html: journeysIndexPage(journeys) });
+  for (const country of journeys) {
+    out.push({ path: `/journeys/${country.slug}/`, html: journeyPage(country) });
   }
   out.push({ path: '/about/', html: aboutPage() });
   out.push({ path: '/gallery/', html: galleryPage() });
