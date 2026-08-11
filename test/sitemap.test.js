@@ -18,9 +18,9 @@ test('the sitemap lists every HTML page and nothing else', () => {
   assert.deepEqual(listed.sort(), htmlPaths.sort());
 });
 
-test('there are 37 pages in the sitemap', () => {
+test('there are 47 pages in the sitemap', () => {
   const listed = [...sitemap.matchAll(/<loc>/g)];
-  assert.equal(listed.length, 37);
+  assert.equal(listed.length, 47);
 });
 
 test('robots.txt allows crawling and points at the sitemap', () => {

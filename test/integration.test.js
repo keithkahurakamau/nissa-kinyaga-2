@@ -33,6 +33,6 @@ test('every page is reachable from the home page in at most two hops', () => {
   }
 });
 
-test('all 37 HTML pages are emitted', () => {
-  assert.equal(all.filter((p) => p.path.endsWith('/')).length, 37);
+test('all 47 HTML pages are emitted', () => {
+  assert.equal(all.filter((p) => p.path.endsWith('/')).length, 47);
 });
