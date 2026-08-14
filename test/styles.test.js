@@ -42,3 +42,36 @@ test('every contractual class name is present', () => {
 test('no horizontal overflow escape hatches are left in place', () => {
   assert.doesNotMatch(css, /overflow-x:\s*visible/);
 });
+
+// Regression guard for the mobile lightbox bug: `.lb-figure` is a flex item,
+// so it paints like an inline block and beats a `z-index: auto` sibling on DOM
+// order alone. When `.lb-close` had no z-index the image covered it, and on
+// viewports under ~380px wide (and in landscape) the X stopped closing the
+// lightbox. `.galbtn` was already carrying z-index for the same reason.
+test('the lightbox close button is stacked above the figure', () => {
+  const rule = css.match(/\.lb-close\s*\{[^}]*\}/);
+  assert.ok(rule, 'missing .lb-close rule');
+  const zIndex = rule[0].match(/z-index:\s*(\d+)/);
+  assert.ok(zIndex, '.lb-close must declare a z-index or .lb-figure paints over it');
+  assert.ok(Number(zIndex[1]) >= 3, '.lb-close z-index must be at least .galbtn\'s 3');
+});
+
+test('the lightbox close button meets the 44x44 touch target minimum', () => {
+  const rule = css.match(/\.lb-close\s*\{[^}]*\}/)[0];
+  const minWidth = rule.match(/min-width:\s*(\d+)px/);
+  const minHeight = rule.match(/min-height:\s*(\d+)px/);
+  assert.ok(minWidth && Number(minWidth[1]) >= 44, '.lb-close needs min-width >= 44px');
+  assert.ok(minHeight && Number(minHeight[1]) >= 44, '.lb-close needs min-height >= 44px');
+});
+
+test('the lightbox sits above the consent banner and progress bar', () => {
+  const zOf = (selector) => {
+    const rule = css.match(new RegExp(`\\${selector}\\s*\\{[^}]*\\}`));
+    assert.ok(rule, `missing ${selector} rule`);
+    const match = rule[0].match(/z-index:\s*(\d+)/);
+    return match ? Number(match[1]) : 0;
+  };
+  const lightbox = zOf('.lb');
+  assert.ok(lightbox > zOf('.consent'), '.lb must stack above .consent');
+  assert.ok(lightbox > 120, '.lb must stack above #nk-progress (120)');
+});

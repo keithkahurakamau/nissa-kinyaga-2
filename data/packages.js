@@ -1345,8 +1345,9 @@ const packages = [
     nights: 3,
     category: 'Coast',
     destinations: ['diani'],
-    hero: '/assets/p09.jpg',
-    heroAlt: 'A gerenuk standing upright on its hind legs to browse a thorn bush',
+    hero: '/assets/diani-02.jpg',
+    heroAlt:
+      'White sand fringed with coconut palms on the edge of the beach',
     summary:
       'Four unhurried days on Diani\'s white sand, with the reef offshore for snorkelling and a dhow trip along the coast, built to close out a safari or stand on its own.',
     overview: [

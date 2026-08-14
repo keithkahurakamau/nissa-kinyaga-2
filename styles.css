@@ -515,11 +515,28 @@ a { text-decoration: none; }
   background: rgba(201,162,75,.34);
   box-shadow: 0 10px 28px rgba(20,15,9,.28), inset 0 1px 0 rgba(255,255,255,.45);
 }
+/* Dark sections only. `.btn` sets `color: var(--cream)`, so this translucent
+   white fill leaves cream-on-near-white and is effectively invisible on the
+   light --sand surfaces (.section, .section-alt). Use .btn-outline there. */
 .btn-ghost {
   background: rgba(255,255,255,.16);
   border: 1px solid rgba(255,255,255,.32);
 }
 .btn-ghost:hover { background: rgba(255,255,255,.26); }
+/* The light-section counterpart to .btn-ghost: --ink on --sand is ~13:1,
+   so a secondary action stays readable where .btn-ghost would vanish. */
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--gold-deep);
+  color: var(--ink);
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.btn-outline:hover {
+  background: rgba(122,90,34,.1);
+  box-shadow: none;
+}
 .btn-ink {
   background: rgba(28,22,14,.32);
   -webkit-backdrop-filter: url(#nk-refract) blur(16px) saturate(160%);
@@ -1111,11 +1128,15 @@ a { text-decoration: none; }
 .galbtn-prev { left: 6px; }
 .galbtn-next { right: 6px; }
 
+/* Above .consent (130) and #nk-progress (120). At the old z-index of 90 the
+   privacy banner floated over an open lightbox on a phone, covering the
+   caption and taking taps meant for the image. A modal has to sit above
+   page furniture. */
 .lb {
   display: none;
   position: fixed;
   inset: 0;
-  z-index: 90;
+  z-index: 140;
   background: rgba(15,11,6,.72);
   backdrop-filter: blur(20px) saturate(1.1);
   -webkit-backdrop-filter: blur(20px) saturate(1.1);
@@ -1146,10 +1167,28 @@ a { text-decoration: none; }
   flex-direction: column;
   align-items: center;
 }
+/* z-index is load-bearing, not decoration. `.lb-figure` is a flex item, and a
+   flex item paints like an inline block, so with `z-index: auto` on both it
+   and this button the tie is broken by DOM order, which `.lb-figure` wins by
+   coming second. Without this the image sits over the close button and
+   swallows the tap: on viewports narrower than about 380px (iPhone SE,
+   smaller Androids) and in landscape, .lb-img's `min(1100px, 90vw)` box
+   reaches under `top: 24px; right: 30px` and the X stops closing the
+   lightbox entirely. `.galbtn` (prev/next) already carries `z-index: 3` for
+   exactly this reason; this matches it.
+   min-width/min-height give a real 44x44 touch target: the glyph alone
+   measured 27x40, under the minimum, which made near-misses common on a
+   phone even where the stacking was fine. */
 .lb-close {
   position: absolute;
   top: 24px;
   right: 30px;
+  z-index: 3;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: none;
   border: none;
   color: var(--cream-2);
@@ -1982,4 +2021,142 @@ a { text-decoration: none; }
 .pkg-card-link:focus-visible::after {
   outline: 2px solid var(--gold);
   outline-offset: 3px;
+}
+
+/* Photo credit fine print. Only rendered on pages using a licensed
+   third-party photograph (data/journeys.js `heroCredit`); CC BY-SA requires
+   the attribution to travel with the image. Muted, but --muted-2 keeps it
+   above 4.5:1 rather than fading it out entirely. */
+.photo-credit {
+  max-width: 78rem;
+  margin: 0 auto;
+  padding: 1.75rem 1.5rem 2.5rem;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--muted-2);
+}
+.photo-credit a {
+  color: var(--muted-2);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.photo-credit a:hover,
+.photo-credit a:focus-visible {
+  color: var(--gold-deep);
+}
+
+/* ============================================================
+   Reviews & credentials (/reviews/)
+   Every block here is data-gated in templates/reviews.js and renders
+   nothing while its source data is empty, so these rules are inert on a
+   site with no verified licences and no published reviews yet.
+   ============================================================ */
+
+.cred-group {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+  margin: 40px 0 18px;
+}
+.cred-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+.cred {
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--gold-deep);
+  background: var(--sand);
+  padding: 24px 22px;
+}
+.cred-body {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin: 6px 0 12px;
+}
+.cred-body a { color: inherit; text-decoration: underline; text-underline-offset: .2em; }
+/* --muted-2 rather than --muted: this is small text and must clear 4.5:1,
+   the same correction applied across the stylesheet in the contrast pass. */
+.cred-source {
+  margin-top: 14px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted-2);
+}
+.cred-source a { color: var(--muted-2); text-decoration: underline; text-underline-offset: .2em; }
+.cred-source a:hover, .cred-source a:focus-visible { color: var(--gold-deep); }
+.cred-note {
+  margin-top: 36px;
+  padding-top: 26px;
+  border-top: 1px solid var(--line);
+  max-width: 68ch;
+}
+
+.review-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 22px;
+}
+.review {
+  margin: 0;
+  border: 1px solid var(--line);
+  background: var(--sand);
+  padding: 26px 24px;
+}
+.review-stars {
+  color: var(--gold-deep);
+  font-size: 15px;
+  letter-spacing: .16em;
+}
+.review-body {
+  margin: 14px 0 0;
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: var(--ink);
+}
+.review-by {
+  margin-top: 18px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+.review-trip { display: block; margin-top: 6px; color: var(--gold-deep); }
+
+.platform-links,
+.rating-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+/* Radio group, not a star widget: a real <input type="radio"> keeps this
+   operable by keyboard and screen reader without any JS, which matters
+   because the CSP forbids inline handlers anyway. */
+.rating-opt {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  background: var(--sand);
+  font-size: 13.5px;
+  color: var(--ink);
+  cursor: pointer;
+}
+.rating-opt:has(input:checked) {
+  border-color: var(--gold-deep);
+  background: var(--sand-2);
+}
+.rating-opt input { accent-color: var(--gold-deep); }
+
+@media (max-width: 720px) {
+  .cred-grid, .review-grid { grid-template-columns: 1fr; }
 }

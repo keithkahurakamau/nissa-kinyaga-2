@@ -18,7 +18,15 @@ const journeys = [
     shortName: 'Rwanda',
     countryCode: 'RW',
     hero: '/assets/rwanda-01.jpg',
-    heroAlt: 'A mountain gorilla resting low in dense green forest foliage',
+    heroAlt:
+      'A mountain gorilla in close view, head and shoulders filling the frame against blurred green forest',
+    heroCredit: {
+      author: 'Charles J. Sharp',
+      license: 'CC BY-SA 4.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+      sourceUrl:
+        'https://commons.wikimedia.org/wiki/File:Mountain_gorilla_(Gorilla_beringei_beringei)_female_3.jpg',
+    },
     summary:
       'The Land of a Thousand Hills, and the most straightforward country in the world for seeing mountain gorillas: a short trek from volcanoes, terraced farmland and rainforest.',
     overview: [
@@ -47,7 +55,14 @@ const journeys = [
     shortName: 'Uganda',
     countryCode: 'UG',
     hero: '/assets/uganda-01.jpg',
-    heroAlt: 'A chimpanzee moving through dense tropical forest canopy',
+    heroAlt: 'An alpha male chimpanzee on the forest floor in Kibale National Park',
+    heroCredit: {
+      author: 'Giles Laurent',
+      license: 'CC BY-SA 4.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+      sourceUrl:
+        'https://commons.wikimedia.org/wiki/File:013_Alpha_male_chimpanzee_at_Kibale_forest_National_Park_Photo_by_Giles_Laurent.jpg',
+    },
     summary:
       "The Pearl of Africa: gorilla and chimpanzee tracking in ancient rainforest, tree-climbing lions on the savanna, and the Nile forced through a narrow gorge at Murchison Falls.",
     overview: [
@@ -222,7 +237,14 @@ const journeys = [
     shortName: 'Namibia',
     countryCode: 'NA',
     hero: '/assets/namibia-01.jpg',
-    heroAlt: 'Tall red sand dunes rising against a clear blue sky',
+    heroAlt: 'The crest of a tall red dune at Sossusvlei catching low sunrise light',
+    heroCredit: {
+      author: 'Giles Laurent',
+      license: 'CC BY-SA 4.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+      sourceUrl:
+        'https://commons.wikimedia.org/wiki/File:006_Dune_45_in_Sossusvlei_at_sunrise_Photo_by_Giles_Laurent.jpg',
+    },
     summary:
       "Towering red dunes at Sossusvlei, desert-adapted elephant in Damaraland, and Etosha's waterholes: big-sky, self-drive country with some of the lowest population density in Africa.",
     overview: [

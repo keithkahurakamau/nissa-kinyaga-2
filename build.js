@@ -18,6 +18,7 @@ import { galleryPage } from './templates/gallery.js';
 import { journalPage } from './templates/journal.js';
 import { contactPage } from './templates/contact.js';
 import { notFoundPage } from './templates/not-found.js';
+import { reviewsPage } from './templates/reviews.js';
 import { privacyPage } from './templates/privacy.js';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
@@ -47,6 +48,7 @@ export function pages() {
   out.push({ path: '/gallery/', html: galleryPage() });
   out.push({ path: '/journal/', html: journalPage() });
   out.push({ path: '/contact/', html: contactPage(packages) });
+  out.push({ path: '/reviews/', html: reviewsPage() });
   out.push({ path: '/privacy/', html: privacyPage() });
   // Vercel serves /404.html for any unmatched path. Emitted as a file, not a
   // directory, so the sitemap's `endsWith('/')` filter excludes it.

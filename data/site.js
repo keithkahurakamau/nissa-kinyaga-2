@@ -24,6 +24,7 @@ export default {
     { label: 'About', href: '/about/' },
     { label: 'Gallery', href: '/gallery/' },
     { label: 'Journal', href: '/journal/' },
+    { label: 'Reviews', href: '/reviews/' },
     { label: 'Contact', href: '/contact/' },
   ],
   footerLinks: [
@@ -31,6 +32,7 @@ export default {
     { label: 'Destinations', href: '/destinations/' },
     { label: 'International journeys', href: '/journeys/' },
     { label: 'About Nissa', href: '/about/' },
+    { label: 'Reviews & credentials', href: '/reviews/' },
     { label: 'Contact', href: '/contact/' },
     { label: 'Privacy', href: '/privacy/' },
   ],

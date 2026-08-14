@@ -4,6 +4,7 @@ import { MAX_DESCRIPTION, escapedLength, truncateToEscapedLimit } from '../lib/t
 import { layout } from './layout.js';
 import { ctaBlock, breadcrumbNav, sectionHeading, picture } from './partials.js';
 import site from '../data/site.js';
+import { guideCredentials, verified } from '../data/credentials.js';
 import about from '../data/about.js';
 
 // Authored well clear of the 50-165 (escaped) char range; truncateToEscapedLimit
@@ -114,6 +115,29 @@ function workedAtSection() {
 </section>`;
 }
 
+// Verified guiding qualifications only, read straight from
+// data/credentials.js so an unverified entry cannot appear here either.
+// Links through to /reviews/ where the full list and the sources live.
+function credentialsSection() {
+  const entries = verified(guideCredentials);
+  if (!entries.length) return '';
+  const items = entries.map(
+    (entry) => html`<div class="worked-item">
+      <h3 class="worked-name">${entry.name}</h3>
+      <p class="worked-role">${entry.body}</p>
+    </div>`,
+  );
+  return html`<section class="section-alt">
+  <div class="wrap">
+    ${sectionHeading({ number: '05', eyebrow: 'Qualifications', heading: 'Certified guiding' })}
+    <div class="worked-grid">
+      ${items}
+    </div>
+    <p class="body cred-note">Both are examined qualifications rather than memberships. The full detail, including the independent sources that report them, is on the <a href="/reviews/">reviews and credentials</a> page.</p>
+  </div>
+</section>`;
+}
+
 function expertiseSection() {
   const items = about.expertise.map(
     (entry, i) => html`<div class="expertise-item">
@@ -188,6 +212,7 @@ export function aboutPage() {
   ${trainingSection()}
   ${careerSection()}
   ${workedAtSection()}
+  ${credentialsSection()}
   ${expertiseSection()}
   ${servicesSection()}
   ${philosophySection()}

@@ -215,8 +215,9 @@ const destinations = [
     slug: 'diani',
     name: 'Diani Beach',
     shortName: 'Diani',
-    hero: '/assets/p09.jpg',
-    heroAlt: 'A gerenuk standing upright on its hind legs to browse a thorn bush',
+    hero: '/assets/diani-01.jpg',
+    heroAlt:
+      'Tall coconut palms leaning over a coastal treeline with the sea visible beyond',
     summary:
       "A south-coast beach below Mombasa, white sand backed by palm groves and a coral reef offshore, the classic way to close out a Kenya safari.",
     overview: [

@@ -274,6 +274,52 @@
     });
   })();
 
+  /* ---------- review form (/reviews/) ----------
+     Same delivery model as the enquiry form above: static site, no backend,
+     so the answers are composed into a message and handed to WhatsApp.
+     #nk-review-form only renders on /reviews/, so bail out everywhere else
+     rather than throwing on a null lookup.
+
+     The consent checkbox is `required` in the markup, so the browser blocks
+     submission without it; this never sends a review the guest has not
+     agreed to have published, and says so in the message it composes. */
+  (function(){
+    var form = document.getElementById('nk-review-form');
+    if (!form) return;
+    var wrap = document.getElementById('nk-review-wrap');
+
+    function val(id){
+      var el = document.getElementById(id);
+      return ((el && el.value) || '').trim();
+    }
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var checked = form.querySelector('input[name="rating"]:checked');
+      var rating = checked ? checked.value : '';
+      var consent = document.getElementById('nk-rv-consent');
+      var lines = 'Safari review\n\n' +
+        'Name: ' + (val('nk-rv-name') || '-') + '\n' +
+        'From: ' + (val('nk-rv-country') || '-') + '\n' +
+        'Trip: ' + (val('nk-rv-trip') || '-') + '\n' +
+        'Rating: ' + (rating ? rating + '/5' : '-') + '\n' +
+        'Publish on the site: ' + (consent && consent.checked ? 'yes' : 'no') + '\n\n' +
+        (val('nk-rv-body') || '-');
+
+      // Contact details come from the DOM attributes the layout renders, for
+      // the same reason as the enquiry form: app.js cannot import site.js.
+      var wa = document.body.getAttribute('data-wa') || '';
+      var mail = document.body.getAttribute('data-email') || '';
+      var tel = document.body.getAttribute('data-phone') || '';
+      window.open('https://wa.me/' + wa + '?text=' + encodeURIComponent(lines), '_blank', 'noopener');
+      if (wrap) wrap.innerHTML =
+        '<div class="form-success">'+
+          '<div class="form-success-heading">Asante sana.</div>'+
+          '<p class="form-success-body">Your review has opened in WhatsApp, just hit send and it comes straight to Nissa. If nothing opened, message <a href="https://wa.me/'+wa+'" target="_blank" rel="noopener noreferrer">'+tel+'</a> or email <a href="mailto:'+mail+'">'+mail+'</a>.</p>'+
+        '</div>';
+    });
+  })();
+
   /* ---------- safaris index: client-side filtering ----------
      Progressive enhancement over the static /safaris/ index: every card
      ships in the HTML already grouped by category (so JS-off visitors and

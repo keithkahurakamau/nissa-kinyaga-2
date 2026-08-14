@@ -3,6 +3,7 @@ import { touristDestinationSchema } from '../lib/seo.js';
 import { MAX_DESCRIPTION, escapedLength, truncateToEscapedLimit } from '../lib/text.js';
 import { layout } from './layout.js';
 import { ctaBlock, breadcrumbNav, picture } from './partials.js';
+import { internationalAssurance } from '../data/credentials.js';
 
 /**
  * Derives a safe 50-165 (escaped) char meta description from a country's
@@ -50,6 +51,22 @@ function overviewSection(country) {
 </section>`;
 }
 
+// CC BY-SA requires the author, the licence and a route back to the source to
+// travel with the image. `.dest-hero` may hold nothing but the picture (see
+// the styles.css comment on it), so the credit is rendered here instead, as
+// fine print at the foot of the page. Entries without `heroCredit` are our own
+// photographs and render nothing.
+function photoCreditSection(country) {
+  const credit = country.heroCredit;
+  if (!credit) return '';
+  return html`<p class="photo-credit">
+  Header photograph by
+  <a href="${credit.sourceUrl}" target="_blank" rel="noopener noreferrer">${credit.author}</a>,
+  licensed under
+  <a href="${credit.licenseUrl}" target="_blank" rel="noopener noreferrer">${credit.license}</a>.
+</p>`;
+}
+
 function factsSection(country) {
   const highlights = country.highlights.map((item) => html`<li>${item}</li>`);
   return html`<section class="section">
@@ -88,6 +105,7 @@ function arrangementsSection(country) {
     <h2 class="h2">How we arrange it</h2>
     <p class="body">We don't guide inside ${country.shortName} ourselves, and we don't publish a fixed ${country.shortName} itinerary the way we do for Kenya: no set trips exist yet for this country, so we build each one individually rather than invent a day-by-day plan that isn't real. What we do is put the trip together end to end, flights in and out, the right lodges and camps for your budget and interests, road or light-aircraft transfers between them, and a private guide on the ground who knows that particular park well.</p>
     <p class="body">Tell us what you want to see and how many days you have, and we'll draw up an itinerary and put you in touch with the people who can deliver it, with Nissa as your single point of contact throughout.</p>
+    <p class="body">${internationalAssurance}</p>
   </div>
 </section>`;
 }
@@ -118,6 +136,7 @@ export function journeyPage(country) {
     heading: `Ready to plan ${country.shortName}?`,
     body: `Send us your travel dates and we'll put together a ${country.shortName} itinerary around them, flights, lodges and a guide on the ground.`,
   })}
+  ${photoCreditSection(country)}
 </main>`;
 
   return layout({
