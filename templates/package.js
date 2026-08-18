@@ -2,7 +2,8 @@ import { html } from '../lib/html.js';
 import { touristTripSchema, faqPageSchema } from '../lib/seo.js';
 import { MIN_DESCRIPTION, MAX_DESCRIPTION, escapedLength, truncateToEscapedLimit } from '../lib/text.js';
 import { layout } from './layout.js';
-import { packageCard, ctaBlock, breadcrumbNav, picture } from './partials.js';
+import { balloonSafari } from '../data/experiences.js';
+import { packageCard, ctaBlock, breadcrumbNav, picture, balloonSection } from './partials.js';
 import packages from '../data/packages.js';
 
 // Fixed, truthful marketing copy used only as a last-resort suffix to pull
@@ -187,6 +188,14 @@ function relatedSection(pkg) {
  * @param {object} pkg, an entry from `data/packages.js`
  * @returns {string} the complete HTML document
  */
+// A package gets the balloon add-on if any park it visits has flights. The
+// first match wins, so a Mara-and-Amboseli trip shows the Mara block rather
+// than two nearly identical sections.
+function balloonForPackage(pkg) {
+  const slug = pkg.destinations.find((d) => Boolean(balloonSafari.parks[d]));
+  return slug ? balloonSection(slug) : '';
+}
+
 export function packagePage(pkg) {
   const crumbs = [
     { name: 'Home', path: '/' },
@@ -202,6 +211,7 @@ export function packagePage(pkg) {
   ${inclExclSection(pkg)}
   ${bestTimeSection(pkg)}
   ${faqSection(pkg)}
+  ${balloonForPackage(pkg)}
   ${ctaBlock({
     heading: 'Ready to book this safari?',
     body: `Send us your travel dates and group size and we'll confirm availability for the ${pkg.title} within a day.`,

@@ -58,9 +58,18 @@ test('a package page carries TouristTrip and FAQPage schema', () => {
 test('a package page CTA reaches WhatsApp prefilled with the package name', () => {
   const pkg = packages[0];
   const page = byPath.get(`/safaris/${pkg.slug}/`);
-  const match = page.match(/https:\/\/wa\.me\/254707415444\?text=([^"]+)/);
-  assert.ok(match, 'no WhatsApp link on the page');
-  assert.match(decodeURIComponent(match[1]), new RegExp(pkg.title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  // Match every prefilled WhatsApp link, not just the first: package pages
+  // that visit a balloon park also carry the balloon add-on's own CTA, which
+  // is prefilled with the flight rather than the trip. The assertion is that
+  // the trip's CTA exists, not that it is the only one on the page.
+  const matches = [...page.matchAll(/https:\/\/wa\.me\/254707415444\?text=([^"]+)/g)]
+    .map((m) => decodeURIComponent(m[1]));
+  assert.ok(matches.length, 'no WhatsApp link on the page');
+  const wanted = new RegExp(pkg.title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  assert.ok(
+    matches.some((text) => wanted.test(text)),
+    `no WhatsApp CTA prefilled with "${pkg.title}"; found: ${JSON.stringify(matches)}`,
+  );
 });
 
 test('no image is missing alt text', () => {

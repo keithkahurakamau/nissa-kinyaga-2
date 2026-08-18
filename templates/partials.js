@@ -1,6 +1,7 @@
 import { existsSync } from 'node:fs';
 import { html, raw } from '../lib/html.js';
 import site from '../data/site.js';
+import { balloonSafari } from '../data/experiences.js';
 
 /**
  * The `.webp` path that would sit alongside `src` if `scripts/make-webp.js`
@@ -111,6 +112,55 @@ export function packageCard(pkg) {
     <p class="pkg-meta">${pkg.days} days · ${pkg.destinations.length} ${pkg.destinations.length === 1 ? 'destination' : 'destinations'}</p>
   </div>
 </article>`;
+}
+
+/**
+ * The hot air balloon add-on, rendered on the two parks that have flights
+ * (data/experiences.js `parks`) and on any package visiting one of them.
+ *
+ * Returns an empty string for every other destination, so a park with no
+ * balloon operation can never accidentally advertise one. Written in
+ * operator voice throughout: we book the seat, a licensed balloon company
+ * flies it. See the voice rule at the top of data/experiences.js.
+ *
+ * @param {string} slug, a data/destinations.js slug
+ * @returns {import('../lib/html.js').RawHtml | string}
+ */
+export function balloonSection(slug) {
+  const park = balloonSafari.parks[slug];
+  if (!park) return '';
+
+  const steps = balloonSafari.howItWorks.map((step) => html`<p class="body">${step}</p>`);
+  const notes = balloonSafari.practical.map((note) => html`<li>${note}</li>`);
+
+  return html`<section class="section-alt">
+  <div class="wrap">
+    ${sectionHeading({ number: '05', eyebrow: 'Add-on experience', heading: balloonSafari.name })}
+    <div class="balloon-grid">
+      <div class="balloon-media">
+        ${picture({ src: park.image, alt: park.imageAlt })}
+      </div>
+      <div class="balloon-copy">
+        <h3 class="h3">${park.label}</h3>
+        <p class="lede">${park.body}</p>
+        ${steps}
+      </div>
+    </div>
+    <div class="balloon-foot">
+      <div>
+        <h3 class="h3">Worth knowing</h3>
+        <ul class="balloon-notes">
+          ${notes}
+        </ul>
+      </div>
+      <div>
+        <h3 class="h3">Who flies it</h3>
+        <p class="body">${balloonSafari.operatorNote}</p>
+        <a class="btn btn-gold" href="${whatsappLink(`Balloon safari, ${park.label}`)}" target="_blank" rel="noopener noreferrer">Add a balloon flight</a>
+      </div>
+    </div>
+  </div>
+</section>`;
 }
 
 /**

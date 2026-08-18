@@ -2,7 +2,7 @@ import { html } from '../lib/html.js';
 import { placeSchema } from '../lib/seo.js';
 import { MAX_DESCRIPTION, escapedLength, truncateToEscapedLimit } from '../lib/text.js';
 import { layout } from './layout.js';
-import { packageCard, ctaBlock, breadcrumbNav, picture } from './partials.js';
+import { packageCard, ctaBlock, breadcrumbNav, picture, balloonSection } from './partials.js';
 
 /**
  * Derives a safe 50-165 (escaped) char meta description from a destination's
@@ -122,6 +122,7 @@ export function destinationPage(dest, packagesHere) {
   ${factsSection(dest)}
   ${nissaNoteSection(dest)}
   ${packagesSection(dest, packagesHere)}
+  ${balloonSection(dest.slug)}
   ${ctaBlock({
     heading: `Ready to explore ${dest.shortName}?`,
     body: `Send us your travel dates and we'll build a ${dest.shortName} itinerary around them.`,
