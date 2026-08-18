@@ -2160,3 +2160,76 @@ a { text-decoration: none; }
 @media (max-width: 720px) {
   .cred-grid, .review-grid { grid-template-columns: 1fr; }
 }
+
+/* ============================================================
+   Borrowed motion, reworked for this stylesheet
+   Two effects taken from a reference safari site and rebuilt in our own
+   idiom rather than lifted: a parallax on photo-backed sections, and a
+   panel that slides up over a trip card's photograph on hover.
+   ============================================================ */
+
+/* Parallax. The reference used `background-attachment: fixed`, which iOS
+   Safari ignores outright and which forces a repaint on every scroll frame
+   on the browsers that do honour it. This instead translates the existing
+   <img class="photo-bg"> on the compositor via app.js, which is smooth on
+   mobile and costs no repaint.
+
+   The scale is what makes it safe: translating a full-bleed image would
+   expose the section behind it at one end of the travel, so the image is
+   oversized by more than the maximum shift app.js can apply. Keep
+   --parallax-scale ahead of the travel distance if that shift is changed. */
+.photo-bg {
+  --parallax-scale: 1.14;
+  transform: scale(var(--parallax-scale));
+  will-change: transform;
+}
+/* Only the JS-driven state gets the transition-free treatment; without the
+   class the image simply sits scaled and still, which is the correct
+   no-JS and reduced-motion fallback. */
+.photo-bg.is-parallax {
+  transition: none;
+}
+
+/* Sliding reveal over a trip card's photograph. The reference site slides a
+   solid block up from the bottom edge on hover; this keeps the idea but uses
+   a gradient scrim and the site's own gold rule, so the photograph stays
+   readable underneath instead of being covered by a flat panel. */
+.pkg-card-veil {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 16px 20px 18px;
+  background: linear-gradient(to top, rgba(20, 15, 9, .92), rgba(20, 15, 9, .55) 60%, transparent);
+  border-top: 2px solid var(--gold);
+  transform: translateY(101%);
+  transition: transform .45s var(--ease-glass);
+  pointer-events: none;
+}
+.pkg-card-veil span {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+.pkg-card:hover .pkg-card-veil,
+.pkg-card:focus-within .pkg-card-veil {
+  transform: translateY(0);
+}
+
+/* Touch devices have no hover, so the veil would never appear and the card
+   would be missing a cue the pointer version has. Showing it at rest there
+   keeps both versions equally informative. */
+@media (hover: none) {
+  .pkg-card-veil { transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* The global reduced-motion block already collapses durations. These two
+     go further and remove the movement itself: a parallax that snaps to its
+     scroll position is worse than none, and the veil should simply be
+     present rather than arriving instantly. */
+  .photo-bg { transform: scale(1); }
+  .pkg-card-veil { transform: translateY(0); }
+}

@@ -102,6 +102,7 @@ export function packageCard(pkg) {
   return html`<article class="pkg-card">
   <div class="pkg-card-media">
     ${picture({ src: pkg.hero, alt: pkg.heroAlt })}
+    <div class="pkg-card-veil" aria-hidden="true"><span>View the itinerary</span></div>
   </div>
   <div class="pkg-card-body">
     ${pkg.signature && html`<span class="badge badge-signature">Signature</span>`}

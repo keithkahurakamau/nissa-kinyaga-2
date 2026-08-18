@@ -274,6 +274,83 @@
     });
   })();
 
+  /* ---------- parallax on photo-backed sections ----------
+     Borrowed from a reference safari site that used
+     `background-attachment: fixed`. That property is ignored by iOS Safari
+     and repaints on every scroll frame elsewhere, so this drives the
+     existing <img class="photo-bg"> with a compositor-only transform
+     instead: same effect, no repaint, and it actually works on a phone.
+
+     styles.css scales .photo-bg by --parallax-scale so the image is larger
+     than its section; MAX_SHIFT stays well inside the slack that creates,
+     otherwise the section's background would show through at one end of
+     the travel.
+
+     Writing to el.style is CSSOM, not a markup-parsed style attribute, so
+     it is unaffected by the stylesheet CSP that forbids inline styles. */
+  (function(){
+    var imgs = Array.prototype.slice.call(document.querySelectorAll('.photo-bg'));
+    if (!imgs.length) return;
+
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (reduce && reduce.matches) return;
+
+    var MAX_SHIFT = 42; // px either side of centre; see --parallax-scale
+    var visible = [];
+    var raf = 0;
+
+    function paint(){
+      raf = 0;
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      for (var i = 0; i < visible.length; i++){
+        var el = visible[i];
+        var section = el.parentElement;
+        if (!section) continue;
+        var r = section.getBoundingClientRect();
+        // -1 when the section sits fully below the fold, +1 fully above it,
+        // 0 when its centre is level with the viewport centre.
+        var progress = ((r.top + r.height / 2) - vh / 2) / (vh / 2 + r.height / 2);
+        if (progress < -1) progress = -1;
+        if (progress > 1) progress = 1;
+        el.style.transform =
+          'translate3d(0,' + (progress * MAX_SHIFT).toFixed(2) + 'px,0) ' +
+          'scale(var(--parallax-scale))';
+      }
+    }
+    function schedule(){ if (!raf) raf = requestAnimationFrame(paint); }
+
+    // Only sections on screen are measured, so a long page does not pay for
+    // every parallax image on every frame.
+    if ('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          var at = visible.indexOf(en.target);
+          if (en.isIntersecting && at === -1) visible.push(en.target);
+          else if (!en.isIntersecting && at !== -1) visible.splice(at, 1);
+        });
+        schedule();
+      }, { rootMargin: '120px 0px' });
+      imgs.forEach(function(el){ el.classList.add('is-parallax'); io.observe(el); });
+    } else {
+      visible = imgs;
+      imgs.forEach(function(el){ el.classList.add('is-parallax'); });
+    }
+
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    schedule();
+
+    // If the visitor turns reduced motion on mid-session, hand the images
+    // back to the stylesheet rather than leaving a stale inline transform.
+    if (reduce && reduce.addEventListener){
+      reduce.addEventListener('change', function(e){
+        if (!e.matches) return;
+        window.removeEventListener('scroll', schedule);
+        imgs.forEach(function(el){ el.style.transform = ''; el.classList.remove('is-parallax'); });
+      });
+    }
+  })();
+
   /* ---------- review form (/reviews/) ----------
      Same delivery model as the enquiry form above: static site, no backend,
      so the answers are composed into a message and handed to WhatsApp.
