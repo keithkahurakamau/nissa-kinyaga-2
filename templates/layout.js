@@ -8,8 +8,17 @@ const CSP =
   "img-src 'self' data:; style-src 'self' https://fonts.googleapis.com; " +
   "font-src https://fonts.gstatic.com; script-src 'self'; connect-src 'self'; manifest-src 'self'";
 
-const FAVICON =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2322291E'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' font-weight='600' fill='%23C9A24B' text-anchor='middle'%3ENK%3C/text%3E%3C/svg%3E";
+// Real icon files, not a data: URI. The previous inline SVG decoded fine in
+// the browser but Google's favicon crawler ignores data: URIs and probes
+// /favicon.ico, which is why search results showed a generic globe. The mark
+// is the spearhead from assets/logo.png: the full logo is an illustration
+// that turns to mud below about 48px, so the favicon uses the one element of
+// it that still reads at 16.
+const ICONS = {
+  ico: '/favicon.ico',
+  png32: '/assets/icon-32.png',
+  apple: '/assets/apple-touch-icon.png',
+};
 
 const FONTS_HREF =
   'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&family=Mulish:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap';
@@ -159,7 +168,9 @@ export function layout({
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#22291E">
 <meta name="format-detection" content="telephone=no">
-<link rel="icon" href="${FAVICON}">
+<link rel="icon" href="${ICONS.ico}" sizes="any">
+<link rel="icon" type="image/png" href="${ICONS.png32}" sizes="32x32">
+<link rel="apple-touch-icon" href="${ICONS.apple}">
 ${headTags({ title, description, path, image, type, robots })}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

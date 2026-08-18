@@ -77,6 +77,11 @@ export async function build() {
   await rm(DIST, { recursive: true, force: true });
   await mkdir(DIST, { recursive: true });
   await cp(join(ROOT, 'assets'), join(DIST, 'assets'), { recursive: true });
+  // /favicon.ico must exist at the site root, not only under /assets/.
+  // Browsers and, more importantly, Google's favicon crawler probe that exact
+  // path; the site previously declared its icon as a data: URI, which the
+  // crawler ignores, so search results fell back to a generic globe.
+  await cp(join(ROOT, 'assets', 'favicon.ico'), join(DIST, 'favicon.ico'));
   await cp(join(ROOT, 'styles.css'), join(DIST, 'styles.css'));
   await cp(join(ROOT, 'app.js'), join(DIST, 'app.js'));
 
