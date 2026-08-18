@@ -20,6 +20,25 @@
   window.addEventListener('scroll', onScroll, { passive:true });
   onScroll();
 
+  /* ---------- back to top ----------
+     Appears once you are more than a viewport down, which is the point at
+     which reaching the nav again is a real scroll rather than a flick.
+     Honours reduced motion by jumping instead of animating. */
+  (function(){
+    var btn = document.getElementById('nk-top');
+    if (!btn) return;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+    function sync(){
+      btn.classList.toggle('is-visible', window.scrollY > window.innerHeight);
+    }
+    window.addEventListener('scroll', sync, { passive:true });
+    window.addEventListener('resize', sync);
+    btn.addEventListener('click', function(){
+      window.scrollTo({ top: 0, behavior: (reduce && reduce.matches) ? 'auto' : 'smooth' });
+    });
+    sync();
+  })();
+
   /* ---------- mobile menu ---------- */
   var menu = document.getElementById('nk-menu');
   function openMenu(){ menu.style.display = 'flex'; }
@@ -159,18 +178,62 @@
     requestAnimationFrame(update);
   })();
 
-  /* ---------- reveal on scroll ---------- */
+  /* ---------- reveal on scroll ----------
+     The transitions and the up/left/right/zoom/clip variants live in
+     styles.css and predate this; what was missing was any element carrying
+     data-reveal, so the whole system was dead. Templates now set it.
+
+     Two additions here. `data-reveal-delay` is applied by writing the --d
+     custom property the stylesheet already reads, via CSSOM rather than a
+     style attribute, since the CSP forbids markup-parsed inline styles.
+     And siblings that reveal together are staggered, so a row of cards
+     arrives in sequence instead of snapping in as one block.
+
+     The 2600ms failsafe is kept: if the observer never fires (an odd
+     viewport, a browser quirk), content must still end up visible rather
+     than stuck at opacity 0. */
   (function(){
-    var els = document.querySelectorAll('[data-reveal]');
-    if (!('IntersectionObserver' in window)){
-      Array.prototype.forEach.call(els, function(el){ el.classList.add('nk-in'); });
+    var els = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
+    if (!els.length) return;
+
+    var STAGGER = 70;   // ms between siblings in the same container
+    var MAX_STEPS = 6;  // beyond this the wait gets noticeable, so it caps
+
+    function delayFor(el){
+      var own = parseInt(el.getAttribute('data-reveal-delay'), 10);
+      if (!isNaN(own)) return own;
+      var parent = el.parentElement;
+      if (!parent) return 0;
+      var sibs = Array.prototype.filter.call(parent.children, function(c){
+        return c.hasAttribute && c.hasAttribute('data-reveal');
+      });
+      if (sibs.length < 2) return 0;
+      return Math.min(sibs.indexOf(el), MAX_STEPS) * STAGGER;
+    }
+
+    function show(el){
+      var d = delayFor(el);
+      if (d) el.style.setProperty('--d', d + 'ms');
+      el.classList.add('nk-in');
+    }
+
+    // Reduced motion: the stylesheet already collapses the durations, but
+    // there is no reason to run an observer at all in that case.
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+    if ((reduce && reduce.matches) || !('IntersectionObserver' in window)){
+      els.forEach(function(el){ el.classList.add('nk-in'); });
       return;
     }
+
     var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(en){ if (en.isIntersecting){ en.target.classList.add('nk-in'); io.unobserve(en.target); } });
+      entries.forEach(function(en){
+        if (!en.isIntersecting) return;
+        show(en.target);
+        io.unobserve(en.target);
+      });
     }, { threshold:0, rootMargin:'0px 0px 14% 0px' });
-    Array.prototype.forEach.call(els, function(el){ io.observe(el); });
-    setTimeout(function(){ Array.prototype.forEach.call(els, function(el){ el.classList.add('nk-in'); }); }, 2600);
+    els.forEach(function(el){ io.observe(el); });
+    setTimeout(function(){ els.forEach(function(el){ el.classList.add('nk-in'); }); }, 2600);
   })();
 
   /* ---------- contact form + calendar ----------

@@ -14,7 +14,7 @@ function packageCount(dest) {
 function destinationCard(dest) {
   const href = `/destinations/${dest.slug}/`;
   const count = packageCount(dest);
-  return html`<article class="card">
+  return html`<article class="card" data-reveal="up">
   <a class="card-media" href="${href}">
     ${picture({ src: dest.hero, alt: dest.heroAlt })}
   </a>

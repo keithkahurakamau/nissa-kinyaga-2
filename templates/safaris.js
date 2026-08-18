@@ -65,7 +65,17 @@ function categoryCard(pkg) {
   const attrs =
     ` data-destinations="${escape(pkg.destinations.join(' '))}"` +
     ` data-days="${pkg.days}" data-category="${escape(pkg.category)}"`;
-  return raw(cardHtml.replace('<article class="pkg-card">', `<article class="pkg-card"${attrs}>`));
+  // Insert after the class attribute rather than replacing the whole opening
+  // tag as a literal string. The literal form silently stopped matching the
+  // moment packageCard gained another attribute (data-reveal), which dropped
+  // the filter attributes and broke /safaris/ filtering without erroring.
+  // Anchoring on `class="pkg-card"` keeps that from recurring, and the throw
+  // turns a future mismatch into a failed build instead of a silent one.
+  const anchor = '<article class="pkg-card"';
+  if (!cardHtml.includes(anchor)) {
+    throw new Error(`packageCard no longer opens with ${anchor}; filter attributes cannot be spliced`);
+  }
+  return raw(cardHtml.replace(anchor, `${anchor}${attrs}`));
 }
 
 function categorySection(category, packagesHere, alt) {

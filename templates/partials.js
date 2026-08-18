@@ -100,7 +100,7 @@ export function packageCard(pkg) {
   // title anchor, rather than wrapping the <article> in an <a>. That keeps one
   // real link per card (so screen readers announce the trip name, not the whole
   // card's text), keeps the markup valid, and leaves text selectable.
-  return html`<article class="pkg-card">
+  return html`<article class="pkg-card" data-reveal="clip">
   <div class="pkg-card-media">
     ${picture({ src: pkg.hero, alt: pkg.heroAlt })}
     <div class="pkg-card-veil" aria-hidden="true"><span>View the itinerary</span></div>
@@ -188,8 +188,13 @@ export function ctaBlock({ heading, body, packageTitle }) {
  * @returns {import('../lib/html.js').RawHtml}
  */
 export function sectionHeading({ number, eyebrow, heading }) {
-  return html`<div class="eyebrow"><span>${number}</span><span>${eyebrow}</span></div>
-<h2 class="h2">${heading}</h2>`;
+  // data-reveal hooks the IntersectionObserver in app.js and the transitions
+  // in styles.css, both of which already existed but had nothing to act on:
+  // the attribute appeared in no template, so the whole reveal system was
+  // dead code. The eyebrow leads and the heading follows on a short delay,
+  // which reads as one movement rather than two separate ones.
+  return html`<div class="eyebrow" data-reveal="up"><span>${number}</span><span>${eyebrow}</span></div>
+<h2 class="h2" data-reveal="up" data-reveal-delay="90">${heading}</h2>`;
 }
 
 /**

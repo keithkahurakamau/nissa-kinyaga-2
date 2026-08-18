@@ -2303,3 +2303,48 @@ a { text-decoration: none; }
   .balloon-foot { grid-template-columns: 1fr; gap: 28px; }
   .balloon-media { aspect-ratio: 4/3; }
 }
+
+/* ============================================================
+   Back to top
+   Sits above the floating WhatsApp button (.nk-wa: 58px tall at
+   right/bottom 24px, z-index 75) rather than beside it, so the two never
+   collide on a narrow screen. Hidden until app.js adds .is-visible.
+   ============================================================ */
+.nk-top {
+  position: fixed;
+  right: 24px;
+  bottom: 94px;
+  z-index: 74;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(246, 239, 222, .28);
+  border-radius: 50%;
+  background: rgba(34, 41, 30, .88);
+  color: var(--cream-2);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity .3s ease, transform .3s ease, visibility .3s, background .2s ease;
+}
+.nk-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.nk-top:hover,
+.nk-top:focus-visible {
+  background: var(--gold-deep);
+  border-color: var(--gold);
+}
+
+@media (max-width: 720px) {
+  /* Tracks .nk-wa's own 16px inset at this breakpoint. */
+  .nk-top { right: 16px; bottom: 82px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nk-top { transition: opacity .001ms, visibility .001ms; transform: none; }
+}

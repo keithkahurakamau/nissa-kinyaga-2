@@ -13,7 +13,7 @@ const REGIONS = [
 
 function journeyCard(country) {
   const href = `/journeys/${country.slug}/`;
-  return html`<article class="card">
+  return html`<article class="card" data-reveal="up">
   <a class="card-media" href="${href}">
     ${picture({ src: country.hero, alt: country.heroAlt })}
   </a>
