@@ -134,3 +134,27 @@ test('the review form requires consent before publication', () => {
 test('the reviews page carries no em dashes', () => {
   assert.ok(!page.includes('—'), 'em dash found on /reviews/');
 });
+
+// llms.txt is what an AI assistant reads to describe this business. A wrong
+// statement there propagates into answers the client never sees, so the
+// claims that could go stale are asserted against the data they describe.
+test('llms.txt does not contradict the site', async () => {
+  const { readFileSync } = await import('node:fs');
+  const llms = readFileSync(join(ROOT, 'dist', 'llms.txt'), 'utf8');
+
+  if (reviews.length === 0) {
+    assert.match(llms, /reviews are not yet published/i,
+      'llms.txt must say reviews are unpublished while data/reviews.js is empty');
+  } else {
+    assert.match(llms, new RegExp(`${reviews.length} guest review`),
+      'llms.txt must report the real published review count');
+  }
+
+  // Prices are removed sitewide; an assistant quoting one would be inventing it.
+  assert.match(llms, /Prices are not published/i);
+  assert.doesNotMatch(llms, /(KES|USD|\$)\s?[\d,]{3}/);
+
+  // The two things the site brokers rather than operates.
+  assert.match(llms, /does not guide inside the countries/i);
+  assert.match(llms, /does not operate aircraft/i);
+});

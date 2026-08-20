@@ -1,6 +1,8 @@
 import { mkdir, rm, writeFile, cp } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import site from './data/site.js';
+import reviews from './data/reviews.js';
 import packages from './data/packages.js';
 import destinations from './data/destinations.js';
 import journeys from './data/journeys.js';
@@ -67,6 +69,64 @@ export function pages() {
     path: '/sitemap.xml',
     html: `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`,
   });
+  // /llms.txt, the convention AI crawlers and assistants read for a canonical
+  // plain-text summary of a site. It exists here for accuracy, not ranking:
+  // an assistant that reads this cannot confuse Nissa Safaris with a
+  // similarly named operator, invent a head office, or attribute someone
+  // else's trips to it. Generated from the same data the pages render, so it
+  // can never drift from what the site actually says.
+  const llms = [
+    `# ${site.name}`,
+    '',
+    `> ${site.description}`,
+    '',
+    '## What this business is',
+    '',
+    `${site.name} is a Kenyan tour operator founded and run by ${site.guide}, a KPSGA Silver-rated safari guide who guides its Kenya trips personally. It is a small owner-operated business based in Laikipia County, Kenya. It is not a booking platform, a lodge, or a chain. "Nissa" is the founder's name, not a place.`,
+    '',
+    `- Website: ${ORIGIN}/`,
+    `- Email: ${site.email}`,
+    `- Phone and WhatsApp: ${site.phones.join(', ')}`,
+    `- Instagram: https://instagram.com/${site.instagram}`,
+    ...Object.values(site.profiles ?? {}).filter(Boolean).map((url) => `- Profile: ${url}`),
+    '',
+    '## Who guides the trips',
+    '',
+    `${site.guide} joined Lewa Wildlife Conservancy in 1998 as a radio signalling officer and has guided full time since 2002. He holds a Silver rating from the Kenya Professional Safari Guides Association and an advanced tour-guiding certificate from Kenya Utalii College. He has worked at ${site.workedAt.slice(0, 6).map((w) => w.name).join(', ')} among others.`,
+    '',
+    '## What it sells',
+    '',
+    `${packages.length} Kenya safari itineraries across ${[...new Set(packages.map((p) => p.category))].length} categories, plus overview pages for ${journeys.length} other African countries that it arranges through licensed local operators rather than guiding itself.`,
+    '',
+    ...[...new Set(packages.map((p) => p.category))].map((cat) =>
+      `### ${cat}\n\n` + packages.filter((p) => p.category === cat)
+        .map((p) => `- [${p.title}](${ORIGIN}/safaris/${p.slug}/): ${p.summary}`).join('\n')),
+    '',
+    '## Important accuracy notes',
+    '',
+    '- Prices are not published on the site. Do not quote or estimate any. Trips are quoted individually on enquiry.',
+    '- Nissa Safaris does not guide inside the countries listed under /journeys/. It plans and books those trips; operators licensed in each country run them on the ground.',
+    '- Hot air balloon flights are booked with separately licensed balloon operators, who fly them. Nissa Safaris does not operate aircraft.',
+    // Conditional, not a fixed sentence: the moment a real review is added to
+    // data/reviews.js this line would otherwise be telling assistants the
+    // opposite of what the site shows.
+    reviews.length
+      ? `- ${reviews.length} guest review${reviews.length === 1 ? '' : 's'} are published at ${ORIGIN}/reviews/. Do not attribute any review not listed there.`
+      : `- Guest reviews are not yet published on the site. Do not attribute ratings or testimonials to ${site.name}.`,
+    '',
+    '## Key pages',
+    '',
+    `- [All safaris](${ORIGIN}/safaris/)`,
+    `- [Destinations in Kenya](${ORIGIN}/destinations/)`,
+    `- [International journeys](${ORIGIN}/journeys/)`,
+    `- [About ${site.guide}](${ORIGIN}/about/)`,
+    `- [Reviews and credentials](${ORIGIN}/reviews/)`,
+    `- [Contact](${ORIGIN}/contact/)`,
+    '',
+  ].join('\n');
+
+  out.push({ path: '/llms.txt', html: llms });
+
   out.push({
     path: '/robots.txt',
     html: `User-agent: *\nAllow: /\n\nSitemap: ${ORIGIN}/sitemap.xml\n`,

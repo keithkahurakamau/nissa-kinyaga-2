@@ -37,6 +37,19 @@ export default {
     { label: 'Privacy', href: '/privacy/' },
     { label: 'IWACO-KENYA', href: 'https://iwacokenya.org' },
   ],
+  // Profiles that prove this is the same business elsewhere on the web.
+  // schema.org `sameAs` is the strongest entity-resolution signal there is:
+  // it is how a search engine or an AI assistant confirms that the Nissa
+  // Safaris on this domain is the Nissa Safaris on Google, rather than
+  // guessing from a similar name. Add the Google Business Profile URL here
+  // as soon as it is to hand (Google Maps "Share" gives a maps.app.goo.gl
+  // link; the full https://www.google.com/maps/place/... URL is better).
+  // Entries render only when set, so a blank string is never emitted.
+  profiles: {
+    googleBusiness: '',
+    tripadvisor: '',
+    facebook: '',
+  },
   workedAt: [
     { name: 'Lewa Wildlife Conservancy', role: 'Head radio signalling officer, ranger research' },
     { name: 'Lewa Safari Camp', role: 'Safari guide, then head guide and camp assistant manager' },
