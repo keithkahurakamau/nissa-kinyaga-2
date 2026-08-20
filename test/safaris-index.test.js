@@ -10,7 +10,7 @@ test('the safaris index exists', () => {
   assert.ok(index);
 });
 
-test('all 21 packages are in the static HTML', () => {
+test('every package is in the static HTML', () => {
   for (const pkg of packages) {
     assert.ok(index.includes(`/safaris/${pkg.slug}/`), `index omits ${pkg.slug}`);
   }
@@ -18,7 +18,7 @@ test('all 21 packages are in the static HTML', () => {
 
 test('every card carries filter data attributes', () => {
   const cards = [...index.matchAll(/<article class="pkg-card"[^>]*>/g)].map((m) => m[0]);
-  assert.equal(cards.length, 21);
+  assert.equal(cards.length, packages.length);
   for (const card of cards) {
     assert.match(card, /data-destinations="/);
     assert.match(card, /data-days="\d+"/);

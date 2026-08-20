@@ -32,12 +32,13 @@ const packages = [
       'Two game drives, led by an English-speaking driver-guide',
       'Masai Mara reserve entry fees',
       'Bottled water in the vehicle throughout',
+      'Soft drinks, juices, tea and coffee throughout',
     ],
     excluded: [
       'International and domestic flights',
       'Kenya e-Visa or entry permit fees',
       'Tips and gratuities for your guide and camp staff',
-      'Alcoholic drinks and items of a personal nature',
+      'Alcoholic drinks, and items of a personal nature such as laundry, tips and souvenirs',
       'Travel insurance',
     ],
     bestTime:
@@ -100,12 +101,13 @@ const packages = [
       'Four game drives, led by an English-speaking driver-guide',
       'Masai Mara reserve entry fees',
       'Bottled water in the vehicle throughout',
+      'Soft drinks, juices, tea and coffee throughout',
     ],
     excluded: [
       'International and domestic flights',
       'Kenya e-Visa or entry permit fees',
       'Tips and gratuities for your guide and camp staff',
-      'Alcoholic drinks and items of a personal nature',
+      'Alcoholic drinks, and items of a personal nature such as laundry, tips and souvenirs',
       'Travel insurance',
     ],
     bestTime:
@@ -177,12 +179,13 @@ const packages = [
       'Six game drives, led by an English-speaking driver-guide',
       'Lake Nakuru and Masai Mara park and reserve entry fees',
       'Bottled water in the vehicle throughout',
+      'Soft drinks, juices, tea and coffee throughout',
     ],
     excluded: [
       'International and domestic flights',
       'Kenya e-Visa or entry permit fees',
       'Tips and gratuities for your guide and camp staff',
-      'Alcoholic drinks and items of a personal nature',
+      'Alcoholic drinks, and items of a personal nature such as laundry, tips and souvenirs',
       'Travel insurance',
     ],
     bestTime:
@@ -256,12 +259,13 @@ const packages = [
       'Six game drives, led by an English-speaking driver-guide',
       'Lake Nakuru and Masai Mara park and reserve entry fees',
       'Bottled water in the vehicle throughout',
+      'Soft drinks, juices, tea and coffee throughout',
     ],
     excluded: [
       'International and domestic flights',
       'Kenya e-Visa or entry permit fees',
       'Tips and gratuities for your guide and camp staff',
-      'Alcoholic drinks and items of a personal nature',
+      'Alcoholic drinks, and items of a personal nature such as laundry, tips and souvenirs',
       'Travel insurance',
     ],
     bestTime:
@@ -344,12 +348,13 @@ const packages = [
       'Eight game drives, led by an English-speaking driver-guide',
       'Lake Nakuru, Masai Mara and Amboseli park and reserve entry fees',
       'Bottled water in the vehicle throughout',
+      'Soft drinks, juices, tea and coffee throughout',
     ],
     excluded: [
       'International flights',
       'Kenya e-Visa or entry permit fees',
       'Tips and gratuities for your guide and camp staff',
-      'Alcoholic drinks and items of a personal nature',
+      'Alcoholic drinks, and items of a personal nature such as laundry, tips and souvenirs',
       'Travel insurance',
     ],
     bestTime:
@@ -434,12 +439,13 @@ const packages = [
       'Ten game drives, led by an English-speaking driver-guide',
       'Lake Nakuru, Masai Mara and Amboseli park and reserve entry fees',
       'Bottled water in the vehicle throughout',
+      'Soft drinks, juices, tea and coffee throughout',
     ],
     excluded: [
       'International flights',
       'Kenya e-Visa or entry permit fees',
       'Tips and gratuities for your guide and camp staff',
-      'Alcoholic drinks and items of a personal nature',
+      'Alcoholic drinks, and items of a personal nature such as laundry, tips and souvenirs',
       'Travel insurance',
     ],
     bestTime:
@@ -506,12 +512,13 @@ const packages = [
       'Four game drives, led by an English-speaking driver-guide',
       'Amboseli National Park entry fees',
       'Bottled water in the vehicle throughout',
+      'Soft drinks, juices, tea and coffee throughout',
     ],
     excluded: [
       'International and domestic flights',
       'Kenya e-Visa or entry permit fees',
       'Tips and gratuities for your guide and camp staff',
-      'Alcoholic drinks and items of a personal nature',
+      'Alcoholic drinks, and items of a personal nature such as laundry, tips and souvenirs',
       'Travel insurance',
     ],
     bestTime:
@@ -569,12 +576,13 @@ const packages = [
       'Two game drives, led by an English-speaking driver-guide',
       'Tsavo East National Park entry fees',
       'Bottled water in the vehicle throughout',
+      'Soft drinks, juices, tea and coffee throughout',
     ],
     excluded: [
       'International and domestic flights',
       'Kenya e-Visa or entry permit fees',
       'Tips and gratuities for your guide and camp staff',
-      'Alcoholic drinks and items of a personal nature',
+      'Alcoholic drinks, and items of a personal nature such as laundry, tips and souvenirs',
       'Travel insurance',
     ],
     bestTime:
@@ -638,12 +646,13 @@ const packages = [
       'Guided visit to the Mzima Springs underwater viewing chamber',
       'Tsavo East and Tsavo West National Park entry fees',
       'Bottled water in the vehicle throughout',
+      'Soft drinks, juices, tea and coffee throughout',
     ],
     excluded: [
       'International and domestic flights',
       'Kenya e-Visa or entry permit fees',
       'Tips and gratuities for your guide and camp staff',
-      'Alcoholic drinks and items of a personal nature',
+      'Alcoholic drinks, and items of a personal nature such as laundry, tips and souvenirs',
       'Travel insurance',
     ],
     bestTime:
@@ -711,12 +720,13 @@ const packages = [
       'Six game drives, led by an English-speaking driver-guide',
       'Tsavo East and Amboseli National Park entry fees',
       'Bottled water in the vehicle throughout',
+      'Soft drinks, juices, tea and coffee throughout',
     ],
     excluded: [
       'International and domestic flights',
       'Kenya e-Visa or entry permit fees',
       'Tips and gratuities for your guide and camp staff',
-      'Alcoholic drinks and items of a personal nature',
+      'Alcoholic drinks, and items of a personal nature such as laundry, tips and souvenirs',
       'Travel insurance',
     ],
     bestTime:
@@ -779,12 +789,13 @@ const packages = [
       'Four game drives, led by an English-speaking driver-guide',
       'Samburu National Reserve entry fees',
       'Bottled water in the vehicle throughout',
+      'Soft drinks, juices, tea and coffee throughout',
     ],
     excluded: [
       'International and domestic flights',
       'Kenya e-Visa or entry permit fees',
       'Tips and gratuities for your guide and camp staff',
-      'Alcoholic drinks and items of a personal nature',
+      'Alcoholic drinks, and items of a personal nature such as laundry, tips and souvenirs',
       'Travel insurance',
     ],
     bestTime:
@@ -842,12 +853,13 @@ const packages = [
       'Two game drives, led by an English-speaking driver-guide',
       'Ol Pejeta Conservancy entry fees and chimpanzee sanctuary visit',
       'Bottled water in the vehicle throughout',
+      'Soft drinks, juices, tea and coffee throughout',
     ],
     excluded: [
       'International and domestic flights',
       'Kenya e-Visa or entry permit fees',
       'Tips and gratuities for your guide and camp staff',
-      'Alcoholic drinks and items of a personal nature',
+      'Alcoholic drinks, and items of a personal nature such as laundry, tips and souvenirs',
       'Travel insurance',
     ],
     bestTime:
@@ -915,12 +927,13 @@ const packages = [
       'Six game drives, led by an English-speaking driver-guide',
       'Samburu National Reserve and Ol Pejeta Conservancy entry fees, including the chimpanzee sanctuary visit',
       'Bottled water in the vehicle throughout',
+      'Soft drinks, juices, tea and coffee throughout',
     ],
     excluded: [
       'International and domestic flights',
       'Kenya e-Visa or entry permit fees',
       'Tips and gratuities for your guide and camp staff',
-      'Alcoholic drinks and items of a personal nature',
+      'Alcoholic drinks, and items of a personal nature such as laundry, tips and souvenirs',
       'Travel insurance',
     ],
     bestTime:
@@ -990,12 +1003,14 @@ const packages = [
       'Horseback safari for intermediate and above riders',
       'Evening anti-poaching patrol with Borana rangers',
       'Borana and Lewa conservancy fees',
+      'Bottled water throughout',
+      'Soft drinks, juices, tea and coffee throughout',
     ],
     excluded: [
       'International and domestic flights',
       'Kenya e-Visa or entry permit fees',
       'Tips and gratuities for your guide, rangers and camp staff',
-      'Alcoholic drinks and items of a personal nature',
+      'Alcoholic drinks, and items of a personal nature such as laundry, tips and souvenirs',
       'Travel insurance',
     ],
     bestTime:
@@ -1063,12 +1078,13 @@ const packages = [
       'One game drive',
       'Laikipia conservancy fees',
       'Bottled water throughout',
+      'Soft drinks, juices, tea and coffee throughout',
     ],
     excluded: [
       'International and domestic flights',
       'Kenya e-Visa or entry permit fees',
       'Tips and gratuities for your guide, tracker and camp staff',
-      'Alcoholic drinks and items of a personal nature',
+      'Alcoholic drinks, and items of a personal nature such as laundry, tips and souvenirs',
       'Travel insurance',
     ],
     bestTime:
@@ -1141,6 +1157,7 @@ const packages = [
       'All meals on the mountain from lunch on day one to breakfast on day four',
       'Camping equipment: tents, sleeping mats and a mess tent',
       'Drinking water, treated or boiled, throughout the trek',
+      'Soft drinks, juices, tea and coffee throughout',
     ],
     excluded: [
       'Transport to and from Nairobi (we can arrange this separately)',
@@ -1220,6 +1237,7 @@ const packages = [
       'All meals on the mountain from lunch on day one to lunch on day five',
       'Camping equipment: tents, sleeping mats and a mess tent',
       'Drinking water, treated or boiled, throughout the trek',
+      'Soft drinks, juices, tea and coffee throughout',
     ],
     excluded: [
       'Transport to and from Nairobi (we can arrange this separately)',
@@ -1304,6 +1322,7 @@ const packages = [
       'All meals on the mountain from lunch on day one to lunch on day six',
       'Camping equipment: tents, sleeping mats and a mess tent',
       'Drinking water, treated or boiled, throughout the trek',
+      'Soft drinks, juices, tea and coffee throughout',
     ],
     excluded: [
       'Transport to and from Nairobi (we can arrange this separately)',
@@ -1379,9 +1398,11 @@ const packages = [
     included: [
       'Airport or ferry-point transfers on arrival and departure',
       'Three nights accommodation on a bed-and-breakfast basis at a beachfront hotel',
-      'One snorkelling trip to the reef with equipment provided',
-      'One dhow sailing trip along the coast',
+      'One snorkelling trip to the reef with equipment provided (arranged on your behalf through our coast agent)',
+      'One dhow sailing trip along the coast (arranged on your behalf through our coast agent)',
+      'Marine park fees for the reef snorkelling trip',
       'Bottled water at your accommodation',
+      'Soft drinks, juices, tea and coffee throughout',
     ],
     excluded: [
       'International and domestic flights',
@@ -1464,8 +1485,11 @@ const packages = [
       'Two nights full-board accommodation in or bordering Tsavo East',
       'Three nights accommodation on a bed-and-breakfast basis at a beachfront hotel in Diani',
       'Four game drives, led by an English-speaking driver-guide',
-      'One snorkelling trip and one dhow sailing trip at the coast',
+      'One snorkelling trip and one dhow sailing trip at the coast (arranged on your behalf through our coast agent)',
       'Tsavo East National Park entry fees',
+      'Marine park fees for the reef snorkelling trip',
+      'Bottled water in the vehicle and at your accommodation',
+      'Soft drinks, juices, tea and coffee throughout',
     ],
     excluded: [
       'International and domestic flights',
@@ -1559,8 +1583,11 @@ const packages = [
       'Two nights full-board accommodation in or bordering the Mara',
       'Five nights accommodation on a bed-and-breakfast basis at a beachfront hotel in Diani',
       'Six game drives, led by an English-speaking driver-guide',
-      'One snorkelling trip and one dhow sailing trip at the coast',
+      'One snorkelling trip and one dhow sailing trip at the coast (arranged on your behalf through our coast agent)',
       'Masai Mara reserve entry fees',
+      'Marine park fees for the reef snorkelling trip',
+      'Bottled water in the vehicle and at your accommodation',
+      'Soft drinks, juices, tea and coffee throughout',
     ],
     excluded: [
       'International flights',
@@ -1587,6 +1614,200 @@ const packages = [
       {
         q: 'Is a full week enough to feel unrushed doing both halves of this trip?',
         a: "That's exactly what eight days is built for. Three days in the Mara is enough for a proper safari without feeling clipped, and five days at the coast, one of them left entirely open, gives real time to unwind rather than a token beach stop before flying home.",
+      },
+    ],
+    signature: false,
+  },
+  {
+    title: '5-Day Romantic Escape',
+    slug: '5-day-romantic-escape',
+    days: 5,
+    nights: 4,
+    category: 'Romance & Honeymoon',
+    destinations: ['masai-mara', 'diani'],
+    hero: '/assets/diani-01.jpg',
+    heroAlt: 'Tall coconut palms leaning over a coastal treeline with the sea visible beyond',
+    summary:
+      'Two nights in the Mara and two on Diani sand, flown between rather than driven, built for couples who want the trip to feel unhurried rather than covered.',
+    overview: [
+      "This is the shorter of our two romance itineraries, and it is deliberately built around two places rather than five. Two nights in the Mara give you an afternoon drive, a full morning drive and a second afternoon, which is enough to see the reserve properly without the trip becoming a schedule. Then you fly to the coast rather than driving, which turns what would be two days on the road into a single morning.",
+      "The pace is the point. Game drives run early and late, and the middle of each day is yours. At the coast nothing is scheduled at all beyond the reef trip and the dhow, both of which you can move or drop. We book twin-or-double as a double by default, ask camps to hold a table away from the main dining area where they have one, and let them know it is a couples trip so they are not seating you at a shared table.",
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Nairobi to the Masai Mara',
+        body: "We collect you early and drive southwest via Narok, reaching the reserve by early afternoon. After lunch at camp we head out for an afternoon game drive, working the drainage lines while the light softens. Dinner and the night are at a tented camp in or bordering the reserve.",
+      },
+      {
+        day: 2,
+        title: 'A full day in the reserve',
+        body: "An early start for the best of the morning light, back to camp through the hottest hours, then out again until last light. Where we drive depends on where sightings have been concentrated over the preceding days rather than on a fixed loop. If you would rather have a sundowner set up somewhere quiet than push on to one more sighting, say so and we will arrange it with the camp.",
+      },
+      {
+        day: 3,
+        title: 'The Mara to Diani by air',
+        body: "A short morning drive before breakfast, then we transfer you to the airstrip for the flight to Wilson Airport in Nairobi, connecting to a scheduled flight down to Ukunda on the edge of Diani. You are met on landing and taken to your beachfront hotel, usually in time for a late lunch. The rest of the day is unscheduled.",
+      },
+      {
+        day: 4,
+        title: 'Diani, at your own pace',
+        body: "Nothing is fixed. The reef trip and the dhow sail are both available today and both are yours to move; most couples take the snorkelling in the morning while the water is clearest and keep the afternoon free. The lagoon inside the reef stays calm and shallow along most of its length, so swimming does not depend on the tide the way it does further up the coast.",
+      },
+      {
+        day: 5,
+        title: 'Departure',
+        body: "A last morning on the sand before we transfer you to Ukunda airstrip or Moi International in Mombasa for your onward flight. If your flight is late in the day we will ask the hotel for a late checkout rather than moving you out at eleven.",
+      },
+    ],
+    included: [
+      'Ground transport for the Mara leg in a 4x4 safari vehicle with a pop-up roof',
+      'One light-aircraft flight from the Mara to Wilson Airport, connecting to a scheduled flight to Ukunda',
+      'Two nights full-board accommodation in or bordering the Masai Mara',
+      'Two nights accommodation on a bed-and-breakfast basis at a beachfront hotel in Diani',
+      'Three game drives, led by an English-speaking driver-guide',
+      'One snorkelling trip and one dhow sailing trip at the coast (arranged on your behalf through our coast agent)',
+      'Masai Mara reserve entry fees',
+      'Marine park fees for the reef snorkelling trip',
+      'Bottled water in the vehicle and at your accommodation',
+      'Soft drinks, juices, tea and coffee throughout',
+    ],
+    excluded: [
+      'International flights to and from Kenya',
+      'Kenya entry visa',
+      'Travel insurance',
+      'Lunch and dinner at the coast',
+      'Alcoholic drinks, and items of a personal nature such as laundry, tips and souvenirs',
+    ],
+    bestTime:
+      'Good year-round. July through October puts the migration herds in or near the Mara and gives the calmest sea at Diani; January through March is drier in the reserve and equally settled on the coast.',
+    faqs: [
+      {
+        q: 'Can you arrange a private dinner or a surprise on one of the nights?',
+        a: 'Yes, and it is worth telling us at booking rather than on arrival. Most camps and beach hotels can set up a private table, a beach dinner or something in the room, but they need notice and some of them charge for it. Tell us what you have in mind and we will find out what is actually possible at the specific property you are booked into, rather than promising something the camp then cannot deliver.',
+      },
+      {
+        q: 'Why fly between the Mara and the coast instead of driving?',
+        a: 'There is no sensible road between the two. Driving would take the better part of two days each way and would eat most of a five-day trip. The flight turns that into a single morning, which is the only reason this itinerary fits into five days at all.',
+      },
+      {
+        q: 'Is the room a double or twin?',
+        a: 'We book a double by default and confirm it with the property, since many camps set rooms up as twins unless told otherwise. If you have a preference either way, tell us and we will have it noted on the booking.',
+      },
+      {
+        q: 'Can we extend either half?',
+        a: 'Easily, and it is the most common change people ask for. An extra night in the Mara gives you a second full day in the reserve, and extra nights at Diani are usually the cheapest part of the trip to add. Tell us how many days you have and we will rebalance the itinerary around them.',
+      },
+    ],
+    signature: false,
+  },
+  {
+    title: '9-Day Kenya Honeymoon Safari',
+    slug: '9-day-kenya-honeymoon-safari',
+    days: 9,
+    nights: 8,
+    category: 'Romance & Honeymoon',
+    destinations: ['masai-mara', 'laikipia', 'diani'],
+    hero: '/assets/diani-02.jpg',
+    heroAlt: 'White sand fringed with coconut palms on the edge of the beach',
+    summary:
+      'Three nights in the Mara, two on a Laikipia conservancy and three on Diani sand: the fullest version of a Kenya honeymoon, without a day of it spent rushing.',
+    overview: [
+      "A honeymoon has a different shape from a safari. Most people want two things that pull against each other, enough of Kenya to feel like they have seen it and enough stillness to feel like they have been away, and a nine-day trip is where those two stop competing. This itinerary gives the Mara three nights, adds a Laikipia conservancy for the things a national reserve cannot offer, and finishes with three nights at the coast.",
+      "Laikipia is the part people do not expect and the part they tend to talk about afterwards. The conservancies there set their own vehicle limits and allow activities a fenced park does not: rhino tracked on foot, drives that run after dark, and horseback outings across open country. It is also the ground Nissa knows best, after seven years at Lewa Safari Camp and six at Borana.",
+      "The whole trip is planned around slowing down rather than adding stops. There is no day where you move in the morning and move again in the afternoon, the two long transfers are flown rather than driven, and the coast leg is left almost entirely unscheduled.",
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Nairobi to the Masai Mara',
+        body: "We collect you from your Nairobi hotel or the airport and drive southwest via Narok, reaching the reserve by early afternoon. Lunch at camp, then straight out for an afternoon game drive while the light is good. Dinner and the night at a tented camp in or bordering the reserve.",
+      },
+      {
+        day: 2,
+        title: 'A full day in the Mara',
+        body: "An early drive out for the first light, back to camp through the middle of the day, and out again through the afternoon until the light goes. With three nights here there is no need to force anything: if a sighting is worth sitting with for an hour, we sit with it.",
+      },
+      {
+        day: 3,
+        title: 'The Mara, on your own terms',
+        body: "A second full day, and this is the one we deliberately leave loose. Some couples want another long drive, some want a single early session and then the rest of the day at camp, and some want a bush breakfast set up somewhere with a view. Tell us the night before and we will arrange it with the camp.",
+      },
+      {
+        day: 4,
+        title: 'The Mara to Laikipia by air',
+        body: "A morning game drive, then the airstrip for a light-aircraft flight north to Laikipia. You are met on landing and driven to your camp on the conservancy, arriving in time for lunch. An orientation drive in the late afternoon introduces the ground, which looks and feels nothing like the Mara.",
+      },
+      {
+        day: 5,
+        title: 'Rhino on foot, and a night drive',
+        body: "Out early on foot with the conservancy's anti-poaching team to track black rhino, which is a completely different experience from watching one from a vehicle: quiet, slow and on the animal's terms. The afternoon is free, and after dinner we head out on a night drive for the animals that only move once the light has gone.",
+      },
+      {
+        day: 6,
+        title: 'Horseback, or whatever you would rather do',
+        body: "A morning on horseback across open country for riders at intermediate level and above, which gets you closer to plains game than a vehicle can. If you would rather not ride, the alternative is a walk with a guide or simply a slow morning, and neither costs you anything from the itinerary.",
+      },
+      {
+        day: 7,
+        title: 'Laikipia to Diani',
+        body: "A last morning on the conservancy, then a flight south to the coast via Nairobi, landing at Ukunda on the edge of Diani. You are met and transferred to your beachfront hotel. Nothing is scheduled for the rest of the day beyond getting into the sea.",
+      },
+      {
+        day: 8,
+        title: 'Diani, unscheduled',
+        body: "The reef trip and the dhow sail are both available today and both are optional. The reef sits close enough to shore to keep the lagoon calm and shallow, so snorkelling does not need a long boat ride to reach good coral. Beyond that the day is yours.",
+      },
+      {
+        day: 9,
+        title: 'Departure',
+        body: "A final morning on the sand, then a transfer to Ukunda airstrip or Moi International in Mombasa for your onward flight. Where the flight allows it we ask the hotel to hold the room later rather than moving you out mid-morning.",
+      },
+    ],
+    included: [
+      'Ground transport in a 4x4 safari vehicle with a pop-up roof for the Mara and Laikipia legs',
+      'Two light-aircraft flights: the Mara to Laikipia, and Laikipia to the coast via Nairobi',
+      'Three nights full-board accommodation in or bordering the Masai Mara',
+      'Two nights full-board accommodation at a camp on a Laikipia conservancy',
+      'Three nights accommodation on a bed-and-breakfast basis at a beachfront hotel in Diani',
+      'Game drives throughout, including one night drive, led by an English-speaking driver-guide',
+      'Guided rhino tracking on foot with the conservancy anti-poaching team',
+      'Horseback safari for intermediate and above riders, or a guided walk instead',
+      'One snorkelling trip and one dhow sailing trip at the coast (arranged on your behalf through our coast agent)',
+      'Masai Mara reserve and Laikipia conservancy fees',
+      'Marine park fees for the reef snorkelling trip',
+      'Bottled water in the vehicle and at your accommodation',
+      'Soft drinks, juices, tea and coffee throughout',
+    ],
+    excluded: [
+      'International flights to and from Kenya',
+      'Kenya entry visa',
+      'Travel insurance',
+      'Lunch and dinner at the coast',
+      'Alcoholic drinks, and items of a personal nature such as laundry, tips and souvenirs',
+    ],
+    bestTime:
+      'Year-round. June through October is the driest across all three, and puts the migration herds in or near the Mara; January through March gives firmer ground in Laikipia and settled sea at Diani. The long rains around April and May are quietest and greenest, with a real chance of afternoon storms.',
+    faqs: [
+      {
+        q: 'Do you tell the camps it is a honeymoon?',
+        a: 'Yes, on every booking, because it changes what they can offer: a double rather than a twin, a table away from the main dining area, sometimes something in the room on arrival. What each property actually does varies, and we would rather tell you what a specific camp will do than promise a general honeymoon treatment that some of them do not run.',
+      },
+      {
+        q: 'Why include Laikipia rather than adding days to the Mara?',
+        a: "Because it does things the Mara cannot. Laikipia conservancies allow walking, night drives and horseback, all of which are prohibited inside a national reserve, and they cap vehicle numbers so sightings are quieter. Adding a fourth Mara night would give you more of the same; two nights in Laikipia give you a different country entirely.",
+      },
+      {
+        q: 'Is the rhino tracking on foot safe?',
+        a: 'It is done with the conservancy anti-poaching team, who track these animals daily and know them individually, and you walk with an armed ranger. They control the approach and the distance, and will call it off if the wind or the animal is wrong. It is genuinely a wild animal on foot, so it is not risk-free, but it is run by the people who know that particular rhino best.',
+      },
+      {
+        q: 'Can we swap the horseback morning?',
+        a: 'Yes. It needs an intermediate rider and plenty of couples are not, so a guided walk or a slower morning at camp replaces it at no cost to the rest of the itinerary. Tell us at booking so the conservancy can plan its day.',
+      },
+      {
+        q: 'Can the coast half be longer?',
+        a: 'Yes, and it is the easiest change to make. Extra nights at Diani are usually the least expensive part of the trip, and the bush half is already the fuller of the two. Tell us how long you have and we will rebalance rather than compress.',
       },
     ],
     signature: false,

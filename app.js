@@ -105,77 +105,58 @@
     });
   }
 
-  /* ---------- carousel controller (snap + arrows + keyboard) ----------
-     Native scroll-snap drives touch swipe and trackpad on every device; arrows,
-     keyboard and a live counter give explicit control. The centred card scales
-     up for a focal transition. */
+  /* ---------- gallery mosaic: filters + lightbox ----------
+     Replaced the carousel controller. The gallery is now a grid of every
+     photograph rather than a one-at-a-time reel, so there is nothing to
+     scroll-snap and no active-card tracking; what is left is the category
+     filter and opening a frame in the lightbox.
+
+     Tiles are hidden with the `hidden` attribute rather than a class, so they
+     leave the grid's flow entirely (styles.css sets display:none on [hidden])
+     and the mosaic reflows without leaving holes. */
   (function(){
     if (!gal) return;
-    var cards = galCards;
-    if (!cards.length) return;
-    var prevBtn = document.getElementById('nk-prev');
-    var nextBtn = document.getElementById('nk-next');
-    var curEl = document.getElementById('nk-gal-cur');
-    var totEl = document.getElementById('nk-gal-total');
-    var active = -1, raf = 0, target = 0, settleT = 0;
-    var pad = function(n){ return ('0' + n).slice(-2); };
-    if (totEl) totEl.textContent = pad(cards.length);
+    var tiles = galCards;
+    if (!tiles.length) return;
 
-    function update(){
-      var gr = gal.getBoundingClientRect();
-      var center = gr.left + gr.width / 2;
-      var best = 0, bd = Infinity;
-      for (var i = 0; i < cards.length; i++){
-        var r = cards[i].getBoundingClientRect();
-        var d = Math.abs((r.left + r.width / 2) - center);
-        if (d < bd){ bd = d; best = i; }
+    var chips = Array.prototype.slice.call(document.querySelectorAll('.gal-chip'));
+    var countEl = document.getElementById('nk-gal-count');
+    var total = tiles.length;
+
+    function applyFilter(name){
+      var shown = 0;
+      for (var i = 0; i < tiles.length; i++){
+        var match = (name === 'all') || (tiles[i].getAttribute('data-cat') === name);
+        tiles[i].hidden = !match;
+        if (match) shown++;
       }
-      if (best !== active){
-        if (cards[active]) cards[active].classList.remove('is-active');
-        cards[best].classList.add('is-active');
-        active = best;
-        if (curEl) curEl.textContent = pad(active + 1);
+      chips.forEach(function(chip){
+        var on = chip.getAttribute('data-filter') === name;
+        chip.classList.toggle('is-on', on);
+        chip.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      if (countEl){
+        countEl.textContent = (name === 'all')
+          ? 'Showing all ' + total + ' photographs'
+          : 'Showing ' + shown + ' of ' + total + ' photographs in ' + name;
       }
-      if (prevBtn) prevBtn.disabled = (active <= 0);
-      if (nextBtn) nextBtn.disabled = (active >= cards.length - 1);
     }
-    // navigation is driven by an explicit target index that increments
-    // immediately, so rapid arrow taps accumulate even mid-animation
-    function goTo(i){
-      target = Math.max(0, Math.min(cards.length - 1, i));
-      var gr = gal.getBoundingClientRect();
-      var cr = cards[target].getBoundingClientRect();
-      var delta = (cr.left + cr.width / 2) - (gr.left + gr.width / 2);
-      gal.scrollTo({ left: gal.scrollLeft + delta, behavior:'smooth' });
-    }
-    function schedule(){ if (raf) cancelAnimationFrame(raf); raf = requestAnimationFrame(update); }
-    // only a genuine user swipe/scroll should resync the target; button-driven
-    // scrolling must let the explicit target accumulate
-    var userScroll = false;
-    gal.addEventListener('wheel', function(){ userScroll = true; }, { passive:true });
-    gal.addEventListener('touchstart', function(){ userScroll = true; }, { passive:true });
-    gal.addEventListener('scroll', function(){
-      schedule();
-      if (userScroll){ clearTimeout(settleT); settleT = setTimeout(function(){ target = active; userScroll = false; }, 150); }
-    }, { passive:true });
-    window.addEventListener('resize', schedule);
-    if (prevBtn) prevBtn.addEventListener('click', function(){ goTo(target - 1); });
-    if (nextBtn) nextBtn.addEventListener('click', function(){ goTo(target + 1); });
-    gal.addEventListener('keydown', function(e){
-      if (e.key === 'ArrowRight'){ e.preventDefault(); goTo(target + 1); }
-      else if (e.key === 'ArrowLeft'){ e.preventDefault(); goTo(target - 1); }
+
+    chips.forEach(function(chip){
+      chip.addEventListener('click', function(){
+        applyFilter(chip.getAttribute('data-filter'));
+      });
     });
-    // tap / click a card opens the lightbox (suppressed if the pointer was dragging/swiping)
-    var downX = 0, downY = 0, moved = false;
-    gal.addEventListener('pointerdown', function(e){ downX = e.clientX; downY = e.clientY; moved = false; if (e.pointerType !== 'mouse') userScroll = true; }, { passive:true });
-    gal.addEventListener('pointermove', function(e){ if (Math.abs(e.clientX - downX) > 8 || Math.abs(e.clientY - downY) > 8) moved = true; }, { passive:true });
+
+    // The lightbox indexes into the full, unfiltered list, so `data-lb` stays
+    // correct whatever is on screen. Stepping through it with the arrows walks
+    // every photograph rather than only the visible ones, which is deliberate:
+    // the filter narrows the grid, not the viewer.
     gal.addEventListener('click', function(e){
       var t = e.target.closest('[data-lb]');
       if (!t) return;
-      if (moved){ e.preventDefault(); return; }
       openLb(parseInt(t.getAttribute('data-lb'), 10));
     });
-    requestAnimationFrame(update);
   })();
 
   /* ---------- reveal on scroll ----------

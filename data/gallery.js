@@ -218,4 +218,17 @@ export default [
     title: 'Palms and the sea beyond',
     story: 'Coconut palms leaning the way the wind has trained them, with the water showing through underneath. This is where a Kenya trip usually ends, after the bush.',
   },
+  {
+    // Baraka died on the night of 15 August 2026, aged 31, at Ol Pejeta.
+    // The facts here (born 1994, right eye lost in a fight in 2008, the
+    // remaining eye lost to a cataract, blind thereafter) are on the public
+    // record and were checked before publishing, rather than written from
+    // memory. Do not add a cause of death: Ol Pejeta had not published a
+    // veterinary finding when this was written.
+    src: '/assets/baraka.jpg',
+    alt: 'A black rhino standing in green grass with flat-topped acacia and a treeline behind',
+    category: 'Conservation',
+    title: 'The late Baraka',
+    story: 'Ol Pejeta\'s blind black rhino, born there in 1994 and known to almost everyone who visited. He lost one eye fighting another male in 2008 and the other to a cataract, and lived out his years in a quiet enclosure where people could meet a rhino at arm\'s length. He died on 15 August 2026, aged 31.',
+  },
 ];

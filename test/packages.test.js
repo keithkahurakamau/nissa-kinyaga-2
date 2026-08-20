@@ -51,8 +51,8 @@ test('exactly 2 packages are flagged signature', () => {
   ]);
 });
 
-test('there are exactly 21 packages', () => {
-  assert.equal(packages.length, 21);
+test('there are exactly 23 packages', () => {
+  assert.equal(packages.length, 23);
 });
 
 test('the 3 Mount Kenya packages are present', () => {

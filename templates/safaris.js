@@ -14,6 +14,7 @@ const CATEGORY_ORDER = [
   'Laikipia & the North',
   'Mount Kenya',
   'Coast',
+  'Romance & Honeymoon',
 ];
 
 function filterBar(total) {

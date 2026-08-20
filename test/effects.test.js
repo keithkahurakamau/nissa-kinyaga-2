@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { pages } from '../build.js';
+import packages from '../data/packages.js';
 
 const ROOT = join(fileURLToPath(import.meta.url), '..', '..');
 const css = readFileSync(join(ROOT, 'styles.css'), 'utf8');
@@ -53,7 +54,7 @@ test('reveal has a failsafe so content cannot stay invisible', () => {
 test('trip cards keep both their filter attributes and their reveal', () => {
   const index = byPath.get('/safaris/');
   const cards = [...index.matchAll(/<article class="pkg-card"[^>]*>/g)].map((m) => m[0]);
-  assert.equal(cards.length, 21);
+  assert.equal(cards.length, packages.length);
   for (const card of cards) {
     assert.match(card, /data-destinations="/, 'filter attribute lost');
     assert.match(card, /data-days="\d+"/);
