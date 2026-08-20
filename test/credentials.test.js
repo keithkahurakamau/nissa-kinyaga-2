@@ -158,3 +158,23 @@ test('llms.txt does not contradict the site', async () => {
   assert.match(llms, /does not guide inside the countries/i);
   assert.match(llms, /does not operate aircraft/i);
 });
+
+// The Google reviews block is filled at runtime by app.js from a same-origin
+// proxy. It must ship hidden and empty: Google's policies forbid storing
+// review content, so nothing may be baked into the build, and an
+// unconfigured site must show no empty shell.
+test('the Google reviews section ships hidden and carries no baked review text', () => {
+  assert.match(page, /<section id="nk-google"[^>]*\shidden/,
+    'the Google section must ship hidden');
+  assert.match(page, /<div id="nk-grev-list" class="review-grid"><\/div>/,
+    'the review list must ship empty, not pre-populated');
+  assert.match(page, /<span id="nk-grev-rating" class="grev-rating"><\/span>/,
+    'no rating may be baked into the build');
+});
+
+// Google requires the author and a link back to Google to travel with any
+// review taken from the Places API.
+test('the Google reviews block carries its required attribution', () => {
+  assert.match(page, /Reviews shown live from Google/i);
+  assert.match(page, /id="nk-grev-link"[^>]*href="https:\/\/www\.google\.com\/maps"/);
+});

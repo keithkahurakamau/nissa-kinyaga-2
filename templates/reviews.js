@@ -60,6 +60,31 @@ function credentialsSection() {
 </section>`;
 }
 
+// Live Google reviews. The markup ships empty and hidden; app.js fills it
+// from /api/google-reviews and unhides it only when that returns reviews.
+// It cannot be server-rendered: Google's policies forbid storing review
+// content, so the reviews may not be baked into the build (see the comment
+// at the top of api/google-reviews.js). A visitor with JS off, or a site
+// with no API key configured, simply never sees this block, which is why
+// the guest reviews and the platform links below it stand on their own.
+function googleReviewsSection() {
+  return html`<section id="nk-google" class="section" hidden>
+  <div class="wrap">
+    ${sectionHeading({ number: '02', eyebrow: 'From Google', heading: 'Google reviews' })}
+    <div class="grev-head">
+      <div class="grev-score">
+        <span id="nk-grev-rating" class="grev-rating"></span>
+        <span id="nk-grev-stars" class="grev-stars" aria-hidden="true"></span>
+        <span id="nk-grev-total" class="grev-total"></span>
+      </div>
+      <a id="nk-grev-link" class="btn btn-ink" href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer">Read them all on Google</a>
+    </div>
+    <div id="nk-grev-list" class="review-grid"></div>
+    <p class="grev-attrib">Reviews shown live from Google and are the work of their authors. Nissa Safaris cannot edit or remove them.</p>
+  </div>
+</section>`;
+}
+
 // Renders nothing while data/reviews.js is empty, which it is until real
 // guests send them. Never seed this with sample reviews.
 function publishedReviewsSection() {
@@ -76,7 +101,7 @@ function publishedReviewsSection() {
   );
   return html`<section class="section">
   <div class="wrap">
-    ${sectionHeading({ number: '02', eyebrow: 'Guest reviews', heading: 'In their words' })}
+    ${sectionHeading({ number: '03', eyebrow: 'Guest reviews', heading: 'In their words' })}
     <div class="review-grid">${cards}</div>
   </div>
 </section>`;
@@ -188,6 +213,7 @@ export function reviewsPage() {
     </div>
   </header>
   ${credentialsSection()}
+  ${googleReviewsSection()}
   ${publishedReviewsSection()}
   ${platformsSection()}
   ${leaveReviewSection()}

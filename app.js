@@ -395,6 +395,93 @@
     }
   })();
 
+  /* ---------- live Google reviews (/reviews/) ----------
+     Fills #nk-google from /api/google-reviews, a same-origin proxy, and
+     unhides the section only if that returns reviews. Google's Places API
+     sends no CORS headers and rejects referrer-restricted keys, so the
+     browser cannot call it directly; and its policies forbid storing review
+     content, so the build cannot bake them in either. See the comment at the
+     top of api/google-reviews.js.
+
+     Everything is built with createElement and textContent rather than
+     innerHTML: review text is third-party content this site does not
+     control, and it is never parsed as markup. */
+  (function(){
+    var root = document.getElementById('nk-google');
+    if (!root) return;
+
+    var listEl = document.getElementById('nk-grev-list');
+    var ratingEl = document.getElementById('nk-grev-rating');
+    var starsEl = document.getElementById('nk-grev-stars');
+    var totalEl = document.getElementById('nk-grev-total');
+    var linkEl = document.getElementById('nk-grev-link');
+
+    function stars(n){
+      var full = Math.round(n || 0);
+      return new Array(5).fill(0).map(function(_, i){ return i < full ? '★' : '☆'; }).join('');
+    }
+
+    function card(review){
+      var fig = document.createElement('figure');
+      fig.className = 'review';
+
+      if (review.rating){
+        var st = document.createElement('div');
+        st.className = 'review-stars';
+        st.setAttribute('aria-label', review.rating + ' out of 5');
+        st.textContent = stars(review.rating);
+        fig.appendChild(st);
+      }
+
+      var quote = document.createElement('blockquote');
+      quote.className = 'review-body';
+      quote.textContent = review.text;
+      fig.appendChild(quote);
+
+      var cap = document.createElement('figcaption');
+      cap.className = 'review-by';
+      // Google requires the author's name, and their link where there is one,
+      // to be displayed with the review.
+      if (review.authorUri){
+        var a = document.createElement('a');
+        a.href = review.authorUri;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.textContent = review.author;
+        cap.appendChild(a);
+      } else {
+        cap.appendChild(document.createTextNode(review.author));
+      }
+      if (review.relativeTime){
+        var when = document.createElement('span');
+        when.className = 'review-trip';
+        when.textContent = review.relativeTime;
+        cap.appendChild(when);
+      }
+      fig.appendChild(cap);
+      return fig;
+    }
+
+    fetch('/api/google-reviews', { headers: { accept: 'application/json' } })
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(data){
+        if (!data || !data.configured || !data.reviews || !data.reviews.length) return;
+
+        if (ratingEl && data.rating) ratingEl.textContent = data.rating.toFixed(1);
+        if (starsEl && data.rating) starsEl.textContent = stars(data.rating);
+        if (totalEl && data.total){
+          totalEl.textContent = data.total === 1
+            ? 'from 1 Google review'
+            : 'from ' + data.total + ' Google reviews';
+        }
+        if (linkEl && data.mapsUri) linkEl.href = data.mapsUri;
+
+        data.reviews.forEach(function(review){ listEl.appendChild(card(review)); });
+        root.hidden = false;
+      })
+      .catch(function(){ /* stays hidden; the rest of the page is unaffected */ });
+  })();
+
   /* ---------- review form (/reviews/) ----------
      Same delivery model as the enquiry form above: static site, no backend,
      so the answers are composed into a message and handed to WhatsApp.

@@ -2499,3 +2499,63 @@ a { text-decoration: none; }
   .partner { grid-template-columns: 1fr; gap: 24px; }
   .partner-mark { max-width: 180px; }
 }
+
+/* ============================================================
+   Live Google reviews (/reviews/, filled by app.js)
+   The section ships hidden and is unhidden only once real reviews arrive,
+   so an unconfigured site shows nothing rather than an empty shell.
+   ============================================================ */
+
+.grev-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 28px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+}
+.grev-score {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.grev-rating {
+  font-family: var(--font-display);
+  font-size: 40px;
+  line-height: 1;
+  color: var(--ink);
+}
+.grev-stars {
+  font-size: 18px;
+  letter-spacing: .1em;
+  color: var(--gold-deep);
+}
+.grev-total {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+/* Required attribution, so it must stay legible rather than being faded
+   into the background: --muted-2 clears 4.5:1 on the section ground. */
+.grev-attrib {
+  margin-top: 24px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted-2);
+}
+#nk-grev-list .review-by a {
+  color: var(--muted-2);
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+#nk-grev-list .review-by a:hover,
+#nk-grev-list .review-by a:focus-visible { color: var(--gold-deep); }
+
+@media (max-width: 620px) {
+  .grev-head { flex-direction: column; align-items: flex-start; }
+}
