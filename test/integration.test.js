@@ -4,8 +4,25 @@ import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { pages } from '../build.js';
+import site from '../data/site.js';
+import packages from '../data/packages.js';
+import destinations from '../data/destinations.js';
+import journeys from '../data/journeys.js';
 
 const all = pages();
+// Derived, not a magic number. The count used to be hardcoded, which meant
+// every content addition failed this test for no reason and taught whoever
+// hit it to just bump the number, which is the opposite of what it is for.
+// Built this way it still catches the thing worth catching: a package,
+// destination or country in the data with no page rendered for it.
+const FIXED_PAGES = [
+  '/', '/safaris/', '/destinations/', '/journeys/',
+  '/about/', '/gallery/', '/journal/', '/contact/', '/reviews/',
+  ...site.legalLinks.map((link) => link.href),
+];
+const EXPECTED_PAGES =
+  FIXED_PAGES.length + packages.length + destinations.length + journeys.length;
+
 const ROOT = join(fileURLToPath(import.meta.url), '..', '..');
 
 // Files build.js copies into dist rather than rendering. Mapped to their
@@ -69,6 +86,11 @@ test('every page is reachable from the home page in at most two hops', () => {
   }
 });
 
-test('all 50 HTML pages are emitted', () => {
-  assert.equal(all.filter((p) => p.path.endsWith('/')).length, 50);
+test('every page the data implies is emitted, and nothing extra', () => {
+  const emitted = all.filter((p) => p.path.endsWith('/')).map((p) => p.path);
+  assert.equal(emitted.length, EXPECTED_PAGES);
+  for (const path of FIXED_PAGES) assert.ok(emitted.includes(path), `missing ${path}`);
+  for (const pkg of packages) assert.ok(emitted.includes(`/safaris/${pkg.slug}/`));
+  for (const dest of destinations) assert.ok(emitted.includes(`/destinations/${dest.slug}/`));
+  for (const country of journeys) assert.ok(emitted.includes(`/journeys/${country.slug}/`));
 });

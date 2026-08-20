@@ -2559,3 +2559,450 @@ a { text-decoration: none; }
 @media (max-width: 620px) {
   .grev-head { flex-direction: column; align-items: flex-start; }
 }
+
+/* ==========================================================================
+   Legal pages: /terms/, /privacy/, /cookies/, /copyright/
+   ==========================================================================
+   These are documents, not marketing pages, and they are set as documents:
+   a narrower measure, a smaller heading scale than the rest of the site
+   (the sitewide .h2 clamps up to 58px, which across eighteen sections of
+   terms reads as shouting), and generous line height, because someone
+   deciding whether to send a deposit is going to read this properly. */
+
+.legal-head .lede { max-width: 62ch; }
+.legal-updated {
+  margin-top: 18px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+
+/* Contents list. On the terms page this is the difference between a
+   document someone skims for the clause they need and one they close. */
+.legal-toc {
+  margin-top: 40px;
+  border-top: 1px solid rgba(178,138,63,.28);
+  border-bottom: 1px solid rgba(178,138,63,.28);
+  padding: 26px 0;
+}
+.legal-toc-heading {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+  margin-bottom: 18px;
+}
+.legal-toc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px 32px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  counter-reset: legal-toc;
+}
+.legal-toc-list li { counter-increment: legal-toc; }
+.legal-toc-list a {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--muted-2);
+  /* 44px minimum touch target, the same floor the lightbox close button
+     uses; a contents list of eighteen entries is unusable on a phone if the
+     rows are set at their natural text height. */
+  min-height: 44px;
+  padding: 10px 0;
+  border-bottom: 1px solid transparent;
+  transition: color .25s ease, border-color .25s ease;
+}
+.legal-toc-list a::before {
+  content: counter(legal-toc, decimal-leading-zero) "  ";
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: var(--gold-deep);
+}
+.legal-toc-list a:hover {
+  color: var(--ink);
+  border-bottom-color: rgba(178,138,63,.45);
+}
+
+/* Sections. scroll-margin-top clears the fixed nav when a contents link
+   jumps to one, otherwise the heading lands underneath it. */
+.legal-section {
+  scroll-margin-top: 96px;
+}
+.legal-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .2em;
+  color: var(--gold-deep);
+  margin-bottom: 12px;
+}
+.legal-section .h2 {
+  font-size: clamp(24px, 2.7vw, 35px);
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+.legal-subhead { margin: 34px 0 14px; }
+.legal-section .body + .body { margin-top: 18px; }
+.legal-section .body a,
+.legal-list a,
+.legal-credits a,
+.legal-crosslinks a {
+  color: var(--gold-deep);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgba(122,90,34,.4);
+  transition: text-decoration-color .25s ease;
+}
+.legal-section .body a:hover,
+.legal-list a:hover,
+.legal-credits a:hover { text-decoration-color: var(--gold-deep); }
+
+.legal-list {
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.legal-list li {
+  position: relative;
+  padding-left: 26px;
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--muted-2);
+}
+.legal-list li + li { margin-top: 12px; }
+.legal-list li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 13px;
+  width: 7px;
+  height: 1px;
+  background: var(--gold-dark);
+}
+
+/* Pulled-out note. Used for the "where the numbers live" clause on the
+   terms page, which is the one thing on it a client must not skim past. */
+.legal-note {
+  margin-top: 28px;
+  border-left: 3px solid var(--gold);
+  background: rgba(201,162,75,.10);
+  border-radius: 0 12px 12px 0;
+  padding: 22px 26px;
+}
+.legal-note-heading {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-bottom: 10px;
+}
+.legal-note p:not(.legal-note-heading) {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--muted-2);
+}
+
+/* Tables. The wrapper scrolls, never the page: a four-column table of
+   processors does not fit a 375px screen and must not push the body wide. */
+.legal-table-wrap {
+  margin-top: 26px;
+  border: 1px solid rgba(178,138,63,.28);
+  border-radius: 14px;
+  background: var(--cream);
+}
+/* The scroll container is declared only at the widths that need one. Below
+   701px the table stacks into blocks and nothing overflows there, so undoing
+   this rule in the mobile block would mean reopening horizontal overflow,
+   which test/styles.test.js forbids sitewide and rightly so. Scoping the
+   declaration is the honest way round it. */
+@media (min-width: 701px) {
+  .legal-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+.legal-table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--muted-2);
+  text-align: left;
+}
+.legal-table-caption {
+  caption-side: top;
+  padding: 18px 20px 0;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--muted-2);
+  text-align: left;
+}
+.legal-table th,
+.legal-table td {
+  padding: 14px 20px;
+  vertical-align: top;
+}
+.legal-table thead th {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  border-bottom: 1px solid rgba(178,138,63,.3);
+  white-space: nowrap;
+}
+.legal-table tbody tr + tr th,
+.legal-table tbody tr + tr td { border-top: 1px solid rgba(178,138,63,.18); }
+.legal-table tbody th {
+  font-family: var(--font-body);
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.legal-table tbody th a { color: var(--gold-deep); text-decoration: underline; text-underline-offset: 3px; }
+.legal-table code {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink);
+}
+.legal-tag {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+/* The privacy-choice control on /cookies/. app.js writes the status line;
+   the server-rendered fallback text is true with JavaScript off, because
+   with no JavaScript nothing was ever stored. */
+.legal-prefs {
+  margin-top: 26px;
+  border: 1px solid rgba(178,138,63,.32);
+  border-radius: 14px;
+  background: var(--cream);
+  padding: 24px 26px;
+}
+.legal-prefs-status {
+  font-family: var(--font-body);
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: var(--muted-2);
+}
+.legal-prefs-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+/* Creative Commons credits, generated from data/journeys.js. */
+.legal-credits {
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.legal-credits li {
+  padding: 16px 0;
+  border-top: 1px solid rgba(178,138,63,.2);
+}
+.legal-credits li:last-child { border-bottom: 1px solid rgba(178,138,63,.2); }
+.legal-credit-page {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.legal-credit-page:hover { color: var(--gold-deep); }
+.legal-credit-meta {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--muted-2);
+}
+.legal-copyline {
+  margin-top: 20px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: .1em;
+  color: var(--muted-2);
+}
+
+.legal-foot .h2 { font-size: clamp(24px, 2.7vw, 35px); margin-bottom: 18px; }
+.legal-crosslinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 26px;
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(178,138,63,.25);
+}
+.legal-crosslinks a {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  text-decoration: none;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+.legal-crosslinks a:hover { color: var(--ink); }
+
+/* Legal row in the site footer, set apart from the navigation links above
+   it so the four documents are findable rather than lost in a list. */
+.footer-legal-links {
+  max-width: var(--wrap-w);
+  margin: 30px auto 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 26px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.footer-legal-links a {
+  color: var(--muted-3);
+  text-decoration: none;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+.footer-legal-links a:hover { color: var(--gold); }
+.footer-legal a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.footer-legal a:hover { color: var(--gold); }
+
+/* Second line of the consent banner. */
+.consent-fine {
+  font-size: 12.5px !important;
+  color: var(--muted-3) !important;
+  margin-top: -6px !important;
+}
+
+@media (max-width: 640px) {
+  .legal-toc-list { grid-template-columns: 1fr; }
+  .legal-note { padding: 18px 20px; }
+  .legal-prefs { padding: 20px; }
+  .legal-prefs-actions .btn { width: 100%; justify-content: center; }
+}
+
+/* .btn-ink is a translucent glass button built for the dark consent banner
+   and the dark hero sections: 32% ink over a dark ground composites to a
+   dark button, and its cream text reads fine. Reused on the cream
+   .legal-prefs panel the same rule composites to a pale grey, leaving
+   near-white text on it at roughly 1.7:1, far under WCAG AA's 4.5:1. On a
+   light surface it needs to be a solid button. */
+.legal-prefs .btn-ink {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--cream);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none;
+}
+.legal-prefs .btn-ink:hover { background: #3B2D1E; }
+
+/* Legal tables on a phone.
+   A three- or four-column table cannot be made to fit 375px, and the
+   horizontally scrolling wrapper above put the column that actually matters
+   ("What they see") off the right-hand edge, where nobody would find it.
+   Below 700px each row becomes a labelled block instead: the same markup, a
+   real <table> for anyone using a screen reader, and every cell visible
+   without scrolling. The column headings are carried by data-label on each
+   cell, since the <thead> is hidden in this mode. */
+@media (max-width: 700px) {
+  .legal-table-wrap { padding: 4px 0; }
+  .legal-table { min-width: 0; }
+  /* A <caption> inside a table switched to display:block loses its table
+     context and shrink-wraps to a single-word column; it needs to be told
+     to be a block in its own right. */
+  .legal-table-caption {
+    display: block;
+    width: auto;
+    padding: 14px 18px 4px;
+  }
+  /* Hidden visually but left in the accessibility tree: the header cells are
+     still what a screen reader announces each data cell against. */
+  .legal-table thead {
+    position: absolute;
+    display: block;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+  }
+  /* The cells need collapsing too, not just the thead around them. Left as
+     table cells they keep their natural widths and lay out a box running
+     past the right edge of a 375px viewport. It paints nothing, because the
+     thead clips it, and it creates no page overflow, because the thead is
+     out of flow, but a stray 441px-wide box inside a 375px page is one
+     `position` change away from becoming a real horizontal scrollbar. */
+  .legal-table thead tr,
+  .legal-table thead th {
+    display: block;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+  }
+  .legal-table,
+  .legal-table tbody,
+  .legal-table tr,
+  .legal-table tbody th,
+  .legal-table td {
+    display: block;
+    width: auto;
+  }
+  .legal-table tr { padding: 16px 18px; }
+  .legal-table tbody tr + tr {
+    border-top: 1px solid rgba(178,138,63,.22);
+  }
+  /* Reset the desktop per-cell rules the block layout would otherwise
+     redraw as a line above every single cell. */
+  .legal-table tbody tr + tr th,
+  .legal-table tbody tr + tr td { border-top: 0; }
+  .legal-table tbody th {
+    white-space: normal;
+    padding: 0 0 10px;
+    font-family: var(--font-display);
+    font-size: 21px;
+    font-weight: 600;
+  }
+  .legal-table td { padding: 0 0 14px; }
+  .legal-table tr td:last-child { padding-bottom: 0; }
+  .legal-table td::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 3px;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+  }
+  .legal-tag { display: inline-block; margin: 0 0 0 8px; }
+}

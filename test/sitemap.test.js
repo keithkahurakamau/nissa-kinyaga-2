@@ -2,6 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { pages } from '../build.js';
+import site from '../data/site.js';
+import packages from '../data/packages.js';
+import destinations from '../data/destinations.js';
+import journeys from '../data/journeys.js';
 
 const byPath = new Map(pages().map((p) => [p.path, p.html]));
 const sitemap = byPath.get('/sitemap.xml');
@@ -18,9 +22,28 @@ test('the sitemap lists every HTML page and nothing else', () => {
   assert.deepEqual(listed.sort(), htmlPaths.sort());
 });
 
-test('there are 50 pages in the sitemap', () => {
+// Derived from the data rather than hardcoded, for the same reason as the
+// equivalent assertion in test/integration.test.js.
+test('the sitemap lists one URL per page the data implies', () => {
+  const fixed = [
+    '/', '/safaris/', '/destinations/', '/journeys/',
+    '/about/', '/gallery/', '/journal/', '/contact/', '/reviews/',
+    ...site.legalLinks.map((link) => link.href),
+  ];
   const listed = [...sitemap.matchAll(/<loc>/g)];
-  assert.equal(listed.length, 50);
+  assert.equal(
+    listed.length,
+    fixed.length + packages.length + destinations.length + journeys.length,
+  );
+});
+
+// A legal page missing from the sitemap is a page Google may never index,
+// and these four are exactly the ones a search engine looks for to decide a
+// site belongs to a real business.
+test('the sitemap lists all four legal pages', () => {
+  for (const link of site.legalLinks) {
+    assert.match(sitemap, new RegExp(`<loc>https://nissasafaris\\.com${link.href}</loc>`));
+  }
 });
 
 test('robots.txt allows crawling and points at the sitemap', () => {

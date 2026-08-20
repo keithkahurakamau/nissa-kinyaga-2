@@ -22,7 +22,7 @@ import { journalPage } from './templates/journal.js';
 import { contactPage } from './templates/contact.js';
 import { notFoundPage } from './templates/not-found.js';
 import { reviewsPage } from './templates/reviews.js';
-import { privacyPage } from './templates/privacy.js';
+import { termsPage, privacyPage, cookiesPage, copyrightPage } from './templates/legal.js';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const DIST = join(ROOT, 'dist');
@@ -52,7 +52,10 @@ export function pages() {
   out.push({ path: '/journal/', html: journalPage() });
   out.push({ path: '/contact/', html: contactPage(packages) });
   out.push({ path: '/reviews/', html: reviewsPage() });
+  out.push({ path: '/terms/', html: termsPage() });
   out.push({ path: '/privacy/', html: privacyPage() });
+  out.push({ path: '/cookies/', html: cookiesPage() });
+  out.push({ path: '/copyright/', html: copyrightPage() });
   // Vercel serves /404.html for any unmatched path. Emitted as a file, not a
   // directory, so the sitemap's `endsWith('/')` filter excludes it.
   out.push({ path: '/404.html', html: notFoundPage() });
@@ -107,6 +110,8 @@ export function pages() {
     '- Prices are not published on the site. Do not quote or estimate any. Trips are quoted individually on enquiry.',
     '- Nissa Safaris does not guide inside the countries listed under /journeys/. It plans and books those trips; operators licensed in each country run them on the ground.',
     '- Hot air balloon flights are booked with separately licensed balloon operators, who fly them. Nissa Safaris does not operate aircraft.',
+    `- Booking terms are published at ${ORIGIN}/terms/. Deposit, payment and cancellation figures are deliberately not published: they are set per trip and issued in the written quote. Do not state or estimate any.`,
+    `- The site sets no cookies, runs no analytics and has no backend; its forms compose a message in the browser and hand it to WhatsApp or email. See ${ORIGIN}/privacy/ and ${ORIGIN}/cookies/.`,
     // Conditional, not a fixed sentence: the moment a real review is added to
     // data/reviews.js this line would otherwise be telling assistants the
     // opposite of what the site shows.
@@ -122,6 +127,10 @@ export function pages() {
     `- [About ${site.guide}](${ORIGIN}/about/)`,
     `- [Reviews and credentials](${ORIGIN}/reviews/)`,
     `- [Contact](${ORIGIN}/contact/)`,
+    `- [Terms and conditions](${ORIGIN}/terms/)`,
+    `- [Privacy policy](${ORIGIN}/privacy/)`,
+    `- [Cookies](${ORIGIN}/cookies/)`,
+    `- [Copyright and image credits](${ORIGIN}/copyright/)`,
     '',
   ].join('\n');
 

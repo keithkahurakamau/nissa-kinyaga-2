@@ -35,6 +35,24 @@ guard against a licence number being invented to fill a gap.
 - [ ] **Review platform URLs.** Client says Tripadvisor and Google profiles exist but has not sent the links. Paste them into `reviewPlatforms` in `data/credentials.js`. A platform with `url: null` renders no badge at all, so no dead link can ship. Nothing was found for "Nissa Safaris" on Tripadvisor, Google or SafariBookings when searched, so confirm the profiles are live and public before adding them.
 - [ ] **Real guest reviews.** `data/reviews.js` is deliberately empty and must stay that way until real guests send reviews through the form on `/reviews/`. Never seed it with samples: a fabricated testimonial is a false statement attributed to a named person. `AggregateRating` structured data is only emitted from real entries, and a test asserts none appears while the array is empty.
 
+## Legal pages, one item needs Nissa
+
+`/terms/`, `/privacy/`, `/cookies/` and `/copyright/` are live and complete.
+The content is in `data/legal.js` and `test/legal.test.js` guards it.
+
+- [ ] **Deposit, payment dates and the cancellation scale.** These are the only
+      commercial terms not on the site, deliberately: they are numbers a client
+      can be held to, and inventing them would create terms neither side
+      agreed. Right now `/terms/` states that the written quote carries them
+      and that a quote arriving without them should be queried. If Nissa wants
+      them published, add them to `data/legal.js` as their own section and set
+      `commercialTermsPending = false`. Until then the page is accurate as it
+      stands, so this is a decision rather than a gap.
+- [ ] **Read the terms through once with Nissa.** Every clause describes how the
+      business already works, but he is the one who has to stand behind them,
+      particularly the insurance requirement, the fitness and participation
+      clause, and the guide-instruction safety clause.
+
 ## Off-page SEO, not code, and the highest-leverage work available
 
 - [ ] Create a **Google Business Profile** for Nissa Safaris; verify it; add photos, service area and the website link

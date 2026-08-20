@@ -107,15 +107,29 @@ function footer() {
       ${links}
     </nav>
   </div>
+  <nav class="footer-legal-links" aria-label="Legal">
+    ${site.legalLinks.map((link) => html`<a href="${link.href}">${link.label}</a>`)}
+  </nav>
   <div class="footer-legal">
-    &copy; ${new Date().getFullYear()} ${site.name}. All enquiries are handled personally by ${site.guide}.
+    <a href="/copyright/">&copy; ${new Date().getFullYear()} ${site.name}</a>. All rights reserved. All enquiries are handled personally by ${site.guide}.
   </div>
 </footer>`;
 }
 
+// Deliberately not a cookie banner, because there are no cookies to consent
+// to: app.js writes exactly one localStorage item, the record of this
+// choice itself (data/legal.js `storage` is the source of truth, and
+// test/legal.test.js holds the two in step). Saying "we use cookies to
+// improve your experience" here would be a plain untruth.
+//
+// The choice is offered because app.js carries a consent gate that nothing
+// currently runs behind, and if analytics are ever added they must not
+// appear without having been agreed to first. Both buttons are equally
+// prominent: a banner where refusing is the quieter option is not consent.
 function consentBanner() {
   return html`<div id="nk-consent" class="consent" role="dialog" aria-modal="false" aria-label="Privacy notice">
-  <p>This site keeps your data private. We set <strong>no advertising or tracking cookies</strong>. Any enquiry you send goes straight to ${site.guide} via WhatsApp or email and is not stored here. See how we handle data in our <a href="/privacy/">privacy note</a>.</p>
+  <p><strong>No cookies, no tracking, no analytics.</strong> This site sets no cookies at all and runs no analytics today. Any enquiry you send goes straight to ${site.guide} via WhatsApp or email and is never stored here. Read the <a href="/cookies/">cookie policy</a> or the <a href="/privacy/">privacy policy</a>.</p>
+  <p class="consent-fine">If we ever add analytics, they will only run for people who chose to allow it. You can change your choice at any time on the <a href="/cookies/">cookie page</a>.</p>
   <div class="consent-actions">
     <button type="button" id="nk-consent-accept" class="btn btn-gold">Allow analytics</button>
     <button type="button" id="nk-consent-decline" class="btn btn-ink">Essential only</button>

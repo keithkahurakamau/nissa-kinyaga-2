@@ -573,32 +573,115 @@
   }
   initSafariFilters();
 
-  /* ---------- privacy / cookie consent ----------
-     This site sets no tracking or advertising cookies. The banner records the
-     visitor's choice in localStorage (a functional preference, not a tracker).
-     Any future analytics must be initialised inside loadAnalytics() so it only
-     runs after explicit consent. */
+  /* ---------- privacy choice ----------
+     Not a cookie banner: this site sets no cookies at all, and the single
+     thing written here is the record of this choice. data/legal.js
+     `storage` documents it and test/legal.test.js asserts the two agree,
+     so the key name below cannot be changed without the cookie page
+     changing with it.
+
+     The choice is stored as JSON carrying the date it was made, so it can
+     expire. Consent that never expires is consent someone gave to a
+     different website years ago. Twelve months is the widely used figure
+     and is what /cookies/ states.
+
+     Any future analytics must be initialised inside loadAnalytics(), which
+     is the only place gated on the choice. Nothing runs there today. */
   (function(){
     var KEY = 'nk-consent';
-    var el = document.getElementById('nk-consent');
-    if (!el) return;
-    var stored = null;
-    try { stored = localStorage.getItem(KEY); } catch(e) {}
+    var MAX_AGE_DAYS = 365;
+
+    /* Reads the stored choice, migrating the original format (a bare
+       'accepted' / 'declined' string) rather than discarding it: a visitor
+       who already answered should not be asked again just because the
+       storage shape changed. Undated records are treated as made now. */
+    function read(){
+      var raw = null;
+      try { raw = localStorage.getItem(KEY); } catch(e) { return null; }
+      if (!raw) return null;
+      if (raw === 'accepted' || raw === 'declined') return { choice: raw, at: null };
+      try {
+        var parsed = JSON.parse(raw);
+        if (parsed && (parsed.choice === 'accepted' || parsed.choice === 'declined')) return parsed;
+      } catch(e) {}
+      return null;
+    }
+
+    function expired(record){
+      if (!record || !record.at) return false;
+      var made = Date.parse(record.at);
+      if (isNaN(made)) return false;
+      return (Date.now() - made) > MAX_AGE_DAYS * 86400000;
+    }
+
+    function write(choice){
+      try {
+        localStorage.setItem(KEY, JSON.stringify({ choice: choice, at: new Date().toISOString() }));
+      } catch(e) {}
+    }
+
+    function forget(){
+      try { localStorage.removeItem(KEY); } catch(e) {}
+    }
 
     function loadAnalytics(){
       /* consent-gated hook: place analytics/measurement init here.
          Nothing loads unless the visitor has chosen "Allow analytics". */
     }
-    function hide(){ el.style.display = 'none'; }
-    function remember(v){ try { localStorage.setItem(KEY, v); } catch(e) {} }
 
-    if (stored === 'accepted'){ loadAnalytics(); hide(); }
-    else if (stored === 'declined'){ hide(); }
-    else { el.style.display = 'flex'; }
+    var record = read();
+    if (expired(record)) { forget(); record = null; }
+    if (record && record.choice === 'accepted') loadAnalytics();
 
-    var a = document.getElementById('nk-consent-accept');
-    var d = document.getElementById('nk-consent-decline');
-    if (a) a.addEventListener('click', function(){ remember('accepted'); hide(); loadAnalytics(); });
-    if (d) d.addEventListener('click', function(){ remember('declined'); hide(); });
+    /* ---- the banner ---- */
+    var el = document.getElementById('nk-consent');
+    if (el) {
+      var hide = function(){ el.style.display = 'none'; };
+      if (record) hide(); else el.style.display = 'flex';
+
+      var accept = document.getElementById('nk-consent-accept');
+      var decline = document.getElementById('nk-consent-decline');
+      if (accept) accept.addEventListener('click', function(){
+        write('accepted'); hide(); loadAnalytics(); render();
+      });
+      if (decline) decline.addEventListener('click', function(){
+        write('declined'); hide(); render();
+      });
+    }
+
+    /* ---- the control on /cookies/ ----
+       Withdrawing a choice has to be as easy as making one, and until this
+       existed the banner was a one-way door: answer once and there was no
+       way back short of clearing site data by hand. Only renders on
+       /cookies/, so bail out everywhere else. */
+    var status = document.getElementById('nk-prefs-status');
+
+    function describe(){
+      var current = read();
+      if (expired(current)) { forget(); current = null; }
+      if (!current) return 'Nothing is stored in this browser. The banner will ask you on your next visit.';
+      var when = '';
+      if (current.at) {
+        var d = new Date(current.at);
+        if (!isNaN(d.getTime())) when = ', chosen on ' + d.toLocaleDateString(undefined,
+          { year: 'numeric', month: 'long', day: 'numeric' });
+      }
+      return current.choice === 'accepted'
+        ? 'Your current choice is Allow analytics' + when + '. Nothing is actually running, because this site has no analytics yet.'
+        : 'Your current choice is Essential only' + when + '. Nothing beyond this record is stored in your browser.';
+    }
+
+    function render(){ if (status) status.textContent = describe(); }
+
+    if (status) {
+      render();
+      var on = function(id, fn){
+        var b = document.getElementById(id);
+        if (b) b.addEventListener('click', function(){ fn(); render(); });
+      };
+      on('nk-prefs-accept', function(){ write('accepted'); loadAnalytics(); });
+      on('nk-prefs-decline', function(){ write('declined'); });
+      on('nk-prefs-clear', forget);
+    }
   })();
 })();

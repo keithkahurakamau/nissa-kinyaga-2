@@ -34,8 +34,17 @@ export default {
     { label: 'About Nissa', href: '/about/' },
     { label: 'Reviews & credentials', href: '/reviews/' },
     { label: 'Contact', href: '/contact/' },
-    { label: 'Privacy', href: '/privacy/' },
     { label: 'IWACO-KENYA', href: 'https://iwacokenya.org' },
+  ],
+  // Kept apart from footerLinks and rendered as its own row: these are the
+  // four documents a visitor goes looking for deliberately, and burying them
+  // among the navigation links is how they end up hard to find. Order is
+  // the order they matter in to someone about to book.
+  legalLinks: [
+    { label: 'Terms & conditions', href: '/terms/' },
+    { label: 'Privacy policy', href: '/privacy/' },
+    { label: 'Cookies', href: '/cookies/' },
+    { label: 'Copyright & credits', href: '/copyright/' },
   ],
   // Profiles that prove this is the same business elsewhere on the web.
   // schema.org `sameAs` is the strongest entity-resolution signal there is:
