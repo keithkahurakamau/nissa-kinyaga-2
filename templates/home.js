@@ -46,7 +46,7 @@ function bySlug(list, slugs) {
 
 // Holds only the hero photograph (as .hero-media, a background-image div, 
 // there's no inline style="..." to point an <img> at a per-instance src, and
-// this hero is always bush-breakfast.jpg) plus its text overlay, which carries its own
+// this hero is always cheetah-cubs.jpg) plus its text overlay, which carries its own
 // stacking context (.hero-content, z-index:1) so it isn't painted underneath
 // the image/gradient. See the styles.css comments on .hero-media/.hero::after
 // /.hero-content for why this differs from .about-hero/.dest-hero/.pkg-hero.
@@ -58,7 +58,7 @@ function bySlug(list, slugs) {
 // location claim, matching that established alt text for the same photo.
 function heroSection() {
   return html`<header class="hero">
-  <div class="hero-media" role="img" aria-label="Guests seated at a long table for a bush breakfast in the open, with a spread of food in the foreground and dry hills behind"></div>
+  <div class="hero-media" role="img" aria-label="Three cheetah cubs resting close together in dry grass, two of them looking straight at the camera"></div>
   <div class="hero-content">
     <div class="wrap">
       <h1 class="display-lg">Nissa Safaris</h1>
@@ -181,7 +181,7 @@ export function homePage(packagesList, destinationsList) {
     description: metaDescription(),
     path: '/',
     image: site.defaultShareImage,
-    preloadImage: '/assets/bush-breakfast.jpg',
+    preloadImage: '/assets/cheetah-cubs.jpg',
     type: 'website',
     schemas: [travelAgencySchema(), personSchema()],
     body,

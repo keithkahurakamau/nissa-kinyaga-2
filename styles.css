@@ -1782,9 +1782,9 @@ a { text-decoration: none; }
 .hero-media {
   position: absolute;
   inset: 0;
-  background-image: url('/assets/bush-breakfast.jpg');
+  background-image: url('/assets/cheetah-cubs.jpg');
   background-size: cover;
-  background-position: center 40%;
+  background-position: center 42%;
   animation: nk_pan 22s ease-out forwards;
 }
 /* Golden-hour wash, ported from index.html's hero (a separate soft-light

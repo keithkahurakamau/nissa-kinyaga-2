@@ -231,4 +231,16 @@ export default [
     title: 'The late Baraka',
     story: 'Ol Pejeta\'s blind black rhino, born there in 1994 and known to almost everyone who visited. He lost one eye fighting another male in 2008 and the other to a cataract, and lived out his years in a quiet enclosure where people could meet a rhino at arm\'s length. He died on 15 August 2026, aged 31.',
   },
+  {
+    // Was the home hero briefly, replaced there by the cheetah cubs. Kept in
+    // the gallery rather than deleted, since the photograph was supplied for
+    // the site. NOTE: guests' faces are identifiable in this frame; if consent
+    // was not obtained, remove this entry rather than cropping it, because the
+    // tile crop is not guaranteed to exclude them at every breakpoint.
+    src: '/assets/bush-breakfast.jpg',
+    alt: 'Guests seated at a long table for a bush breakfast in the open, with a spread of food in the foreground and dry hills behind',
+    category: 'Safari Moments',
+    title: 'Breakfast in the open',
+    story: 'A table carried out to a spot chosen the night before, laid up while the drive is still running, and reached when the morning has already earned it. Camps do this properly when they are told in advance, which is the whole reason we ask.',
+  },
 ];
