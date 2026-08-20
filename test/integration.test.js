@@ -13,10 +13,13 @@ const ROOT = join(fileURLToPath(import.meta.url), '..', '..');
 // be copied, instead of being waved through by an allowlist: a typo in an
 // asset href used to pass this test silently.
 const COPIED = {
-  '/styles.css': 'styles.css',
-  '/app.js': 'app.js',
   '/favicon.ico': 'assets/favicon.ico',
 };
+
+// styles.css and app.js ship under content-hashed names (lib/assets.js), so
+// their URLs cannot be listed literally. Matched by shape instead, and the
+// unhashed source file is what gets checked for existence.
+const HASHED_URL = /^\/(styles|app)\.[0-9a-f]{8}\.(css|js)$/;
 
 test('every internal href resolves to a page the build emits', () => {
   const known = new Set(all.map((p) => p.path));
@@ -29,6 +32,12 @@ test('every internal href resolves to a page the build emits', () => {
           existsSync(join(ROOT, href.replace(/^\//, ''))),
           `${path} links to ${href}, which is not in assets/`,
         );
+        continue;
+      }
+      const hashed = href.match(HASHED_URL);
+      if (hashed) {
+        const source = `${hashed[1]}.${hashed[2]}`;
+        assert.ok(existsSync(join(ROOT, source)), `${path} links ${href} but ${source} is missing`);
         continue;
       }
       if (href in COPIED) {

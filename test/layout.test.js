@@ -17,9 +17,13 @@ test('emits a complete HTML document', () => {
   assert.match(page, /<\/html>\s*$/);
 });
 
-test('links the external stylesheet and defers the external script', () => {
-  assert.match(page, /<link rel="stylesheet" href="\/styles\.css">/);
-  assert.match(page, /<script src="\/app\.js" defer><\/script>/);
+// Both carry a content hash in the filename (lib/assets.js), so the URL
+// changes whenever the bytes do and a deploy can never serve a returning
+// visitor a stale stylesheet. The hash is asserted as a shape, not a value,
+// or every CSS edit would fail this test.
+test('links the hashed stylesheet and defers the hashed script', () => {
+  assert.match(page, /<link rel="stylesheet" href="\/styles\.[0-9a-f]{8}\.css">/);
+  assert.match(page, /<script src="\/app\.[0-9a-f]{8}\.js" defer><\/script>/);
 });
 
 test('contains no inline script and no inline event handler', () => {
@@ -75,4 +79,25 @@ test('breadcrumbNav marks the last crumb as current', () => {
     { name: 'Home', path: '/' }, { name: 'Safaris', path: '/safaris/' },
   ]));
   assert.match(nav, /aria-current="page"/);
+});
+
+// The whole point of hashing: the URL must change when the bytes change.
+// Without this, a deploy can serve a returning visitor the old stylesheet,
+// which is exactly how the home hero stayed on the previous photograph for
+// an hour after each deploy.
+test('the asset hash tracks file contents', async () => {
+  const { createHash } = await import('node:crypto');
+  const { readFileSync } = await import('node:fs');
+  const { join } = await import('node:path');
+  const { fileURLToPath } = await import('node:url');
+  const { HASHED } = await import('../lib/assets.js');
+  const root = join(fileURLToPath(import.meta.url), '..', '..');
+
+  for (const [source, url] of Object.entries(HASHED)) {
+    const expected = createHash('sha256')
+      .update(readFileSync(join(root, source)))
+      .digest('hex')
+      .slice(0, 8);
+    assert.ok(url.includes(expected), `${source} URL ${url} does not carry its content hash`);
+  }
 });

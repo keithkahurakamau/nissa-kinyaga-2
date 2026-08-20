@@ -2471,3 +2471,31 @@ a { text-decoration: none; }
   .gal-item:hover .gal-item-media img { transform: none; }
   .gal-open-cue { transform: none; }
 }
+
+/* ============================================================
+   Community partner block (IWACO-KENYA, /about/)
+   ============================================================ */
+
+.partner {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 38px;
+  align-items: start;
+}
+.partner-mark {
+  display: block;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--cream);
+  transition: border-color .25s ease, transform .35s var(--ease-glass);
+}
+.partner-mark:hover { border-color: var(--gold-deep); transform: translateY(-3px); }
+.partner-mark img { width: 100%; height: auto; }
+.partner-body .body { margin-top: 14px; }
+.partner-body .btn { margin-top: 24px; }
+
+@media (max-width: 760px) {
+  .partner { grid-template-columns: 1fr; gap: 24px; }
+  .partner-mark { max-width: 180px; }
+}

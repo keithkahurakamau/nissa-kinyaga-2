@@ -1,6 +1,7 @@
 import { html, raw, renderToString } from '../lib/html.js';
 import { headTags, jsonLd, breadcrumbSchema } from '../lib/seo.js';
 import site from '../data/site.js';
+import { HASHED } from '../lib/assets.js';
 import { whatsappLink, picture } from './partials.js';
 
 const CSP =
@@ -84,8 +85,14 @@ function mobileMenu(path) {
 }
 
 function footer() {
-  const links = site.footerLinks.map(
-    (link) => html`<a href="${link.href}">${link.label}</a>`,
+  // Footer links are internal paths apart from the community partner, which
+  // is an absolute URL. External ones open in a new tab and carry
+  // rel="noopener noreferrer", the invariant test/*.test.js enforces across
+  // the whole site.
+  const links = site.footerLinks.map((link) =>
+    link.href.startsWith('http')
+      ? html`<a href="${link.href}" target="_blank" rel="noopener noreferrer">${link.label}</a>`
+      : html`<a href="${link.href}">${link.label}</a>`,
   );
   return html`<footer class="footer">
   <div class="footer-mark">
@@ -187,7 +194,7 @@ ${headTags({ title, description, path, image, type, robots })}
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="${FONTS_HREF}" rel="stylesheet">
 ${preloadImage ? html`<link rel="preload" as="image" href="${preloadImage}" fetchpriority="high">` : ''}
-<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="${HASHED['styles.css']}">
 ${allSchemas.map((schema) => jsonLd(schema))}
 </head>
 <body data-wa="${site.whatsapp}" data-email="${site.email}" data-phone="${site.phones[0]}">
@@ -201,7 +208,7 @@ ${footer()}
 ${consentBanner()}
 ${whatsappButton()}
 ${scrollTopButton()}
-<script src="/app.js" defer></script>
+<script src="${HASHED['app.js']}" defer></script>
 </body>
 </html>`;
 

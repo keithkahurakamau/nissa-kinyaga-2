@@ -6,6 +6,7 @@ import destinations from './data/destinations.js';
 import journeys from './data/journeys.js';
 import { validatePackage, validateDestination, validateCountry, assertAllValid } from './lib/validate.js';
 import { outputPath, ORIGIN } from './lib/paths.js';
+import { HASHED } from './lib/assets.js';
 import { packagePage } from './templates/package.js';
 import { destinationPage } from './templates/destination.js';
 import { destinationsIndexPage } from './templates/destinations.js';
@@ -82,8 +83,11 @@ export async function build() {
   // path; the site previously declared its icon as a data: URI, which the
   // crawler ignores, so search results fell back to a generic globe.
   await cp(join(ROOT, 'assets', 'favicon.ico'), join(DIST, 'favicon.ico'));
-  await cp(join(ROOT, 'styles.css'), join(DIST, 'styles.css'));
-  await cp(join(ROOT, 'app.js'), join(DIST, 'app.js'));
+  // Emitted under content-hashed names (see lib/assets.js): the URL changes
+  // whenever the bytes do, so a deploy can never serve a stale stylesheet to a
+  // returning visitor, and these can be cached permanently.
+  await cp(join(ROOT, 'styles.css'), join(DIST, HASHED['styles.css'].slice(1)));
+  await cp(join(ROOT, 'app.js'), join(DIST, HASHED['app.js'].slice(1)));
 
   for (const page of pages()) {
     const file = join(DIST, outputPath(page.path));

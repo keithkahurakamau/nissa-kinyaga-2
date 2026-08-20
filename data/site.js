@@ -35,6 +35,7 @@ export default {
     { label: 'Reviews & credentials', href: '/reviews/' },
     { label: 'Contact', href: '/contact/' },
     { label: 'Privacy', href: '/privacy/' },
+    { label: 'IWACO-KENYA', href: 'https://iwacokenya.org' },
   ],
   workedAt: [
     { name: 'Lewa Wildlife Conservancy', role: 'Head radio signalling officer, ranger research' },

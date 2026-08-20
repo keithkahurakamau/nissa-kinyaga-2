@@ -33,16 +33,16 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
         }
       ]
     },
     {
-      "source": "/(styles.css|app.js)",
+      "source": "/(styles|app)\\.[0-9a-f]{8}\\.(css|js)",
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=3600, must-revalidate"
+          "value": "public, max-age=31536000, immutable"
         }
       ]
     }

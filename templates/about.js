@@ -168,6 +168,36 @@ function servicesSection() {
 </section>`;
 }
 
+// IWACO-KENYA, a Laikipia community organisation the site points visitors to.
+//
+// WORDING RULE. The description below is drawn from the organisation's own
+// site and states what IWACO does, not what Nissa Safaris does with them.
+// No donation, percentage, formal partnership or programme is claimed here,
+// because none has been recorded. If a specific arrangement exists, add it
+// explicitly rather than letting a reader infer one; "we support" is doing
+// enough work as it is, and inventing a figure would be worse than silence.
+function iwacoSection() {
+  return html`<section class="section">
+  <div class="wrap">
+    ${sectionHeading({ number: '09', eyebrow: 'Community', heading: 'IWACO-KENYA' })}
+    <div class="partner">
+      <a class="partner-mark" href="https://iwacokenya.org" target="_blank" rel="noopener noreferrer">
+        ${picture({
+          src: '/assets/iwaco-logo.png',
+          alt: 'IWACO-KENYA logo: a map of Kenya with a mother and child, ringed by the words Indigenous Women and Children Organization',
+        })}
+      </a>
+      <div class="partner-body">
+        <p class="lede">The Indigenous Women and Children Organization-Kenya works in Laikipia County, the same country Nissa spent years guiding at Borana, Lewa and Il Ngwesi.</p>
+        <p class="body">Registered as a community-based organisation in 2024 and run out of Nanyuki, IWACO-KENYA works on child protection and alternative family care, economic empowerment and financial literacy for indigenous women, and support for survivors of gender-based violence. Its climate work runs alongside that: restoring rangeland, clearing invasive species and building up beekeeping and small-scale agriculture as income that does not depend on the rains.</p>
+        <p class="body">That last part is the piece a safari guest will recognise. The rangeland IWACO is restoring is the same grazing that carries the wildlife people come to Laikipia to see, and the households doing the restoring are the ones who decide whether it holds.</p>
+        <a class="btn btn-gold" href="https://iwacokenya.org" target="_blank" rel="noopener noreferrer">Visit IWACO-KENYA</a>
+      </div>
+    </div>
+  </div>
+</section>`;
+}
+
 function philosophySection() {
   const items = about.philosophy.map(
     (entry) => html`<div class="philosophy-item">
@@ -216,6 +246,7 @@ export function aboutPage() {
   ${expertiseSection()}
   ${servicesSection()}
   ${philosophySection()}
+  ${iwacoSection()}
   ${ctaBlock({
     heading: 'Plan your safari with Nissa',
     body: "Send your travel dates and Nissa will build the itinerary himself, drawing on the conservancies and lodges he knows first-hand.",
