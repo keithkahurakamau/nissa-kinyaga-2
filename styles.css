@@ -3006,3 +3006,157 @@ a { text-decoration: none; }
   }
   .legal-tag { display: inline-block; margin: 0 0 0 8px; }
 }
+
+/* ==========================================================================
+   Installable app: /app/ and /offline/
+   ========================================================================== */
+
+/* An author rule that sets `display` beats the user-agent sheet's
+   `[hidden] { display: none }` regardless of specificity, so any element
+   carrying a display rule silently ignores the attribute. `.btn` sets
+   `display: inline-flex`, which meant the install button on /app/ (rendered
+   `hidden`, revealed only when the browser says it can install) was visible
+   on every device including the ones that cannot install anything. This is
+   the standard reset for it: `hidden` means the element is not relevant, and
+   a stylesheet overriding that is always a bug rather than an intention. */
+[hidden] { display: none !important; }
+
+.install-panel {
+  margin-top: 34px;
+  border: 1px solid rgba(178,138,63,.32);
+  border-radius: 16px;
+  background: var(--cream);
+  padding: 26px 28px;
+}
+.install-status {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--muted-2);
+}
+.install-btn { margin-top: 18px; }
+
+.install-points {
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.install-points li {
+  position: relative;
+  padding-left: 26px;
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--muted-2);
+}
+.install-points li + li { margin-top: 14px; }
+.install-points li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 13px;
+  width: 7px;
+  height: 1px;
+  background: var(--gold-dark);
+}
+.install-points strong { color: var(--ink); font-weight: 600; }
+.install-points a,
+.install-status a {
+  color: var(--gold-deep);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.install-steps {
+  margin-top: 34px;
+  border-top: 1px solid rgba(178,138,63,.25);
+  padding-top: 26px;
+}
+.install-steps .h3 { margin-bottom: 16px; }
+.install-step-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: install-step;
+}
+.install-step-list li {
+  counter-increment: install-step;
+  position: relative;
+  padding-left: 42px;
+  min-height: 30px;
+  font-family: var(--font-body);
+  font-size: 16.5px;
+  line-height: 1.75;
+  color: var(--muted-2);
+}
+.install-step-list li + li { margin-top: 14px; }
+.install-step-list li::before {
+  content: counter(install-step);
+  position: absolute;
+  left: 0;
+  top: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(178,138,63,.5);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--gold-deep);
+}
+.install-step-list strong { color: var(--ink); font-weight: 600; }
+
+/* The offline screen. Carries no photograph and nothing it would have to
+   fetch: it renders precisely when the network is gone, so any asset it
+   referenced beyond the precached stylesheet would paint as a broken box. */
+.offline-section {
+  min-height: 78vh;
+  display: flex;
+  align-items: center;
+}
+.offline-section .label { margin-bottom: 18px; }
+.offline-section .lede { margin-top: 16px; max-width: 54ch; }
+.offline-section .body { margin-top: 18px; max-width: 60ch; }
+.offline-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 26px;
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(178,138,63,.25);
+}
+.offline-links a {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+.offline-links a:hover { color: var(--ink); }
+.offline-retry { margin-top: 26px; }
+.offline-note {
+  margin-top: 26px;
+  font-size: 15px;
+}
+.offline-note a {
+  color: var(--gold-deep);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .install-panel { padding: 20px; }
+  .install-btn { width: 100%; }
+  .offline-section { min-height: 70vh; }
+  .offline-retry { width: 100%; }
+}
+
+/* /offline/ only. templates/layout.js omits the footer's full logo there
+   (minimalFooter), so the footer needs its top padding back to sit right
+   without the mark above it. */
+.is-offline .footer { padding-top: clamp(40px, 5vw, 64px); }

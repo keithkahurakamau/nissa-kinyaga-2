@@ -34,6 +34,7 @@ export default {
     { label: 'About Nissa', href: '/about/' },
     { label: 'Reviews & credentials', href: '/reviews/' },
     { label: 'Contact', href: '/contact/' },
+    { label: 'Get the app', href: '/app/' },
     { label: 'IWACO-KENYA', href: 'https://iwacokenya.org' },
   ],
   // Kept apart from footerLinks and rendered as its own row: these are the

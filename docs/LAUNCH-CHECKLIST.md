@@ -53,6 +53,19 @@ The content is in `data/legal.js` and `test/legal.test.js` guards it.
       particularly the insurance requirement, the fitness and participation
       clause, and the guide-instruction safety clause.
 
+## Installable app
+
+Live at `/app/`. Registration, offline fallback, cache rules and the manifest
+are all verified in a headless browser against a genuinely dead origin, but
+two things can only be checked on real hardware:
+
+- [ ] **Install it on an actual iPhone and an actual Android phone.** Confirm
+      the spearhead icon looks right on the home screen, that the label reads
+      "Nissa" rather than something truncated, and that it opens full screen.
+- [ ] **Check the icon against a dark and a light home screen wallpaper.** The
+      mark is gold on forest green and should hold up on both, but this is a
+      judgement call best made by eye.
+
 ## Off-page SEO, not code, and the highest-leverage work available
 
 - [ ] Create a **Google Business Profile** for Nissa Safaris; verify it; add photos, service area and the website link

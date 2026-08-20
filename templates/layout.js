@@ -84,7 +84,7 @@ function mobileMenu(path) {
 </div>`;
 }
 
-function footer() {
+function footer({ minimal = false } = {}) {
   // Footer links are internal paths apart from the community partner, which
   // is an absolute URL. External ones open in a new tab and carry
   // rel="noopener noreferrer", the invariant test/*.test.js enforces across
@@ -94,14 +94,21 @@ function footer() {
       ? html`<a href="${link.href}" target="_blank" rel="noopener noreferrer">${link.label}</a>`
       : html`<a href="${link.href}">${link.label}</a>`,
   );
-  return html`<footer class="footer">
-  <div class="footer-mark">
+  // `minimal` drops the full logo. A display:none image is still fetched by
+  // the browser, so hiding it in CSS would have left /offline/ making a
+  // request that cannot succeed; not rendering it is the actual fix.
+  const mark = minimal
+    ? ''
+    : html`<div class="footer-mark">
     ${picture({
       src: site.logoFull,
       alt: `${site.name}, ${site.tagline}`,
       className: 'footer-logo',
     })}
-  </div>
+  </div>`;
+
+  return html`<footer class="footer">
+  ${mark}
   <div class="footer-grid">
     <nav class="footer-links" aria-label="Footer">
       ${links}
@@ -174,6 +181,10 @@ function whatsappButton() {
  * @param {{name: string, path: string}[]} [opts.crumbs], breadcrumb trail;
  *   a BreadcrumbList schema is emitted automatically when there are 2+
  * @param {string} [opts.preloadImage], root-relative image to preload
+ * @param {string} [opts.bodyClass], class on <body>, for the rare page that
+ *   needs to suppress part of the shared shell (see /offline/)
+ * @param {boolean} [opts.minimalFooter], omit the footer's full logo, for a
+ *   page that renders when the network is gone and cannot fetch it
  * @param {import('../lib/html.js').RawHtml} opts.body, page content,
  *   including the `<main id="main">` wrapper
  * @returns {string} the full HTML document
@@ -187,6 +198,8 @@ export function layout({
   schemas = [],
   crumbs = [],
   preloadImage,
+  bodyClass,
+  minimalFooter = false,
   body, robots }) {
   const allSchemas = crumbs.length > 1 ? [...schemas, breadcrumbSchema(crumbs)] : schemas;
 
@@ -203,6 +216,11 @@ export function layout({
 <link rel="icon" href="${ICONS.ico}" sizes="any">
 <link rel="icon" type="image/png" href="${ICONS.png32}" sizes="32x32">
 <link rel="apple-touch-icon" href="${ICONS.apple}">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="${site.name}">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 ${headTags({ title, description, path, image, type, robots })}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -211,14 +229,14 @@ ${preloadImage ? html`<link rel="preload" as="image" href="${preloadImage}" fetc
 <link rel="stylesheet" href="${HASHED['styles.css']}">
 ${allSchemas.map((schema) => jsonLd(schema))}
 </head>
-<body data-wa="${site.whatsapp}" data-email="${site.email}" data-phone="${site.phones[0]}">
+<body${bodyClass ? html` class="${bodyClass}"` : ''} data-wa="${site.whatsapp}" data-email="${site.email}" data-phone="${site.phones[0]}">
 ${raw(SVG_FILTER_DEFS)}
 <a class="skip-link" href="#main">Skip to content</a>
 <div id="nk-progress" aria-hidden="true"></div>
 ${nav(path)}
 ${mobileMenu(path)}
 ${body}
-${footer()}
+${footer({ minimal: minimalFooter })}
 ${consentBanner()}
 ${whatsappButton()}
 ${scrollTopButton()}

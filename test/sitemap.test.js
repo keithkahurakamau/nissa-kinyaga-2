@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { pages } from '../build.js';
+import { pages, NOINDEX_PATHS } from '../build.js';
 import site from '../data/site.js';
 import packages from '../data/packages.js';
 import destinations from '../data/destinations.js';
@@ -16,8 +16,8 @@ test('a sitemap is emitted', () => {
   assert.match(sitemap, /<urlset xmlns="http:\/\/www\.sitemaps\.org\/schemas\/sitemap\/0\.9">/);
 });
 
-test('the sitemap lists every HTML page and nothing else', () => {
-  const htmlPaths = [...byPath.keys()].filter((p) => p.endsWith('/'));
+test('the sitemap lists every indexable HTML page and nothing else', () => {
+  const htmlPaths = [...byPath.keys()].filter((p) => p.endsWith('/') && !NOINDEX_PATHS.has(p));
   const listed = [...sitemap.matchAll(/<loc>https:\/\/nissasafaris\.com([^<]*)<\/loc>/g)].map((m) => m[1]);
   assert.deepEqual(listed.sort(), htmlPaths.sort());
 });
@@ -27,7 +27,7 @@ test('the sitemap lists every HTML page and nothing else', () => {
 test('the sitemap lists one URL per page the data implies', () => {
   const fixed = [
     '/', '/safaris/', '/destinations/', '/journeys/',
-    '/about/', '/gallery/', '/journal/', '/contact/', '/reviews/',
+    '/about/', '/gallery/', '/journal/', '/contact/', '/reviews/', '/app/',
     ...site.legalLinks.map((link) => link.href),
   ];
   const listed = [...sitemap.matchAll(/<loc>/g)];

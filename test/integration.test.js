@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { pages } from '../build.js';
+import { pages, NOINDEX_PATHS } from '../build.js';
 import site from '../data/site.js';
 import packages from '../data/packages.js';
 import destinations from '../data/destinations.js';
@@ -17,8 +17,9 @@ const all = pages();
 // destination or country in the data with no page rendered for it.
 const FIXED_PAGES = [
   '/', '/safaris/', '/destinations/', '/journeys/',
-  '/about/', '/gallery/', '/journal/', '/contact/', '/reviews/',
+  '/about/', '/gallery/', '/journal/', '/contact/', '/reviews/', '/app/',
   ...site.legalLinks.map((link) => link.href),
+  ...NOINDEX_PATHS,
 ];
 const EXPECTED_PAGES =
   FIXED_PAGES.length + packages.length + destinations.length + journeys.length;
@@ -82,6 +83,10 @@ test('every page is reachable from the home page in at most two hops', () => {
     for (const second of linksFrom(first)) reached.add(second);
   }
   for (const path of byPath.keys()) {
+    // /offline/ is reached by the service worker when a navigation fails,
+    // never by a link. Linking it from the site would put a page that says
+    // "you are offline" in front of someone who is not.
+    if (NOINDEX_PATHS.has(path)) continue;
     assert.ok(reached.has(path), `${path} is more than two hops from the home page`);
   }
 });

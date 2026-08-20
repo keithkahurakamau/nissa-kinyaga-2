@@ -34,10 +34,12 @@ builds, Vercel builds it fresh on every deploy (`vercel.json`'s
 `buildCommand`/`outputDirectory`), and locally you regenerate it with
 `npm run build` whenever you want to preview.
 
-The site covers: home, a safaris index and 21 individual package pages, a
-destinations index and 8 destination pages, about, gallery, journal, contact
-and privacy, plus a generated `sitemap.xml` and `robots.txt`. See
-`docs/LAUNCH-CHECKLIST.md` for what's still outstanding before it goes live.
+The site covers: home, a safaris index and 23 individual package pages, a
+destinations index and 8 destination pages, a journeys index and 9
+international country pages, about, gallery, journal, contact, reviews, an
+app page, and four legal pages (terms, privacy, cookies, copyright). It also
+generates `sitemap.xml`, `robots.txt`, `llms.txt`, `manifest.webmanifest` and
+`sw.js`. See `docs/LAUNCH-CHECKLIST.md` for what's still outstanding.
 
 ## Commands
 
@@ -95,9 +97,41 @@ launch, see `docs/LAUNCH-CHECKLIST.md`.
   that gap.
 - HTTPS enforced via HSTS; a `www` → apex redirect is configured in
   `vercel.json`; outbound links use `rel="noopener noreferrer"`.
-- **Cookie/consent banner** records the choice in `localStorage` (functional,
-  not a tracker). Any future analytics must be initialised only after explicit
-  opt-in. A plain-language privacy note lives at `/privacy/`.
+- **No cookies at all.** The consent banner records the choice in
+  `localStorage` (functional, not a tracker), dated so it expires after twelve
+  months, and changeable at `/cookies/`. Any future analytics must be
+  initialised only after explicit opt-in, inside `loadAnalytics()` in `app.js`.
+  `test/legal.test.js` checks the cookie policy against what the code actually
+  stores.
+
+## Installable app (PWA)
+
+The site installs to a home screen and works offline. `/app/` explains it to
+visitors; the machinery is `sw.js` (source, with two build-time placeholders),
+`lib/pwa.js` (the manifest, and the substitution that fills them in) and
+`/offline/` (the fallback screen).
+
+The caching rules exist to avoid repeating the stale-`styles.css` bug that
+`lib/assets.js` was written to fix, one order of magnitude worse:
+
+- **HTML is network-first, always.** The cache is a fallback for being
+  offline, never a shortcut for being slow. This is what makes a deploy
+  visible immediately to a returning visitor.
+- **Content-hashed assets are cache-first**, because their URL changes when
+  their bytes do, so a cached copy cannot be wrong.
+- **Photographs are cache-first in a capped, trimmed cache.**
+- **`/api/` is never cached**, at all. Google's terms forbid storing review
+  content (see `api/google-reviews.js`).
+- **`/sw.js` is served `max-age=0`** (`vercel.json`). A cached service worker
+  is a frozen site.
+
+Precaching is deliberately small: the offline page, the two hashed assets, an
+icon and the manifest. Most visitors are on Kenyan mobile data, and pulling
+megabytes of photographs on first visit spends their money on pages they may
+never open. Everything else caches as it is actually visited.
+
+`test/pwa.test.js` covers the manifest, the icon sizes, and each caching rule
+above.
 
 ## Accessibility & responsiveness
 

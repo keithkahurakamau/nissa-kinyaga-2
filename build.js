@@ -23,9 +23,14 @@ import { contactPage } from './templates/contact.js';
 import { notFoundPage } from './templates/not-found.js';
 import { reviewsPage } from './templates/reviews.js';
 import { termsPage, privacyPage, cookiesPage, copyrightPage } from './templates/legal.js';
+import { installPage, offlinePage } from './templates/install.js';
+import { manifest, serviceWorker } from './lib/pwa.js';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const DIST = join(ROOT, 'dist');
+
+/** Directory URLs that are real pages but must stay out of the sitemap. */
+export const NOINDEX_PATHS = new Set(['/offline/']);
 
 export function pages() {
   assertAllValid(packages, validatePackage, 'package');
@@ -56,6 +61,8 @@ export function pages() {
   out.push({ path: '/privacy/', html: privacyPage() });
   out.push({ path: '/cookies/', html: cookiesPage() });
   out.push({ path: '/copyright/', html: copyrightPage() });
+  out.push({ path: '/app/', html: installPage() });
+  out.push({ path: '/offline/', html: offlinePage() });
   // Vercel serves /404.html for any unmatched path. Emitted as a file, not a
   // directory, so the sitemap's `endsWith('/')` filter excludes it.
   out.push({ path: '/404.html', html: notFoundPage() });
@@ -64,7 +71,15 @@ export function pages() {
   // Only directory URLs are crawlable pages. Filtering here rather than
   // relying on every entry happening to end in "/" — /404.html is the first
   // file artifact in `out`, and any future one must be excluded too.
-  const htmlPaths = out.map((page) => page.path).filter((path) => path.endsWith('/'));
+  //
+  // NOINDEX_PATHS is the second exclusion: /offline/ is a directory URL, so
+  // the filter above would list it, but it renders only when the network has
+  // failed. Sitemapping it asks Google to index a page that says "you are
+  // offline". It carries robots="noindex" in its own head; this keeps the
+  // two statements consistent, and test/pwa.test.js checks they stay that way.
+  const htmlPaths = out
+    .map((page) => page.path)
+    .filter((path) => path.endsWith('/') && !NOINDEX_PATHS.has(path));
   const urls = htmlPaths
     .map((path) => `  <url><loc>${ORIGIN}${path}</loc><changefreq>monthly</changefreq></url>`)
     .join('\n');
@@ -140,6 +155,12 @@ export function pages() {
     path: '/robots.txt',
     html: `User-agent: *\nAllow: /\n\nSitemap: ${ORIGIN}/sitemap.xml\n`,
   });
+
+  // The installable-app layer. Both must sit at the site root: a service
+  // worker can only control the directory it is served from and below, so
+  // /sw.js is what gives it the whole origin.
+  out.push({ path: '/manifest.webmanifest', html: `${JSON.stringify(manifest(), null, 2)}\n` });
+  out.push({ path: '/sw.js', html: serviceWorker() });
   return out;
 }
 
