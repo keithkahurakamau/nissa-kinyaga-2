@@ -26,7 +26,22 @@ export function metaDescription() {
  * obvious beat. It is a pure function of the index, so the layout is
  * identical on every build and a photo never jumps size between deploys.
  */
-function tileClass(i) {
+const TILE_OVERRIDES = {
+  feature: ' gal-tile-feature',
+  tall: ' gal-tile-tall',
+  normal: '',
+};
+
+function tileClass(item, i) {
+  // An explicit `tile` on the item wins. The rhythm below knows nothing about
+  // a photograph's shape, so left to itself it will eventually hand a
+  // panorama a portrait tile and crop the subject off both ends. Items that
+  // do not set it keep the rhythm, which is the case for almost all of them.
+  if (item.tile) {
+    const override = TILE_OVERRIDES[item.tile];
+    if (override === undefined) throw new Error(`unknown gallery tile "${item.tile}" on ${item.src}`);
+    return override;
+  }
   if (i % 7 === 0) return ' gal-tile-feature';
   if (i % 3 === 1) return ' gal-tile-tall';
   return '';
@@ -39,7 +54,7 @@ function tileClass(i) {
 // `.gal-card-story` must stay present on every tile: the lightbox populates
 // itself from them.
 function galleryTile(item, i) {
-  return html`<figure class="gal-item${raw(tileClass(i))}" data-cat="${item.category}" data-reveal>
+  return html`<figure class="gal-item${raw(tileClass(item, i))}" data-cat="${item.category}" data-reveal>
   <div class="gal-item-media">
     ${// the first frames are above the fold on a wide screen and the very
       // first is the preloaded LCP image, so neither may be lazy

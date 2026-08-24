@@ -69,3 +69,96 @@ test('every destination has at least one package', () => {
     assert.ok(covered.has(dest.slug), `no package visits ${dest.slug}`);
   }
 });
+
+/* ---------------------------------------------------------------------------
+   Food and drink
+   ---------------------------------------------------------------------------
+   Every trip is full board with drinks, alcohol included. That is a client
+   decision about what the business sells, and it has to be stated the same
+   way on all 23 packages: a guest comparing two itineraries and finding meals
+   spelled out on one but not the other will reasonably assume the other does
+   not include them. These tests keep the set consistent, and keep a stale
+   exclusion from contradicting an inclusion on the same page.
+--------------------------------------------------------------------------- */
+
+test('every package states that meals are included', () => {
+  for (const pkg of packages) {
+    assert.ok(
+      pkg.included.some((item) => /^All meals/i.test(item)),
+      `${pkg.slug} does not say meals are included`,
+    );
+  }
+});
+
+test('every package includes soft drinks and alcohol', () => {
+  for (const pkg of packages) {
+    assert.ok(
+      pkg.included.some((item) => /Soft drinks, juices, tea and coffee/i.test(item)),
+      `${pkg.slug} omits soft drinks`,
+    );
+    assert.ok(
+      pkg.included.some((item) => /Beer, wine and spirits/i.test(item)),
+      `${pkg.slug} omits alcoholic drinks`,
+    );
+  }
+});
+
+// The failure this catches is a page that both promises and refuses the same
+// thing, which is worse than either alone: it is the kind of contradiction a
+// guest notices only after they have been charged for a bar bill.
+test('no package excludes something it also includes', () => {
+  for (const pkg of packages) {
+    for (const item of pkg.excluded) {
+      assert.doesNotMatch(item, /alcohol/i, `${pkg.slug} still excludes alcohol`);
+      assert.doesNotMatch(item, /\blunch|\bdinner/i, `${pkg.slug} still excludes a meal`);
+    }
+  }
+});
+
+// Board basis is the single most misread line on any itinerary. Nothing is
+// half board or bed-and-breakfast any more, so nothing should say so.
+test('no package is still sold on a bed-and-breakfast basis', () => {
+  for (const pkg of packages) {
+    for (const item of [...pkg.included, ...pkg.excluded]) {
+      assert.doesNotMatch(item, /bed-and-breakfast|half board/i,
+        `${pkg.slug} still describes a partial board basis: "${item}"`);
+    }
+  }
+});
+
+/* ---------------------------------------------------------------------------
+   Gallery tiles
+--------------------------------------------------------------------------- */
+
+// The mosaic sizes tiles from their position, which knows nothing about a
+// photograph's shape. A wide panorama landing on a portrait tile loses its
+// subject off both ends, so an item may override the rhythm with `tile`. A
+// typo there must fail the build rather than silently fall back to a crop
+// that ruins the frame.
+test('gallery tile overrides are valid, and panoramas are not left to the rhythm', async () => {
+  const gallery = (await import('../data/gallery.js')).default;
+  const { galleryPage } = await import('../templates/gallery.js');
+  const allowed = new Set(['feature', 'tall', 'normal']);
+  for (const item of gallery) {
+    if (item.tile === undefined) continue;
+    assert.ok(allowed.has(item.tile), `${item.src} has an unknown tile "${item.tile}"`);
+  }
+  const page = galleryPage();
+  const overridden = gallery.filter((item) => item.tile === 'feature');
+  for (const item of overridden) {
+    const at = page.indexOf(item.src);
+    assert.ok(at > -1, `${item.src} is not on the page`);
+    const figure = page.lastIndexOf('<figure', at);
+    assert.match(page.slice(figure, at), /gal-item gal-tile-feature/,
+      `${item.src} asked for a feature tile and did not get one`);
+  }
+});
+
+test('an unknown gallery tile value fails the build rather than cropping badly', async () => {
+  const gallery = (await import('../data/gallery.js')).default;
+  const original = gallery[0].tile;
+  gallery[0].tile = 'enormous';
+  const { galleryPage } = await import('../templates/gallery.js');
+  assert.throws(() => galleryPage(), /unknown gallery tile "enormous"/);
+  gallery[0].tile = original;
+});

@@ -5,7 +5,7 @@
 // runs it first, but a machine without `cwebp` installed must still produce
 // a working (JPEG-only) site, not a failed build.
 import { execFileSync } from 'node:child_process';
-import { readdirSync, statSync } from 'node:fs';
+import { readdirSync, statSync, unlinkSync } from 'node:fs';
 import { basename, extname, join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -29,6 +29,31 @@ function outdated(inPath, outPath) {
   }
 }
 
+/**
+ * Drops a WebP that is no smaller than the JPEG it came from.
+ *
+ * `picture()` in templates/partials.js always prefers the WebP when a
+ * sibling exists, so a larger WebP is not a neutral extra file: it is the
+ * file every visitor downloads instead of the smaller one. A handful of
+ * sources (already-optimised JPEGs, and wide low-detail frames like the
+ * group photograph) encode bigger at -q 85 than the original, and the right
+ * answer for those is no sibling at all, which `picture()` handles by
+ * degrading to a plain <img>.
+ *
+ * @returns {boolean} true if the WebP was removed
+ */
+function dropIfNotSmaller(inPath, outPath) {
+  try {
+    const source = statSync(inPath).size;
+    const encoded = statSync(outPath).size;
+    if (encoded < source) return false;
+    unlinkSync(outPath);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 function main() {
   if (!cwebpAvailable()) {
     console.log('cwebp not found — skipping WebP generation (install with: sudo apt install webp)');
@@ -38,13 +63,21 @@ function main() {
   const jpgs = readdirSync(ASSETS).filter((file) => extname(file).toLowerCase() === '.jpg');
   let written = 0;
   let skipped = 0;
+  let dropped = 0;
 
   for (const file of jpgs) {
     const inPath = join(ASSETS, file);
     const outPath = join(ASSETS, `${basename(file, extname(file))}.webp`);
 
     if (!outdated(inPath, outPath)) {
-      skipped += 1;
+      // Still checked, so a WebP generated before this rule existed is
+      // cleaned up rather than living on because it looks up to date.
+      if (dropIfNotSmaller(inPath, outPath)) {
+        dropped += 1;
+        console.log(`webp: dropped ${basename(outPath)}, larger than the JPEG`);
+      } else {
+        skipped += 1;
+      }
       continue;
     }
 
@@ -57,8 +90,13 @@ function main() {
       // more solid than the original 82 output on fine texture (fur,
       // foliage) at normal viewing sizes.
       execFileSync('cwebp', ['-q', '85', inPath, '-o', outPath], { stdio: 'ignore' });
-      written += 1;
-      console.log(`webp: ${file} -> ${basename(outPath)}`);
+      if (dropIfNotSmaller(inPath, outPath)) {
+        dropped += 1;
+        console.log(`webp: ${file} encodes larger than the JPEG, keeping the JPEG only`);
+      } else {
+        written += 1;
+        console.log(`webp: ${file} -> ${basename(outPath)}`);
+      }
     } catch (err) {
       // A single bad/corrupt source image shouldn't take down the build —
       // report it and keep going with the rest of the set.
@@ -66,7 +104,7 @@ function main() {
     }
   }
 
-  console.log(`WebP generation complete: ${written} written, ${skipped} up to date, ${jpgs.length} total.`);
+  console.log(`WebP generation complete: ${written} written, ${skipped} up to date, ${dropped} dropped as larger than source, ${jpgs.length} total.`);
 }
 
 main();

@@ -243,4 +243,21 @@ export default [
     title: 'Breakfast in the open',
     story: 'A table carried out to a spot chosen the night before, laid up while the drive is still running, and reached when the morning has already earned it. Camps do this properly when they are told in advance, which is the whole reason we ask.',
   },
+  {
+    // A 2.2:1 panorama, which is why it carries an explicit `tile`: the
+    // positional rhythm in templates/gallery.js would otherwise be free to
+    // hand it a portrait tile and crop the people off both ends, and this is
+    // a photograph where every person in it is the point.
+    //
+    // NOTE: guests' faces are identifiable here, as with the bush breakfast
+    // above. If consent was not obtained, remove this entry outright rather
+    // than relying on the crop, which is not guaranteed to exclude anyone at
+    // any breakpoint.
+    src: '/assets/safari-group.jpg',
+    alt: 'A safari group standing together with their guide in front of an open-sided safari vehicle, dry golden grass and open bush behind them',
+    tile: 'feature',
+    category: 'Safari Moments',
+    title: 'The whole party',
+    story: 'The photograph nobody plans and everybody ends up wanting: the whole vehicle emptied out, drinks handed round, the country falling away behind. Ask your guide and it takes two minutes.',
+  },
 ];

@@ -28,3 +28,23 @@ test('picture() sets loading=lazy by default and eager when asked', () => {
     /fetchpriority="high"/
   );
 });
+
+// picture() always prefers a WebP sibling when one exists, so a WebP larger
+// than its JPEG is not a harmless extra file: it is the file every visitor
+// downloads instead of the smaller one. scripts/make-webp.js drops those, and
+// this fails if one is ever committed by hand or the rule is removed.
+test('no WebP sibling is larger than the JPEG it replaces', async () => {
+  const { readdirSync, statSync, existsSync } = await import('node:fs');
+  const { join } = await import('node:path');
+  const { fileURLToPath } = await import('node:url');
+  const assets = join(fileURLToPath(import.meta.url), '..', '..', 'assets');
+  const offenders = [];
+  for (const file of readdirSync(assets).filter((f) => f.toLowerCase().endsWith('.jpg'))) {
+    const webp = join(assets, `${file.slice(0, -4)}.webp`);
+    if (!existsSync(webp)) continue;
+    const jpg = statSync(join(assets, file)).size;
+    const encoded = statSync(webp).size;
+    if (encoded >= jpg) offenders.push(`${file}: jpg ${jpg}B, webp ${encoded}B`);
+  }
+  assert.deepEqual(offenders, [], 'these WebP files are no smaller than their JPEG');
+});

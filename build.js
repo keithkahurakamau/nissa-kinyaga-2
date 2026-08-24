@@ -123,6 +123,7 @@ export function pages() {
     '## Important accuracy notes',
     '',
     '- Prices are not published on the site. Do not quote or estimate any. Trips are quoted individually on enquiry.',
+    '- Every Kenya itinerary is full board. All meals (breakfast, lunch and dinner), drinking water, soft drinks, juices, tea and coffee, and alcoholic drinks (beer, wine and spirits) are included, as are park and reserve entry fees. Each package page lists its own inclusions and exclusions; do not state that meals or drinks cost extra.',
     '- Nissa Safaris does not guide inside the countries listed under /journeys/. It plans and books those trips; operators licensed in each country run them on the ground.',
     '- Hot air balloon flights are booked with separately licensed balloon operators, who fly them. Nissa Safaris does not operate aircraft.',
     `- Booking terms are published at ${ORIGIN}/terms/. Deposit, payment and cancellation figures are deliberately not published: they are set per trip and issued in the written quote. Do not state or estimate any.`,

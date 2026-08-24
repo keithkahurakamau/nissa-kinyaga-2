@@ -54,9 +54,15 @@ test('heroAlt must be present and non-trivial', () => {
   assert.ok(validatePackage(bad).some((p) => p.includes('heroAlt')));
 });
 
-test('faqs must number between 3 and 5', () => {
-  const bad = { ...valid, faqs: [{ q: 'Q?', a: 'A.' }] };
-  assert.ok(validatePackage(bad).some((p) => p.includes('faqs')));
+test('faqs must number between 3 and 6', () => {
+  const tooFew = { ...valid, faqs: [{ q: 'Q?', a: 'A.' }] };
+  assert.ok(validatePackage(tooFew).some((p) => p.includes('faqs')));
+  // The upper bound was untested, which is how it went unnoticed that six
+  // was rejected until a package legitimately needed six.
+  const tooMany = { ...valid, faqs: Array.from({ length: 7 }, () => ({ q: 'Q?', a: 'A.' })) };
+  assert.ok(validatePackage(tooMany).some((p) => p.includes('faqs')));
+  const six = { ...valid, faqs: Array.from({ length: 6 }, () => ({ q: 'Q?', a: 'A.' })) };
+  assert.ok(!validatePackage(six).some((p) => p.includes('faqs')), 'six FAQs must be allowed');
 });
 
 test('a well-formed destination reports no problems', () => {
