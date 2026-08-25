@@ -62,11 +62,27 @@
     var cat = fig.querySelector('.gal-card-cat');
     var title = fig.querySelector('.gal-card-title');
     var story = fig.querySelector('.gal-card-story');
+    // A credited photograph is one that is not Nissa's own work. The
+    // attribution has to travel with the image into the lightbox, which is
+    // where the frame is actually shown full size; the tile carries the
+    // same credit as plain text (an anchor cannot live inside the tile's
+    // <button>).
+    var btn = fig.querySelector('.gal-open');
+    var credit = null;
+    if (btn && btn.getAttribute('data-credit-author')) {
+      credit = {
+        author: btn.getAttribute('data-credit-author'),
+        license: btn.getAttribute('data-credit-license'),
+        licenseUrl: btn.getAttribute('data-credit-license-url'),
+        sourceUrl: btn.getAttribute('data-credit-source-url')
+      };
+    }
     return {
       src: img ? img.getAttribute('src') : '',
       cat: cat ? cat.textContent : '',
       title: title ? title.textContent : '',
-      story: story ? story.textContent : ''
+      story: story ? story.textContent : '',
+      credit: credit
     };
   });
 
@@ -76,7 +92,33 @@
   var lbCat = document.getElementById('nk-lb-cat');
   var lbTitle = document.getElementById('nk-lb-title');
   var lbStory = document.getElementById('nk-lb-story');
+  var lbCredit = document.getElementById('nk-lb-credit');
   var lbIndex = null;
+
+  /* Built as real nodes, not an HTML string: the values come from data
+     attributes, and textContent can never be parsed as markup the way
+     innerHTML would be. */
+  function renderCredit(credit){
+    if (!lbCredit) return;
+    while (lbCredit.firstChild) lbCredit.removeChild(lbCredit.firstChild);
+    if (!credit) { lbCredit.hidden = true; return; }
+    lbCredit.hidden = false;
+    lbCredit.appendChild(document.createTextNode('Photograph by '));
+    var who = document.createElement('a');
+    who.textContent = credit.author;
+    who.setAttribute('href', credit.sourceUrl);
+    who.setAttribute('target', '_blank');
+    who.setAttribute('rel', 'noopener noreferrer');
+    lbCredit.appendChild(who);
+    lbCredit.appendChild(document.createTextNode(', licensed under '));
+    var lic = document.createElement('a');
+    lic.textContent = credit.license;
+    lic.setAttribute('href', credit.licenseUrl);
+    lic.setAttribute('target', '_blank');
+    lic.setAttribute('rel', 'noopener noreferrer');
+    lbCredit.appendChild(lic);
+    lbCredit.appendChild(document.createTextNode('.'));
+  }
   function renderLb(){
     if (lbIndex === null) return;
     var it = items[lbIndex];
@@ -85,6 +127,7 @@
     lbCat.textContent = it.cat;
     lbTitle.textContent = it.title;
     lbStory.textContent = it.story;
+    renderCredit(it.credit);
   }
   function openLb(i){ if (!lb) return; lbIndex = i; renderLb(); lb.classList.add('is-open'); }
   function closeLb(){ if (!lb) return; lbIndex = null; lb.classList.remove('is-open'); }

@@ -7,6 +7,21 @@
 // Fields: `src` (root-relative asset path), `alt` (a plain description of
 // the frame, for accessibility/SEO, independent of `title`, which is the
 // caption shown in the gallery/lightbox), `category`, `title`, `story`.
+//
+// Optional: `tile` ('feature' | 'tall' | 'normal') overrides the positional
+// tile rhythm in templates/gallery.js, for a frame whose shape the rhythm
+// would crop badly.
+//
+// Optional: `credit` for a photograph that is not Nissa's own work, shaped
+// exactly like `heroCredit` in data/journeys.js:
+//
+//   credit: { author, license, licenseUrl, sourceUrl }
+//
+// A frame with no `credit` is Nissa's own, and that is the claim the gallery
+// makes about it, so never add one to a photograph whose provenance is not
+// certain. A frame WITH a credit renders its attribution on the tile and in
+// the lightbox, and is listed on /copyright/, which is what CC BY-SA
+// requires and what keeps the page honest about whose work it is.
 export default [
   {
     src: '/assets/p04.jpg',
@@ -259,5 +274,61 @@ export default [
     category: 'Safari Moments',
     title: 'The whole party',
     story: 'The photograph nobody plans and everybody ends up wanting: the whole vehicle emptied out, drinks handed round, the country falling away behind. Ask your guide and it takes two minutes.',
+  },
+  // ---- Lake Nakuru flamingos ----
+  // Not Nissa's photographs. Nissa has none of flamingos, and rather than
+  // leave the birds off a site that sells three itineraries routing through
+  // Lake Nakuru, these are used under the Creative Commons licence they
+  // carry, credited on the tile, in the lightbox and on /copyright/. All
+  // three are Thomas Fuhrmann's, taken in Lake Nakuru National Park.
+  //
+  // The stories deliberately avoid the "million flamingos" line the lake is
+  // still marketed on. Numbers there collapsed after lake levels rose
+  // through the 2010s and diluted the alkalinity the lesser flamingos' food
+  // algae depends on, which is why data/packages.js hedges every mention
+  // with "lake levels permitting". These captions say the same thing.
+  {
+    src: '/assets/flamingo-flock.jpg',
+    alt: 'A long line of lesser flamingos standing in the shallows along the shore of Lake Nakuru, reflected in still water',
+    tile: 'feature',
+    category: 'Birdlife',
+    title: 'The pink line',
+    story: 'From any distance a flock stops being birds and becomes one pink line drawn along the shallows. Lake Nakuru does this in a good year; the numbers rise and fall with the lake itself, which is why nobody honest will promise you them.',
+    credit: {
+      author: 'Thomas Fuhrmann',
+      license: 'CC BY-SA 4.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+      sourceUrl:
+        'https://commons.wikimedia.org/wiki/File:Lake_Nakuru_National_Park_03_-_Lesser_flamingo_(Phoeniconaias_minor).jpg',
+    },
+  },
+  {
+    src: '/assets/flamingo-landing.jpg',
+    alt: 'A flamingo coming in to land on the shallow water of Lake Nakuru with wings spread, the flock a pink line on the far shore',
+    category: 'Birdlife',
+    title: 'Coming in',
+    story: 'They land like a badly judged aeroplane, legs down and running on the surface for a few strides before the wings fold. The far shore here is the rest of the flock, close enough together to read as a single band of colour.',
+    credit: {
+      author: 'Thomas Fuhrmann',
+      license: 'CC BY-SA 4.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+      sourceUrl:
+        'https://commons.wikimedia.org/wiki/File:Lake_Nakuru_National_Park_02_-_Lesser_Flamingo_(Phoeniconaias_minor).jpg',
+    },
+  },
+  {
+    src: '/assets/flamingo-reflection.jpg',
+    alt: 'A greater flamingo standing on a sandbar at Lake Nakuru, mirrored in the still water below it',
+    tile: 'tall',
+    category: 'Birdlife',
+    title: 'Greater, not lesser',
+    story: 'Two species share these lakes and it is worth learning to split them: the greater flamingo is the taller, paler one with a pink bill tipped in black, while the lesser is smaller, deeper pink, and carries a bill so dark it reads as black at any distance.',
+    credit: {
+      author: 'Thomas Fuhrmann',
+      license: 'CC BY-SA 4.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+      sourceUrl:
+        'https://commons.wikimedia.org/wiki/File:Lake_Nakuru_National_Park_04_-_greater_flamingo_(Phoenicopterus_roseus).jpg',
+    },
   },
 ];

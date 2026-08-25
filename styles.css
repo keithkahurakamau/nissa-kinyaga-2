@@ -3160,3 +3160,42 @@ a { text-decoration: none; }
    (minimalFooter), so the footer needs its top padding back to sit right
    without the mark above it. */
 .is-offline .footer { padding-top: clamp(40px, 5vw, 64px); }
+
+/* ---------- credited photographs ----------
+   A frame in the gallery that is not Nissa's own work. The credit is quiet
+   but always present: the whole point of it is that someone looking at the
+   tile is not left assuming the photograph is his. On the tile it is plain
+   text, because the tile is a single <button> and an anchor cannot live
+   inside one; the linked version is in the lightbox. */
+.gal-card-credit {
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(240,232,214,.72);
+}
+.lb-credit {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(201,162,75,.28);
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted-4);
+}
+.lb-credit a {
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+/* Which page the credited image appears on, in the /copyright/ list. */
+.legal-credit-where {
+  display: inline-block;
+  margin-bottom: 4px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}

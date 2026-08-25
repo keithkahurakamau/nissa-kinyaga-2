@@ -4,6 +4,7 @@ import { layout } from './layout.js';
 import { breadcrumbNav } from './partials.js';
 import site from '../data/site.js';
 import journeys from '../data/journeys.js';
+import gallery from '../data/gallery.js';
 import {
   lastUpdated,
   jurisdiction,
@@ -236,21 +237,48 @@ export function cookiesPage() {
 
 /* ---------- copyright ---------- */
 
-// Generated from data/journeys.js, never typed by hand. CC BY-SA 4.0
-// requires the author, the licence and a route back to the source to travel
-// with the image; each journey page already carries its own credit inline,
-// and this collects them in one place so the obligation is visible even to
-// someone who never opens a country page.
+/**
+ * Every photograph on the site that belongs to someone else, gathered from
+ * the data rather than typed here.
+ *
+ * Two sources feed it: the country hero images in data/journeys.js and the
+ * credited frames in data/gallery.js. Generating it is the point. CC BY-SA
+ * requires the author, the licence and a route back to the source to travel
+ * with the image, and a hand-maintained list is exactly the thing that
+ * silently stops matching the images in use when one is swapped out.
+ */
+function creditedPhotographs() {
+  return [
+    ...journeys
+      .filter((country) => country.heroCredit)
+      .map((country) => ({
+        label: country.name,
+        href: `/journeys/${country.slug}/`,
+        where: 'International journeys',
+        ...country.heroCredit,
+      })),
+    ...gallery
+      .filter((item) => item.credit)
+      .map((item) => ({
+        label: item.title,
+        href: '/gallery/',
+        where: 'Gallery',
+        ...item.credit,
+      })),
+  ];
+}
+
 function creativeCommonsCredits() {
-  const credited = journeys.filter((country) => country.heroCredit);
+  const credited = creditedPhotographs();
   if (!credited.length) return '';
   return html`<h3 class="h3 legal-subhead">Photographs licensed from others</h3>
 <p class="body">These images are not ours. Each is used under a Creative Commons licence that permits it, and each is credited here and on the page it appears on.</p>
 <ul class="legal-credits">
   ${credited.map(
-    (country) => html`<li>
-    <a class="legal-credit-page" href="/journeys/${country.slug}/">${country.name}</a>
-    <span class="legal-credit-meta">Photograph by ${country.heroCredit.author}, licensed under <a href="${country.heroCredit.licenseUrl}" target="_blank" rel="noopener noreferrer">${country.heroCredit.license}</a>. <a href="${country.heroCredit.sourceUrl}" target="_blank" rel="noopener noreferrer">Source</a>.</span>
+    (item) => html`<li>
+    <a class="legal-credit-page" href="${item.href}">${item.label}</a>
+    <span class="legal-credit-where">${item.where}</span>
+    <span class="legal-credit-meta">Photograph by ${item.author}, licensed under <a href="${item.licenseUrl}" target="_blank" rel="noopener noreferrer">${item.license}</a>. <a href="${item.sourceUrl}" target="_blank" rel="noopener noreferrer">Source</a>.</span>
   </li>`,
   )}
 </ul>`;

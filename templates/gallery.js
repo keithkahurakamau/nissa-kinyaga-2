@@ -8,7 +8,7 @@ import gallery from '../data/gallery.js';
 // is a safety net for escaping inflation, matching the pattern in
 // templates/about.js/destination.js/package.js.
 const DESCRIPTION =
-  "Photographs from Nissa's own Kenya safaris, each with the story behind the frame, wildlife, landscapes and safari moments from the field.";
+  "Kenya safari photographs with the story behind each frame: wildlife, landscapes, birdlife and safari moments, almost all taken by Nissa in the field.";
 
 export function metaDescription() {
   const text = DESCRIPTION.trim();
@@ -47,6 +47,22 @@ function tileClass(item, i) {
   return '';
 }
 
+/**
+ * The credit as data attributes, for app.js to build a linked attribution in
+ * the lightbox.
+ *
+ * The tile's own credit has to be plain text: the whole tile is a single
+ * <button>, and an anchor inside a button is invalid and unreachable by
+ * keyboard. The lightbox has no such constraint, so that is where the links
+ * to the photographer and the licence live. app.js builds them with
+ * createElement and textContent rather than innerHTML, so these values are
+ * never parsed as markup.
+ */
+function creditData(item) {
+  if (!item.credit) return '';
+  return html` data-credit-author="${item.credit.author}" data-credit-license="${item.credit.license}" data-credit-license-url="${item.credit.licenseUrl}" data-credit-source-url="${item.credit.sourceUrl}"`;
+}
+
 // Every photo renders as a real server-side <img> (Task 17 fix: the reel used
 // to be built entirely by app.js from an inline array, so crawlers indexed
 // nothing). app.js reads each card back out of this markup rather than
@@ -60,10 +76,13 @@ function galleryTile(item, i) {
       // first is the preloaded LCP image, so neither may be lazy
       picture({ src: item.src, alt: item.alt, lazy: i > 2 })}
   </div>
-  <button type="button" class="gal-open" data-lb="${i}" aria-label="View ${item.title} full screen">
+  <button type="button" class="gal-open" data-lb="${i}" aria-label="View ${item.title} full screen"${creditData(item)}>
     <span class="gal-card-cat">${item.category}</span>
     <span class="gal-card-title">${item.title}</span>
     <span class="gal-card-story">${item.story}</span>
+    ${item.credit
+      ? html`<span class="gal-card-credit">Photograph by ${item.credit.author}, ${item.credit.license}</span>`
+      : ''}
     <span class="gal-open-cue" aria-hidden="true">View</span>
   </button>
 </figure>`;
@@ -99,6 +118,7 @@ function lightbox() {
       <span id="nk-lb-cat" class="lb-cat"></span>
       <div id="nk-lb-title" class="lb-title"></div>
       <p id="nk-lb-story" class="lb-story"></p>
+      <p id="nk-lb-credit" class="lb-credit" hidden></p>
     </figcaption>
   </figure>
 </div>`;
@@ -137,7 +157,7 @@ export function galleryPage() {
     <div class="wrap">
       ${breadcrumbNav(crumbs)}
       <h1 class="display">From the field</h1>
-      <p class="lede">Photographs from Nissa's own safaris, each with the story behind the frame. Filter by subject, and open any frame to read it full screen.</p>
+      <p class="lede">Photographs from Nissa's own safaris, each with the story behind the frame. A few, marked with the photographer's name, are licensed from others. Filter by subject, and open any frame to read it full screen.</p>
     </div>
   </header>
   <section class="section-alt">
