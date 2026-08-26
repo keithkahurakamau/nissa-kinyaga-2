@@ -51,10 +51,25 @@ function pngSize(file) {
 // manifest: the browser scales it and the icon ships blurry.
 test('every icon the manifest declares exists at the size it claims', () => {
   for (const icon of manifest().icons) {
-    const file = join(ROOT, icon.src.replace(/^\//, ''));
+    const file = join(ROOT, icon.src.split('?')[0].replace(/^\//, ''));
     assert.ok(existsSync(file), `manifest declares ${icon.src}, which does not exist`);
     assert.equal(pngSize(file), icon.sizes, `${icon.src} is not ${icon.sizes}`);
   }
+});
+
+// An installed app caches its icon at install time and only re-fetches when
+// the manifest it reads has changed. With a fixed icon URL, replacing the
+// logo changed the bytes at a URL the browser already held and considered
+// fresh for a day, so installed apps kept showing the old mark indefinitely.
+// The version in the URL is what turns a new logo into a new manifest.
+test('every manifest icon URL carries a content version', () => {
+  for (const icon of manifest().icons) {
+    assert.match(icon.src, /\?v=[0-9a-f]{8}$/, `${icon.src} has no content version`);
+  }
+  // Different files must not share a version, or the whole thing is a
+  // constant with extra steps.
+  const versions = manifest().icons.map((icon) => icon.src.split('?v=')[1]);
+  assert.equal(new Set(versions).size, versions.length, 'two icons share a version hash');
 });
 
 // The logo is a square composition with a wordmark running to its edges, and
@@ -174,7 +189,8 @@ test('every precached URL is something the build actually emits', () => {
   assert.ok(list.length > 0, 'nothing is precached');
   for (const url of list) {
     if (url.startsWith('/assets/')) {
-      assert.ok(existsSync(join(ROOT, url.replace(/^\//, ''))), `precached ${url} is not in assets/`);
+      const file = url.split('?')[0];
+      assert.ok(existsSync(join(ROOT, file.replace(/^\//, ''))), `precached ${url} is not in assets/`);
       continue;
     }
     const hashed = url.match(/^\/(styles|app)\.[0-9a-f]{8}\.(css|js)$/);

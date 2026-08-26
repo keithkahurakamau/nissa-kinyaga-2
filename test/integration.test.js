@@ -46,8 +46,12 @@ test('every internal href resolves to a page the build emits', () => {
     const hrefs = [...html.matchAll(/href="(\/[^"#]*?)"/g)].map((m) => m[1]);
     for (const href of hrefs) {
       if (href.startsWith('/assets/')) {
+        // Icons carry a `?v=` content hash (lib/assets.js versionedAsset), so
+        // the file on disk is the path without the query. The version itself
+        // is checked in test/pwa.test.js.
+        const file = href.split('?')[0];
         assert.ok(
-          existsSync(join(ROOT, href.replace(/^\//, ''))),
+          existsSync(join(ROOT, file.replace(/^\//, ''))),
           `${path} links to ${href}, which is not in assets/`,
         );
         continue;

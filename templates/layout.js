@@ -1,7 +1,7 @@
 import { html, raw, renderToString } from '../lib/html.js';
 import { headTags, jsonLd, breadcrumbSchema } from '../lib/seo.js';
 import site from '../data/site.js';
-import { HASHED } from '../lib/assets.js';
+import { HASHED, versionedAsset } from '../lib/assets.js';
 import { whatsappLink, picture } from './partials.js';
 
 const CSP =
@@ -20,9 +20,11 @@ const CSP =
 // drops the wordmark for that reason, while 32 and 48 are the whole logo and
 // read fine. Everything above that is the logo unaltered.
 const ICONS = {
+  // Unversioned on purpose: browsers and Google's favicon crawler probe this
+  // exact path, and it is served must-revalidate so it refreshes anyway.
   ico: '/favicon.ico',
-  png32: '/assets/icon-32.png',
-  apple: '/assets/apple-touch-icon.png',
+  png32: versionedAsset('/assets/icon-32.png'),
+  apple: versionedAsset('/assets/apple-touch-icon.png'),
 };
 
 const FONTS_HREF =
