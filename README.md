@@ -45,14 +45,28 @@ generates `sitemap.xml`, `robots.txt`, `llms.txt`, `manifest.webmanifest` and
 
 ```bash
 npm run build   # scripts/make-webp.js, then build.js, writes dist/
-npm test        # node --test test/*.test.js, 145+ tests across every template,
+npm test        # node --test test/*.test.js, 250+ tests across every template,
                 #   data file, and the assembled site (link integrity, sitemap,
-                #   37-page count)
+                #   page count, caching rules, licence attribution)
 npm run images  # scripts/make-webp.js on its own, regenerates assets/*.webp
                 #   from assets/*.jpg via the system `cwebp` binary
 npm run dev     # build.js, then serve dist/ locally
 npm run serve   # serve an already-built dist/ on its own
 ```
+
+Icons are generated separately and by hand, because they change roughly never
+and the generator needs Pillow, which the zero-dependency build does not:
+
+```bash
+python3 scripts/make-icons.py   # every icon in assets/, from assets/logo.png
+```
+
+Run it after replacing `assets/logo.png`. It writes `favicon.ico` (three
+renderings in one file: the logo at 32 and 48, and at 16 the medallion alone,
+because the wordmark is unreadable at that size), `icon-32`, `apple-touch-icon`,
+`icon-192`, `icon-512`, and `icon-maskable-512`. The maskable one is separate
+and deliberately not the square logo: Android crops maskable icons to a circle
+and would cut through the lettering.
 
 `npm run serve` runs `python3 -m http.server 8000` from `dist/`. Port 8000 was
 found already in use by another local process on the development machine, if

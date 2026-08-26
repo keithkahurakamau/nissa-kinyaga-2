@@ -57,6 +57,37 @@ test('every icon the manifest declares exists at the size it claims', () => {
   }
 });
 
+// The logo is a square composition with a wordmark running to its edges, and
+// Android crops maskable icons to a circle or squircle. Pointing the maskable
+// entry at the same square file as the "any" entry is the mistake that slices
+// the lettering in half on every Android home screen, and it is invisible
+// until someone installs it on a phone.
+test('the maskable icon is a purpose-built file, not the square logo again', () => {
+  const icons = manifest().icons;
+  const maskable = icons.filter((icon) => String(icon.purpose).includes('maskable'));
+  assert.ok(maskable.length > 0, 'no maskable icon declared');
+  const plain = icons.filter((icon) => icon.purpose === 'any').map((icon) => icon.src);
+  for (const icon of maskable) {
+    assert.ok(!plain.includes(icon.src),
+      `${icon.src} is declared both as "any" and as "maskable"; a maskable icon needs its own safe-zone inset`);
+  }
+});
+
+// favicon.ico is the one icon that must work at 16px, where the full logo is
+// unreadable. It carries three renderings so the small one can differ.
+test('favicon.ico carries 16, 32 and 48 pixel renderings', () => {
+  const ico = readFileSync(join(ROOT, 'assets', 'favicon.ico'));
+  assert.equal(ico.readUInt16LE(0), 0, 'not an ICO: reserved field');
+  assert.equal(ico.readUInt16LE(2), 1, 'not an ICO: type field');
+  const count = ico.readUInt16LE(4);
+  const sizes = [];
+  for (let i = 0; i < count; i += 1) {
+    const at = 6 + i * 16;
+    sizes.push(ico[at] === 0 ? 256 : ico[at]);
+  }
+  assert.deepEqual(sizes.sort((a, b) => a - b), [16, 32, 48]);
+});
+
 test('the manifest start_url, scope and shortcuts all point at real pages', () => {
   const m = manifest();
   assert.ok(byPath.has(m.start_url), `start_url ${m.start_url} is not a page`);
