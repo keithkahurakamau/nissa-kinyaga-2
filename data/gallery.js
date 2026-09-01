@@ -331,4 +331,65 @@ export default [
         'https://commons.wikimedia.org/wiki/File:Lake_Nakuru_National_Park_04_-_greater_flamingo_(Phoenicopterus_roseus).jpg',
     },
   },
+  // ---- Added September 2026, from the client's own folder ----
+  {
+    src: '/assets/lion-approach.jpg',
+    alt: 'A maned lion walking directly towards the camera through dry golden grass',
+    category: 'Wildlife',
+    title: 'Straight at the vehicle',
+    story: 'Head on, at eye level, and not hurrying. Lions in these parks read a vehicle as one large object and give it almost no attention, which is exactly why nobody inside it should stand up and break that outline.',
+  },
+  {
+    src: '/assets/lionesses-cubs.jpg',
+    alt: 'Two lionesses and their cubs pressed close together in dry grass, one nuzzling another',
+    category: 'Wildlife',
+    title: 'One animal with too many heads',
+    story: 'Lionesses in a pride are usually sisters, cousins or mothers and daughters, and they raise cubs more or less communally, grooming and nursing whichever young are nearest. It is why a pride at rest so often reads as a single animal with the wrong number of heads.',
+  },
+  {
+    src: '/assets/cheetah-mound.jpg',
+    alt: 'A cheetah lying on top of a red termite mound, watching out across open grassland',
+    category: 'Wildlife',
+    title: 'The termite mound office',
+    story: 'On a flat plain a termite mound is the only high ground there is, and cheetahs use them constantly. A metre of elevation is the difference between seeing a gazelle at eight hundred metres and not seeing it at all. Learn to check the mounds before you check the grass.',
+  },
+  {
+    src: '/assets/lion-young.jpg',
+    alt: 'A young lion looking directly into the camera through tall dry grass',
+    category: 'Wildlife',
+    title: 'Being assessed',
+    story: 'Cats look at you properly, in a way almost no plains game does. Whatever else is happening, you are being read, filed as not food, and dismissed, and the whole thing takes about three seconds.',
+  },
+  {
+    // The most graphic frame on the site by some distance. It is here because
+    // a predator feeding is a real and common sighting and the caption says
+    // so plainly rather than dressing it up. If the client would rather the
+    // gallery did not carry it, delete this entry; nothing else depends on it.
+    src: '/assets/cheetah-cubs-kill.jpg',
+    alt: 'Several cheetah cubs feeding together on a small antelope carcass in dry grass, one looking up towards the camera',
+    category: 'Wildlife',
+    title: 'How it actually works',
+    story: 'Not the part that ends up in brochures, and the part people remember longest. A cheetah eats fast because it cannot defend a kill against anything bigger, and losing one to hyena or lion is routine rather than bad luck. If this is not what you came out for, say so and we drive on.',
+  },
+  {
+    // Guests are visible but distant and not identifiable at this size. The
+    // same consent note as the other guest photographs still applies if that
+    // ever changes: delete the entry rather than relying on the crop.
+    src: '/assets/bush-breakfast-wide.jpg',
+    alt: 'A bush breakfast laid out on a long table in the open, with flasks, juices and a cheese board in the foreground and guests eating at a table under acacias behind',
+    tile: 'feature',
+    category: 'Safari Moments',
+    title: 'The whole set-up',
+    story: 'The wider view of the same idea: the buffet goes up first, out of the vehicle and onto a table standing in the open, and the long table under the trees is where you actually sit. Every part of it is carried in and carried out again.',
+  },
+  {
+    // NOTE: guests' faces are identifiable in this frame. If consent was not
+    // obtained, remove this entry rather than cropping it.
+    src: '/assets/airstrip-group.jpg',
+    alt: 'A group of guests standing together with their bags on a bush airstrip, a runway marker board beside them and open plains behind',
+    tile: 'feature',
+    category: 'Safari Moments',
+    title: 'Waiting on the strip',
+    story: 'The board reads 03 21: the two compass headings you can land on here, depending on which way the wind is running. A bush strip is a graded line of murram, a windsock and that number, and the aircraft is a speck for a long time before it is a noise.',
+  },
 ];
