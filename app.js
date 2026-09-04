@@ -2,23 +2,58 @@
   "use strict";
 
   /* ---------- nav scroll + progress ----------
-     The scrolled bar's appearance (solid fill, hairline rule, shadow) is
-     driven entirely by the `.nk-scrolled` class in CSS (see
-     `.nav.nk-scrolled .nav-bar` in styles.css) now that the old
-     backdrop-filter glass panel is gone, so this only ever toggles the one
-     class rather than also juggling glass/refract class names on #nk-navbar. */
+     Publishes one number, --nav-lift, from 0 at the top of the page to 1 by
+     120px down. styles.css interpolates the whole bar off it: the scrim fades
+     out, the material and its elevation fade in, the logo compacts, the
+     progress rule appears. See the Nav section there for why.
+
+     This replaced a boolean class toggle at scrollY > 60 that cross-faded the
+     same properties over 500ms in CSS. The class is still set, as a state
+     hook, but nothing in the stylesheet needs it any more.
+
+     No transition anywhere in that chain now: the value tracks the scroll
+     position directly, so the bar arrives exactly as fast as the finger moves
+     and there is no threshold for it to snap across. */
   var nav = document.getElementById('nk-nav');
   var bar = document.getElementById('nk-progress');
-  function onScroll(){
-    var s = window.scrollY > 60;
-    nav.classList.toggle('nk-scrolled', s);
+  var LIFT_DISTANCE = 120;
+  var lastLift = -1;
+  var queued = false;
+
+  function paint(){
+    queued = false;
+    var y = window.scrollY;
+
+    /* Quantised to fiftieths. --nav-lift lives on .nav, so every write
+       restyles the bar and its dozen descendants; at raw float precision that
+       is a style recalculation per scroll event to move a shadow by an amount
+       no eye resolves. Fifty steps across 120px is finer than the display. */
+    var lift = Math.round(Math.min(1, Math.max(0, y / LIFT_DISTANCE)) * 50) / 50;
+    if (lift !== lastLift){
+      lastLift = lift;
+      nav.style.setProperty('--nav-lift', String(lift));
+      nav.classList.toggle('nk-scrolled', lift > 0);
+    }
+
     if (bar){
       var h = document.documentElement.scrollHeight - window.innerHeight;
-      bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+      /* scaleX, not width: the rule is a compositor-only transform this way,
+         where animating width relayouts it on every frame of every scroll. */
+      bar.style.transform = 'scaleX(' + (h > 0 ? Math.min(1, y / h) : 0) + ')';
     }
   }
+
+  /* Coalesced to one write per frame. A passive scroll listener can fire
+     several times between paints, and each extra call here would be a style
+     recalculation the browser then throws away. */
+  function onScroll(){
+    if (queued) return;
+    queued = true;
+    window.requestAnimationFrame(paint);
+  }
   window.addEventListener('scroll', onScroll, { passive:true });
-  onScroll();
+  window.addEventListener('resize', onScroll);
+  paint();
 
   /* ---------- back to top ----------
      Appears once you are more than a viewport down, which is the point at

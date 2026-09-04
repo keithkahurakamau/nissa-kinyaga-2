@@ -64,7 +64,7 @@ test('the lightbox close button meets the 44x44 touch target minimum', () => {
   assert.ok(minHeight && Number(minHeight[1]) >= 44, '.lb-close needs min-height >= 44px');
 });
 
-test('the lightbox sits above the consent banner and progress bar', () => {
+test('the lightbox sits above the consent banner and the nav', () => {
   const zOf = (selector) => {
     const rule = css.match(new RegExp(`\\${selector}\\s*\\{[^}]*\\}`));
     assert.ok(rule, `missing ${selector} rule`);
@@ -73,5 +73,8 @@ test('the lightbox sits above the consent banner and progress bar', () => {
   };
   const lightbox = zOf('.lb');
   assert.ok(lightbox > zOf('.consent'), '.lb must stack above .consent');
-  assert.ok(lightbox > 120, '.lb must stack above #nk-progress (120)');
+  // #nk-progress used to be a fixed strip of its own at z-index 120. It now
+  // lives inside .nav-bar as the bar's bottom edge, so the nav's own z-index
+  // is what the lightbox has to clear.
+  assert.ok(lightbox > zOf('.nav'), '.lb must stack above .nav');
 });

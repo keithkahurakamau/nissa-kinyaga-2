@@ -76,6 +76,7 @@ function nav(path) {
       <span></span>
       <span></span>
     </button>
+    <div id="nk-progress" aria-hidden="true"></div>
   </div>
 </nav>`;
 }
@@ -238,7 +239,6 @@ ${allSchemas.map((schema) => jsonLd(schema))}
 <body${bodyClass ? html` class="${bodyClass}"` : ''} data-wa="${site.whatsapp}" data-email="${site.email}" data-phone="${site.phones[0]}">
 ${raw(SVG_FILTER_DEFS)}
 <a class="skip-link" href="#main">Skip to content</a>
-<div id="nk-progress" aria-hidden="true"></div>
 ${nav(path)}
 ${mobileMenu(path)}
 ${body}

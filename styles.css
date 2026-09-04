@@ -64,6 +64,11 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   /* motion */
   --ease-glass: cubic-bezier(.16,.7,.3,1);
   --ease-reveal: cubic-bezier(.16,.74,.24,1);
+
+  /* nav geometry, shared by the bar, its scrim and the progress rule so the
+     three cannot drift out of alignment */
+  --nav-h: 64px;
+  --nav-pad: 22px;
 }
 
 /* ==========================================================================
@@ -142,85 +147,137 @@ a { text-decoration: none; }
   overflow: hidden;
 }
 
-/* ---------- Nav ---------- */
+/* ---------- Nav ----------
+
+   The bar is driven by one scroll-linked custom property, --nav-lift, which
+   app.js runs from 0 at the top of the page to 1 by 120px down. Everything
+   below interpolates off it: the scrim fades out, the material fades in, the
+   elevation builds, the logo compacts, the progress rule appears.
+
+   It replaced a class toggle at scrollY > 60 that cross-faded those same
+   properties over 500ms. Two things were wrong with that. 500ms is well past
+   the point a UI transition stops reading as responsive, and because the
+   trigger was a threshold rather than the scroll position itself, the bar
+   changed state a beat after the gesture that caused it. Tying it to scroll
+   removes the lag entirely and makes the bar feel like an object being lifted
+   off the page rather than a state that switches. There is no transition on
+   these properties now, and there should not be: the finger is the clock.
+
+   With JavaScript off --nav-lift stays 0, which is exactly the resting state:
+   full scrim, transparent bar, readable links. Nothing depends on the script
+   to be legible. */
 .nav {
+  --nav-lift: 0;
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 60;
-  padding: 22px 18px;
-  transition: padding .5s ease;
+  /* Interpolated, not transitioned. calc() on a unitless custom property is
+     how the whole bar compacts in step with the scroll.
+     Both axes go to zero: the horizontal inset is what lets the bar sit as an
+     inset band over the hero, and it has to be gone by the time the bar is
+     full-bleed, or the fill stops 18px short of each edge and the thing reads
+     as a floating slab rather than a bar. */
+  padding: calc(var(--nav-pad) * (1 - var(--nav-lift))) calc(18px * (1 - var(--nav-lift)));
 }
-/* Dark scrim behind the fixed nav. .nav-link is `var(--cream)` with no
-   per-page override (it can't have one, the nav is fixed and outside the
-   section it overlaps, so no descendant/background selector reaches it),
-   so on pages that open on a light section (--sand, #F3ECDC) the links are
-   ~1.03:1, effectively invisible. This gives every page a guaranteed dark
-   backdrop regardless of what happens to be behind the nav.
-   Solid to 68% (~109px) then fades to transparent by 160px: that covers the
-   nav's full box in both states (108px unscrolled = 22+64+22, 92px scrolled
-   = 14+64+14) with solid colour, so the *link text itself*, vertically
-   centred inside that box, never sits in the fading tail where alpha (and
-   therefore contrast) would be lower than the figure computed below.
-   pointer-events:none so the scrim never intercepts clicks; z-index:-1 so,
-   inside the stacking context .nav's own z-index:60 already establishes, it
-   paints behind .nav-bar (non-positioned, so it paints in the "in-flow
-   descendants" step, which is *after* the negative-z-index step) while
-   still riding above ordinary page content the same way the rest of .nav
-   already does. Do not remove the z-index:-1 without re-checking paint
-   order, a positive/auto value here previously painted the scrim OVER the
-   nav-bar (the exact "content under an overlay" bug class this project has
-   shipped three times), which still passes a casual look but silently
-   covers the links. */
+
+/* The scroll edge.
+
+   .nav-link is var(--cream) and cannot take a per-page override (the nav is
+   fixed, outside the section it overlaps, so no descendant selector reaches
+   it), so over a pale hero the links would sit at ~1:1 against the photo.
+   This gradient is what guarantees contrast, and its alpha is a measured
+   number rather than a taste one: cream on black-over-white needs alpha 0.56
+   to clear 4.5:1, so the ramp holds 0.60 across the band the link text
+   actually occupies (y 44-64 at rest, text centred at y 54) and decays after.
+
+   It was previously a 160px slab held at 0.65 solid to 68% and then cut to
+   transparent. Two problems. The hard stop left a visible band edge across
+   every hero, and 160px is far taller than the 108px bar it exists to serve,
+   so it dimmed the top fifth of every photograph on the site for no gain: at
+   0.65 the links were running 6.6:1, half again past the floor. Worse, it did
+   not know about the scrolled state, so once the solid bar took over the
+   scrim carried on painting ~96px of grey-brown wash down over the page
+   content beneath it, which is what it looked like: a smear.
+
+   Now it is 112px, eased over five stops so there is no edge to see, and it
+   hands over to the bar as --nav-lift rises. pointer-events:none so it never
+   intercepts clicks; z-index:-1 so it paints behind .nav-bar inside the
+   stacking context .nav's own z-index:60 establishes. Do not remove the
+   z-index:-1 without re-checking paint order: a positive or auto value here
+   previously painted the scrim OVER the bar, the exact "content under an
+   overlay" bug this project has shipped three times. */
 .nav::before {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0;
-  height: 160px;
-  background: linear-gradient(to bottom, rgba(20,15,9,.65) 0%, rgba(20,15,9,.65) 68%, transparent 100%);
+  height: 112px;
+  background: linear-gradient(to bottom,
+    rgba(20,15,9,.62) 0%,
+    rgba(20,15,9,.60) 40%,
+    rgba(20,15,9,.58) 58%,
+    rgba(20,15,9,.34) 74%,
+    rgba(20,15,9,.12) 88%,
+    rgba(20,15,9,0) 100%);
+  opacity: calc(1 - var(--nav-lift));
   pointer-events: none;
   z-index: -1;
 }
-/* Scrolled state is a full-bleed rectangle, not an inset pill: the bar
-   spans edge to edge so it reads as a bar, while the inner content stays
-   aligned to the same 1320px column as the resting state. */
-.nav.nk-scrolled { padding: 0; }
+
 .nav-bar {
+  position: relative;
   max-width: var(--wrap-w);
   margin: 0 auto;
-  padding: 0 28px;
-  height: 64px;
+  /* Full-bleed once lifted, but the content stays locked to the same 1320px
+     column in both states, so nothing slides sideways as the bar solidifies:
+     the padding grows by exactly what the max-width stops constraining. */
+  max-width: calc(var(--wrap-w) + (100vw - var(--wrap-w)) * var(--nav-lift));
+  padding: 0 calc(28px + max(0px, (100vw - var(--wrap-w)) / 2) * var(--nav-lift));
+  height: var(--nav-h);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-radius: 0;
-  /* Resting state: fully transparent, .nav::before's gradient scrim above
-     is what keeps --cream nav-link text readable over the hero/page top.
-     Declared as explicit zero-alpha colours (not the `transparent`
-     keyword) purely so background-color/border-color have a real value to
-     interpolate from into the scrolled state below. */
-  background-color: rgba(36,27,18,0);
-  border-bottom: 1px solid rgba(201,162,75,0);
-  box-shadow: 0 8px 24px rgba(20,15,9,0);
-  transition: padding .5s ease, border-radius .5s ease,
-    background-color .5s ease, border-color .5s ease, box-shadow .5s ease;
+  /* A vertical gradient rather than a flat fill. The bar sits at the top of
+     the viewport with the page's light coming from above, so the material
+     reads as catching a little of it along its upper edge; flat --ink reads
+     as a hole cut in the page. Both stops fade in together off --nav-lift. */
+  background-image: linear-gradient(180deg,
+    rgba(45,34,23, calc(var(--nav-lift) * .985)) 0%,
+    rgba(36,27,18, calc(var(--nav-lift) * .985)) 100%);
+  border-bottom: 1px solid rgba(201,162,75, calc(var(--nav-lift) * .26));
+  /* Elevation, as a stack rather than a single blur.
+     Depth in the real world is two things at once: a tight, dark contact
+     shadow where the object nearly touches the surface, and a wide, faint
+     ambient one cast by the mass above it. One 24px blur at .28 is neither,
+     which is why the old bar read as a flat rectangle with a grey rectangle
+     under it. The third layer is the far cast that gives the bar weight over
+     a busy photograph without darkening the text beneath it. */
+  box-shadow:
+    0 1px 2px rgba(20,15,9, calc(var(--nav-lift) * .34)),
+    0 6px 16px rgba(20,15,9, calc(var(--nav-lift) * .26)),
+    0 22px 48px rgba(20,15,9, calc(var(--nav-lift) * .20));
 }
-/* Replaces the former backdrop-filter: blur(30px) saturate(180%) glass
-   panel (plus an SVG feDisplacementMap "refraction" filter) with a plain
-   near-solid fill in the existing --ink token: cheaper to paint, consistent
-   across browsers, and still reads as a distinct bar once scrolled off the
-   hero. --cream nav links (#FBF7EF) on --ink (#241B12) is ~15.8:1, far past
-   the 4.5:1 floor, so the scrim from .nav::before (needed for the
-   transparent resting state) is redundant but harmless here. */
-.nav.nk-scrolled .nav-bar {
-  border-radius: 0;
-  max-width: none;
-  /* Keep the content on the 1320px column: pad by whatever spills past it,
-     falling back to the resting 28px on narrower viewports. */
-  padding: 0 max(28px, calc((100% - var(--wrap-w)) / 2 + 28px));
-  background-color: var(--ink);
-  border-bottom: 1px solid rgba(201,162,75,.22);
-  box-shadow: 0 8px 24px rgba(20,15,9,.28);
+
+/* The reading rule.
+
+   The scroll progress indicator used to be a 3px bar fixed to the very top of
+   the viewport with a 14px gold glow around it: a zero-offset halo, floating
+   above the nav and belonging to nothing. It is now the bar's own bottom
+   edge, so the hairline is its track and the gold is how far through the page
+   you are. One element instead of two competing ones, and the hero gets its
+   full frame back, since at the top of a page the progress is zero anyway and
+   there is nothing worth drawing. */
+#nk-progress {
+  position: absolute;
+  left: 0; bottom: -1px;
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--gold-deep), var(--gold-dark) 45%, var(--gold) 100%);
+  opacity: var(--nav-lift);
+  transform: scaleX(0);
+  transform-origin: left center;
+  pointer-events: none;
 }
+
 .nav-logo {
   text-decoration: none;
   display: flex;
@@ -233,6 +290,12 @@ a { text-decoration: none; }
   height: 54px;
   width: auto;
   display: block;
+  /* Compacts with the bar. transform rather than height: scaling the box
+     would relayout the flex row on every scroll frame, where a transform
+     stays on the compositor. Origin left so the mark stays pinned to the
+     column edge instead of drifting inward as it shrinks. */
+  transform-origin: left center;
+  transform: scale(calc(1 - .16 * var(--nav-lift)));
 }
 .nav-logo strong,
 .nav-logo .nav-logo-name {
@@ -257,15 +320,56 @@ a { text-decoration: none; }
   gap: 34px;
 }
 .nav-link {
+  position: relative;
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: .18em;
   text-transform: uppercase;
   text-decoration: none;
   color: var(--cream);
-  transition: color .5s ease, opacity .3s ease;
+  transition: color .2s ease;
 }
-.nav-link:hover { opacity: .7; }
+
+/* The rule under a link: solid for the page you are on, drawn in for the ones
+   you are not.
+
+   The current-page rule is the part that was missing. templates/layout.js has
+   emitted aria-current="page" on the active nav item since it was written, and
+   nothing in this stylesheet ever read it, so the bar answered "where can I
+   go" and never "where am I". A screen reader knew which page you were on and
+   the screen did not.
+
+   Inset by one tracking unit on the right because .18em of letter-spacing
+   hangs off the final glyph, and a rule that runs the full inline box sits
+   visibly wider than the word it belongs to.
+
+   Excludes .nav-cta: the last nav item carries .nav-link *and* the button
+   classes, and a pill does not take an underline. */
+.nav-link:not(.nav-cta)::after {
+  content: '';
+  position: absolute;
+  left: 0; right: .18em; bottom: -7px;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .22s var(--ease-glass);
+}
+.nav-link[aria-current="page"]::after { transform: scaleX(1); }
+.nav-link:not(.nav-cta):focus-visible::after { transform: scaleX(1); }
+/* Gated: a touch device fires hover on tap, which would draw the rule on the
+   link you are in the act of leaving. */
+@media (hover: hover) and (pointer: fine) {
+  .nav-link:not(.nav-cta):hover::after { transform: scaleX(1); }
+}
+/* Presses land. Nothing here scales, because a 1px settle is what a line of
+   text does under a finger and 0.97 is what a button does. */
+.nav-link:not(.nav-cta):active { transform: translateY(1px); }
+
+@media (prefers-reduced-motion: reduce) {
+  /* The affordance stays, the movement goes. */
+  .nav-link:not(.nav-cta)::after { transition-duration: 0s; }
+}
 /* Compound selector, not `.nav-cta` alone: `.btn`/`.btn-ink` are declared
    later in this file (Buttons section) and share the `padding`/
    `border-radius` properties at equal (single-class) specificity, so a
@@ -1092,7 +1196,7 @@ a { text-decoration: none; }
 .galbtn-prev { left: 6px; }
 .galbtn-next { right: 6px; }
 
-/* Above .consent (130) and #nk-progress (120). At the old z-index of 90 the
+/* Above .consent (130) and .nav (60). At the old z-index of 90 the
    privacy banner floated over an open lightbox on a phone, covering the
    caption and taking taps meant for the image. A modal has to sit above
    page furniture. */
@@ -1644,17 +1748,6 @@ a { text-decoration: none; }
   pointer-events: none;
 }
 
-/* scroll progress bar (gold gradient) */
-#nk-progress {
-  position: fixed;
-  top: 0; left: 0;
-  height: 3px;
-  width: 0%;
-  z-index: 120;
-  background: linear-gradient(90deg, var(--gold-deep), var(--gold-dark) 40%, var(--gold-light) 70%, var(--gold));
-  box-shadow: 0 0 14px rgba(201,162,75,.65);
-  transition: width .12s linear;
-}
 
 /* grain + wash overlays */
 .nk-grain {
